@@ -1,0 +1,11 @@
+陕西师范大学;http://192.168.101.215:8719
+暨南大学:http://192.168.101.215:8137   http://www.jnupress.com  cnkiadmin cnkiadmin 
+中医药; H5  http://192.168.100.169:8095/  Web  http://192.168.100.169:8094/    H5  http://114.112.104.244:8008   Web http://www.cptcm.com
+
+图标库: http://fontawesome.dashgame.com/
+
+215 cnki@cnki_123
+169 cnki_123
+
+yp yp
+hp hp
