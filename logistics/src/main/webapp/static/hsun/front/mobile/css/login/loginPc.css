@@ -1,0 +1,229 @@
+article header{
+    position: static;
+}
+button,
+input,
+textarea,
+select,
+optgroup,
+option,
+file {
+    font-family: inherit;
+    font-size: inherit;
+    font-style: inherit;
+    font-weight: inherit;
+    outline: none;
+    vertical-align: middle;
+}
+
+select {
+    background: none;
+    border: none;
+    -webkit-appearance: none;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="tel"],
+textarea {
+    -webkit-appearance: none;
+    border: 1px solid #ddd;
+    border-radius: 0;
+    outline: none;
+}
+
+button[disabled],
+html input[disabled] {
+    cursor: default;
+}
+
+button::-moz-focus-inner,
+input::-moz-focus-inner {
+    padding: 0;
+    border: 0;
+}
+
+input[type="search"] {
+    -webkit-box-sizing: content-box;
+    -webkit-appearance: textfield;
+}
+
+input:focus::-webkit-input-placeholder {
+    color: transparent;
+}
+
+button,
+html input[type="button"],
+input[type="reset"],
+input[type="submit"] {
+    -webkit-appearance: button;
+    cursor: pointer;
+}
+
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-decoration {
+    -webkit-appearance: none;
+}
+
+input::-webkit-input-placeholder {
+    color: #dadada;
+}
+
+input::-o-input-placeholder {
+    color: #dadada;
+}
+
+input::-moz-input-placeholder {
+    color: #dadada;
+}
+
+input::-ms-input-placeholder {
+    color: #dadada;
+}
+.flex{
+    display: -webkit-flex;
+    display:flex;
+}
+.flex-cols-center{
+    align-item:center
+}
+.login_container {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 100%;
+    z-index: 10;
+    background: #fff;
+}
+.login header{
+    height:50px;
+    line-height: 50px;
+    color: #fff;
+    font-size: 19px;
+    background: #3db06e;
+}
+.login header .icon{
+    padding-left:10px;
+    padding-right:15px;
+}
+
+.login_cont{
+    padding:10px 20px;
+}
+
+.login_form{
+    /*width: 100%;*/
+}
+.login_form .login_list {
+
+    height:28px;
+    border-bottom:1px solid #d5d5d5;
+    padding-top: 25px;
+    padding-left: 10px;
+    padding-bottom:6px;
+    padding-right: 10px;
+}
+.login_form .login_list:hover {
+    border-color: #3db06e;
+}
+.login_form .login_list input{
+    height: 24px;
+    border: none;
+    line-height: 24px;
+    font-size: 14px;
+    color: #333;
+    position: relative;
+    float: left;
+    width: 80%;
+}
+.login_form .login_list .icon{
+    font-size:15px;
+    font-weight: 500;
+    color: #888;
+}
+.login_form .login_list .icon-yanjing{
+    font-size: 18px;
+}
+.login_form .login_list .icon-yanjing{
+    float: right;
+}
+.login_form .login_list .logo_input{
+    padding-right: 10px;
+    float: left;
+}
+
+.login_form .login_list input[name=validateCode]{
+    width:2rem;
+}
+.login_form .login_list img{
+    height: 0.64rem;
+}
+.login_form .login_list a{
+    position: relative;
+    top: -0.2rem;
+    font-size:0.346667rem;
+}
+
+.login_form .rememberMe{
+    margin-top: 20px;
+    margin-bottom: 15px;
+    padding-left:12px;
+}
+.login_form .rememberMe span{
+    font-size: 0;
+    margin-right: 7px;
+    width: 13px;
+    height: 13px;
+    background: url('../../images/selbg1.png') no-repeat;
+    background-size: 100% 100%;
+    position: relative;
+    top:3px;
+}
+.login_form .rememberMe span.seleced{
+    background: url('../../images/selbg2.png') no-repeat;
+    background-size: 100% 100%;
+}
+
+.login_form .rememberMe label{
+    font-size: 12px;
+}
+.login_form .rememberMe label input{
+    display: none;
+}
+.login_form .rememberMe .icon{
+    font-size: 0.346667rem;
+}
+
+.login_btn {
+    background-color: #3db06e;
+    color: #fff;
+    margin-bottom: 15px;
+    font-weight: bolder;
+}
+.sure {
+    display: block;
+    font-size: 14px;
+    width: 100%;
+    height: 34px;
+    border-radius: 5px;
+    text-align: center;
+    line-height:34px;
+}
+.disabled {
+    opacity: .5;
+}
+.login header{
+    position: relative;
+    text-align: center;;
+}
+.login header i{
+    position: absolute;
+    left:0;
+    top:0;
+}
+.form_err{
+    font-size:0.32rem;
+    text-align: right;
+    display: none;
+}

@@ -1,0 +1,102 @@
+/*搜索*/
+.bo_search{
+    text-align: center;
+    padding:10px 0 6px;
+    background: #fff;
+    float: right;
+    height:50px;
+}
+.bo_search>div{
+    display: inline-block;
+    border:1px solid #3db06e;
+    background: #3db06e;
+}
+.spansearch{
+    display: inline-block;
+    height:40px;
+    line-height: 40px;
+    float:left;
+    -webkit-transition: background 0.5s;
+    -moz-transition: background 0.5s;
+    -ms-transition: background 0.5s;
+    -o-transition: background 0.5s;
+    transition: background 0.5s;
+
+}
+.spansearch:hover{
+    background: #399d60 ;
+}
+.bo_search>div a i{
+    width:60px;
+    color: #fff;
+    /*font-size: 16px;*/
+    /*padding:0 10px;*/
+}
+.bo_search .txtsearch{
+    width:305px;
+    border:none;
+    height:40px;
+    outline: none;
+    padding:5px;
+    float: left;
+}
+#select_reseach{
+    float: left;
+    width:75px;
+    background: #fff;
+    height:40px;
+    position: relative;
+    font-size:14px;
+    line-height: 40px;
+}
+#select_reseach:hover .select_items{
+    display: block;
+}
+#select_reseach em{
+    font-style: normal;
+}
+#select_reseach i{
+    font-size: 12px;
+    color: #666;
+}
+.text_select{
+    padding: 5px 13px 5px 10px;
+    border-right:1px solid #cccdcc;
+}
+.select_items{
+    position: absolute;
+    left:-1px;
+    top:40px;
+    background: #fff;
+    width:72px;
+    border:1px solid #3db06e;
+    border-top:1px solid #eee;
+    display: none;
+}
+.select_items a{
+    width:100%;
+    text-align: left;
+    line-height: 36px;
+    display: block;
+    color: #333;
+}
+.select_items a span{
+    display: block;
+    margin:0 auto;
+    width: 70%;
+    padding-left:9px;
+}
+.select_items a>.bor_bottom{
+    border-bottom:1px solid #eee;
+}
+.select_items a input{
+    display: none;
+}
+.select_items a:hover{
+    color: #3db06e;
+}
+/*没有信息*/
+.no_info{
+    min-height: 250px;
+    background:url('../img/no-info.png') no-repeat center center;
+}

@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hsun.ywork.modules.user.dao.UserMessageDao">
+    
+	<sql id="userMessageColumns">
+		a.id AS "id",
+		a.senderid AS "senderid",
+		a.sendername AS "sendername",
+		a.recieverid AS "recieverid",
+		a.recievername AS "recievername",
+		a.msgtype AS "msgtype",
+		a.senddate AS "senddate",
+		a.content AS "content",
+		a.isread as "isread"
+	</sql>
+	
+	<sql id="userMessageJoins">
+	</sql>
+    
+	<select id="get" resultType="UserMessage">
+		SELECT 
+			<include refid="userMessageColumns"/>
+		FROM yw_msg a
+		<include refid="userMessageJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="UserMessage">
+		SELECT 
+			<include refid="userMessageColumns"/>
+		FROM yw_msg a
+		<include refid="userMessageJoins"/>
+		<where>
+			<if test="msgtype != null and msgtype != ''">
+				AND a.msgtype = #{msgtype}
+			</if>
+			<if test="isread != null and isread != ''">
+				AND a.isread = #{isread}
+			</if>
+			<if test="senderid != null and senderid != '' and recieverid != null and recieverid != ''">
+				AND (a.senderid = #{senderid} AND a.recieverid = #{recieverid}) or (a.senderid = #{recieverid} AND a.recieverid = #{senderid})
+			</if>
+			<if test="content != null and content != ''">
+				AND a.content LIKE
+				<if test="dbName == 'oracle'">'%'||#{content}||'%'</if>
+				<if test="dbName == 'mssql'">'%'+#{content}+'%'</if>
+				<if test="dbName == 'mysql'">concat('%',#{content},'%')</if>
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.senddate DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="UserMessage">
+		SELECT 
+			<include refid="userMessageColumns"/>
+		FROM yw_msg a
+		<include refid="userMessageJoins"/>
+		<where>
+			<if test="msgtype != null and msgtype != ''">
+				AND a.msgtype = #{msgtype}
+			</if>
+			<if test="senderid != null and senderid != ''">
+				AND a.senderid = #{senderid}
+			</if>
+			<if test="recieverid != null and recieverid != ''">
+				AND a.recieverid = #{recieverid}
+			</if>
+			<if test="isread != null and isread != ''">
+				AND a.isread = #{isread}
+			</if>
+			<if test="content != null and content != ''">
+				AND a.content LIKE
+				<if test="dbName == 'oracle'">'%'||#{content}||'%'</if>
+				<if test="dbName == 'mssql'">'%'+#{content}+'%'</if>
+				<if test="dbName == 'mysql'">concat('%',#{content},'%')</if>
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.senddate DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO yw_msg(
+			id,
+			senderid,
+			sendername,
+			recieverid,
+			recievername,
+			msgtype,
+			senddate,
+			content,
+			isread
+		) VALUES (
+			#{id},
+			#{senderid},
+			#{sendername},
+			#{recieverid},
+			#{recievername},
+			#{msgtype},
+			#{senddate},
+			#{content},
+			#{isread}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE yw_msg SET 	
+			senderid = #{senderid},
+			sendername = #{sendername},
+			recieverid = #{recieverid},
+			recievername = #{recievername},
+			msgtype = #{msgtype},
+			senddate = #{senddate},
+			content = #{content},
+			isread = #{isread}
+		WHERE id = #{id}
+	</update>
+
+	<update id="update2Read">
+		UPDATE yw_msg SET
+		isread = 0
+		WHERE id in (${ids})
+	</update>
+	
+	<update id="delete">
+		DELETE FROM yw_msg
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

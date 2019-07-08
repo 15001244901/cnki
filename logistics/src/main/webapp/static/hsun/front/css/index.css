@@ -1,0 +1,231 @@
+@charset "utf-8";
+body,
+h1,
+h2,
+h3,
+p,
+ul,
+ol,
+form {
+	margin: 0;
+	padding: 0;
+}
+
+div,
+figure,
+img,
+input,
+button {
+	box-sizing: border-box;
+}
+
+body {
+	background: #F0F0F2;
+}
+
+ul,
+ol {
+	list-style: outside none none;
+}
+
+a {
+	text-decoration: none;
+}
+
+#header {
+	width: 100%;
+	min-width: 1200px;
+	height: 70px;
+	top: 0;
+	z-index: 9999;
+	background: #FFFFFF;
+	box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.08);
+}
+
+#header .center {
+	max-width: 1200px;
+	width: 1200px;
+	height: 70px;
+	margin: 0 auto;
+}
+
+#header .logo {
+	width: 285px;
+	height: 70px;
+	float: left;
+	margin-top: -5px;
+}
+
+#header .logo img {
+	padding: 10px 0px 0px 20px;
+}
+
+#header .link {
+	height: 70px;
+	line-height: 70px;
+	color: #333333;
+	float: left;
+	width: 595px;
+}
+
+#header .divinfo {
+	height: 70px;
+	line-height: 70px;
+	color: #333333;
+	float: left;
+	width: 320px;
+	text-align: left;
+}
+
+#header .link li {
+	float: left;
+	margin: 0;
+}
+
+#header .link a {
+	color: #1D272C;
+	padding: 0px 33px;
+	border: 1px solid lightgray;
+	border-bottom: none;
+	border-left: none;
+	border-top: none;
+	font-size: 16px;
+}
+#header .link ul li:last-child a{
+	border-right: none;
+}
+
+#header .link span {
+	color: #DCDCDC;
+	margin: 0 0 0 -4.5px;
+}
+
+#header .link a:hover,
+#header .active a {
+	/*background-color: #3db06e;*/
+	/*color: white;*/
+	color: #3db06e;
+	text-decoration: none;
+}
+
+a {
+	color: #999;
+}
+
+.username {
+	color: #333;
+	float: left;
+	margin-left: 10px;
+	margin-top: 14px;
+	line-height: 23px;
+	text-align: left;
+	font-size: 11px;
+}
+
+.username li {
+	margin: -8px 0;
+}
+
+.username .two {
+	display: none;
+}
+
+.userhead {
+	float: left;
+	margin-left: 40px;
+}
+
+/*头部*/
+/** {*/
+	/*moz-user-select: -moz-none;*/
+	/*-moz-user-select: none;*/
+	/*-o-user-select: none;*/
+	/*-khtml-user-select: none;*/
+	/*-webkit-user-select: none;*/
+	/*-ms-user-select: none;*/
+	/*user-select: none;*/
+/*}*/
+.layui-layer-btn {
+	text-align: center;
+}
+
+.layui-layer-content {
+	text-align: center;
+}
+
+.no_login{
+	float: right;
+	height: 70px;
+	line-height: 70px;
+	font-size: 13px;
+	padding-right:10px;
+}
+.no_login span,.no_login .no_res{
+	padding:5px 10px;
+	margin-left:10px;
+	border-radius: 5px;
+	color: #333;
+	cursor: pointer;
+}
+.no_login span:hover,.no_login .no_res:hover{
+	background: #3db06e;
+	color: #fff;
+}
+.no_login .active{
+	background: #3db06e;
+	color: #fff;
+}
+.help{
+	display:inline-block;
+	font-size:14px;
+}
+.help i{
+	height:14px;
+	width:14px;
+	display: inline-block;
+	vertical-align: middle;
+	margin-left:5px;
+	color: #a5a5a5;
+	margin-bottom:1px;
+	margin-right:50px;
+	/*background:url("/ywork/static/hsun/front/img/spriter-a.png") no-repeat -427px -309px;*/
+}
+
+/*提示聊天消息*/
+.is_chat_news{
+	color:#A5A5A5;
+	font-size: 14px;
+	margin-left:60px;
+	float: left;
+	margin-right:10px;
+	position: relative;
+	cursor: pointer;
+}
+.is_chat_news:hover{
+	color: #3db06e;
+}
+.is_chat_news i{
+	/*width: 26px;*/
+	/*height: 18px;*/
+	/*margin-top: 25px;*/
+	/*font-weight: 600;*/
+	position: relative;
+	top:-1px;
+}
+#ischats{
+	display: none;
+	position: absolute;
+	line-height: 24px;
+	border-top-left-radius:50%;
+	border-top-right-radius:50%;
+	border-bottom-right-radius:50%;
+	transform:scale(0.8);
+	background: #3db06e;
+	color: #fff;
+	width:24px;
+	height:24px;
+	text-align: center;
+	font-size: 12px;
+	top:7px;
+	left:73px;
+}

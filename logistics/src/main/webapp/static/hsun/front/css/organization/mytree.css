@@ -1,0 +1,119 @@
+.tree_container{
+
+}
+.bg{
+    /*background: url("../images/spriter-a.png") no-repeat;*/
+}
+.sel{
+    display: inline-block;
+    height: 14px;
+    width: 14px;
+    margin-right: 5px;
+    position: relative;
+    top: 1.5px;
+}
+.select{
+    background: url("../../img/organization/selbg1.png") no-repeat center center;
+}
+.selected{
+    background: url("../../img/organization/selbg2.png") no-repeat center center;
+}
+.dash_line {
+    list-style: none;
+    padding:0;
+    font-size: 14px;
+    -webkit-user-select:none;
+    -moz-user-select:none;
+    -ms-user-select:none;
+    user-select:none;
+}
+
+.title_radio1{
+    background-position: -402px -117px;
+}
+.title_radio2{
+    background-position: -402px -94px;
+}
+.title_dash{
+    margin-left:5px;
+}
+.dash_pos{
+    background-position: 6px 0;
+}
+.one_title{
+    line-height: 30px;
+    height:30px;
+}
+.one_title em{
+    display: inline-block;
+    width: 15px;
+}
+.one_title:hover{
+    background: #DFF0D8
+}
+.one_title_bg{
+    background: #DFF0D8
+}
+.one_title .title_dash{
+    width: 4px;
+}
+.one_title span{
+    cursor: pointer;
+}
+.one_title span:hover{
+    color: #23527c;
+}
+.one_title b{
+    padding-right: 9px;
+    font-weight: normal;
+    color: #F5F7F9;
+}
+.bg_color1{
+    background: #f5e3d1;
+}
+.one_title i{
+    font-style: normal;
+    font-size: 12px;
+    padding-left:5px;
+    cursor: pointer;
+}
+.one_title .issort{
+    color: #888;
+    cursor: default;
+}
+.one_title i:hover{
+    color: #a94442;
+}
+.ml19{
+    margin-left:19px;
+}
+.nodata{
+    background: url("../../img/no-small-info.png") no-repeat center center;
+}
+
+.togger_click{
+    color: #F5F7F9;
+    display: block;
+    height:30px;
+    width:30px;
+    padding-left:0 !important;
+    text-align: center;
+    line-height: 30px;
+    cursor: pointer;
+    /*background: #fff;*/
+    position: absolute;
+    top:0;
+    right:30px;
+}
+.togger_click:hover{
+    color: #777;
+}
+.tree_container ul{
+    display: none;
+}
+.tree_container li{
+    position: relative;
+}
+.set_part_btn{
+    font-family: "微软雅黑";
+}

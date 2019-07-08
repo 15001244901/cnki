@@ -1,0 +1,85 @@
+
+.downmain01{width:1180px;margin:0 auto;margin-top:20px;}
+.downmain01 .left{width:215px;float:left;background:#fff; position:relative; z-index:99}
+.downmain01 .left ul li{}
+.downmain01 .left ul li.li1{*+height:37px; *+overflow:hidden }
+.downmain01 .left ul li.li1 .classtit{ padding-left:15px; font-size:16px;height:39px; line-height:39px;border-bottom:0px; background:none}
+.downmain01 .left ul li.li1:hover .classtit{border:1px solid #f0f0f0;border-bottom:0px;width:196px; padding-left:15px;}
+.downmain01 .left ul li:hover .classinfo{ display:block;}
+.downmain01 .left ul li:hover .classtit{width:199px;border:1px solid #bfbfc7;border-right:1px solid #fff; position:relative; z-index:999}
+.downmain01 .left ul li:hover .classtit a{color:#056ec2}
+
+.downmain01 .left ul li .classtit{height:34px; line-height:34px;font-size:14px; border:1px solid #f0f0f0;border-right:2px solid #f0f0f0; overflow:hidden; padding-left:15px; position:relative; z-index:99; background:#fff; margin-bottom:-1px;background:url(ricon.png) no-repeat 90% 50%}
+.downmain01 .left ul li .classtit span{width:20px;height:34px;float:left;}
+.downmain01 .left ul li .classtit span.spanicon1{ background:url(downicon.png) no-repeat 0 7px;margin-right:10px;}
+.downmain01 .left ul li .classtit span.spanicon2{ background:url(downicon.png) no-repeat 0 -27px;margin-right:10px;}
+.downmain01 .left ul li .classtit span.spanicon3{ background:url(downicon.png) no-repeat 0 -63px;margin-right:10px;}
+.downmain01 .left ul li .classtit span.spanicon4{ background:url(downicon.png) no-repeat 0 -96px;margin-right:10px;}
+.downmain01 .left ul li .classtit span.spanicon5{ background:url(downicon.png) no-repeat 0 -132px;margin-right:10px;}
+.downmain01 .left ul li .classtit span.spanicon6{ background:url(downicon.png) no-repeat 0 -167px;margin-right:10px;}
+.downmain01 .left ul li .classtit span.spanicon7{ background:url(downicon.png) no-repeat 0 -202px;margin-right:10px;}
+.downmain01 .left ul li .classtit span.spanicon8{ background:url(downicon.png) no-repeat 0 -238px;margin-right:10px;}
+.downmain01 .left ul li .classtit span.spanicon9{ background:url(downicon.png) no-repeat 0 -274px;margin-right:10px;}
+
+.downmain01 .left ul li .classinfo{width:183px;border:1px solid #bfbfc7; display:none; padding:10px 20px 20px 10px; position:absolute; left:215px;top:0px; background:#fff; z-index:9;height:324px; overflow:hidden;}
+.downmain01 .left ul li .classinfo .infotit{height:30px; line-height:30px; font-size:16px; padding-left:15px;color:#056ec2}
+.downmain01 .left ul li .classinfo a{ padding:0px 6px; white-space:nowrap;height:26px; line-height:26px;border:1px solid #e3e3e3;border-radius:3px;float:left;margin:10px 0px 0px 10px;}
+.downmain01 .left ul li .classinfo a:hover{ background:#056ec2;color:#fff;border:1px solid #056ec2;}
+
+.downmain01 .leftlistbg{background:url(20151231527.jpg) no-repeat !important; padding-top:200px}
+.downmain01 .leftlist{width:943px;border:1px solid #e5e5e5;float:left;margin-left:20px;background:#fff; position:relative}
+.downmain01 .leftlist .fbzlbg{width:69px;height:69px;background:url(fbzl.png) no-repeat; position:absolute;right:0px;top:0px; cursor:pointer}
+.downmain01 .leftlist .title{ height:49px; line-height:40px;font-size:18px;margin-top:2px; padding:0px 15px}
+.downmain01 .leftlist .title span{ font-size:14px;color:#999; padding-left:10px;}
+.downmain01 .leftlist .title font{color:#056ec2; padding:0px 5px}
+.downmain01 .leftlist .title2{float:left; padding:0px 15px;height:21px; line-height:20px;background:#6eb2e8;color:#fff; margin-left:18px; position:relative}
+.downmain01 .leftlist .title2 .dbg{width:21px;height:5px; background:url(dbg.png) no-repeat; position:absolute;left:-21px;top:8px;}
+.downmain01 .leftlist ul{ margin:0px 15px}
+.downmain01 .leftlist ul li{ padding:5px 15px 20px 15px;border-bottom:1px dotted #ddd;}
+.downmain01 .leftlist ul li .litit{height:18px; line-height:18px;font-size:16px; overflow:hidden;margin-top:15px}
+.downmain01 .leftlist ul li .litit img{margin-right:10px;float:left;}
+.downmain01 .leftlist ul li .intro{color:#666; line-height:25px;height:50px; overflow:hidden;margin-top:15px;}
+.downmain01 .leftlist ul li .liother{color:#999;margin-top:15px;}
+.downmain01 .leftlist ul li .liother img{height:15px;margin:0px 4px 0px 10px}
+
+.downmain01 .right{width:285px;float:right;}
+.downmain01 .right .rightbtn{width:100%;height:50px; cursor:pointer; line-height:50px; background:#f17f1a;border-radius:3px;color:#fff; text-align:center; font-size:16px;-webkit-transition: .3s; transition: .3s;}
+.downmain01 .right .rightbtn:hover{ background:#ee7103;}
+.downmain01 .right .right01{ padding:5px 15px 10px 15px;border:1px solid #f0f0f0;border-left:2px solid #f0f0f0;background:#fff;margin-top:20px;}
+.downmain01 .right .right01 .title{ font-size:17px;height:35px; line-height:30px;color:#333;}
+.downmain01 .right .right01 ul li{height:28px; line-height:28px; overflow:hidden; }
+.downmain01 .right .right01 ul li span{width:15px;margin:7px 8px 0px 0px;height:15px;background:#bfbfc7; color:#333;float:left; text-align:center; line-height:15px;}
+.downmain01 .right .right01 ul li span.span01{background:#ec7c40;color:#fff;}
+.downmain01 .right .right01 ul li em{float:right;color:#999; padding-left:10px;}
+.downmain01 .right .right01 ul li em strong{color:#ec7c40;font-weight:normal; padding-right:3px; font-family:Arial}
+
+
+
+.downmain01 .leftcontent{width:833px; padding:0px 20px;float:left; background:#fff;border:1px solid #f0f0f0;}
+
+.downmain01 .leftcontent .downbox01{ padding:15px 0px; background:#fff;}
+.downmain01 .leftcontent .downbox01 .downtit{height:40px; font-size:18px;}
+.downmain01 .leftcontent .downbox01 .downbox01left{width:150px; float:left; position:relative}
+.downmain01 .leftcontent .downbox01 .downbox01left img.rj_pic{width:148px; float:left;border:1px solid #e3e3e3;box-shadow:0px 1px 2px #e5e5e5;}
+.downmain01 .leftcontent .downbox01 .downbox01left .typeimg{ position:absolute;bottom:1px;right:1px;}
+.downmain01 .leftcontent .downbox01 .downbox01right{width:662px; float:right}
+.downmain01 .leftcontent .downbox01 .downbox01right h4{font-family:"\5FAE\8F6F\96C5\9ED1";font-weight:normal;font-size:18px; height:28px;}
+.downmain01 .leftcontent .downbox01 .downbox01right .xingji{color:#f70; font-family:simhei;font-size:18px;}
+.downmain01 .leftcontent .downbox01 .downbox01right ul li{width:33%; float:left; padding-top:10px;color:#999}
+.downmain01 .leftcontent .downbox01 .downbox01right ul li span{color:#666;}
+.downmain01 .leftcontent .downbox01 .downbox01right ul li.liintro{width:100%; display:block; line-height:19px;}
+.downmain01 .leftcontent .downbox01 .downbox01right ul li.lidownnum{width:100%; display:block;background:url(bg38.png) no-repeat 0 50%;padding-left:20px; line-height:30px;padding-top:0px;margin-top:6px;}
+
+.downmain01 .leftcontent .downbox03 .title{ height:40px; line-height:40px; border-bottom:1px solid #e3e3e3;font-family:"\5FAE\8F6F\96C5\9ED1";font-weight:normal;font-size:18px;}
+.downmain01 .leftcontent .downbox03 .title h4{ float:left; font-weight:normal;border-bottom:1px solid #056ec2;line-height: 40px;}
+.downmain01 .leftcontent .downbox03 .xz_list{margin-top:15px;font-size:14px}
+
+.downmain01 .leftcontent .downbox04{margin-top:15px}
+.downmain01 .leftcontent .downbox04 .title{ height:40px; line-height:40px; border-bottom:1px solid #e3e3e3;font-family:"\5FAE\8F6F\96C5\9ED1";font-weight:normal;font-size:18px;}
+.downmain01 .leftcontent .downbox04 .title h4{ float:left; font-weight:normal;border-bottom:1px solid #056ec2}
+.no-margintop {
+	margin-top: 0px;
+}
+
+.downmain01 .favoritebtn{width:200px;height:50px; cursor:pointer; line-height:50px; background:#f17f1a;border-radius:3px;color:#fff; text-align:center; font-size:16px;-webkit-transition: .3s; transition: .3s;}
+.downmain01 .favoritebtn:hover{ background:#ee7103;}

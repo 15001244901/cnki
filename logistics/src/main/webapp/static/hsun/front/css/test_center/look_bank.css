@@ -1,0 +1,396 @@
+body {
+	font-family: "Helvetica Neue", Helvetica, Arial, "Microsoft Yahei UI", "Microsoft YaHei", SimHei, "\5B8B\4F53", simsun, sans-serif;
+}
+
+a {
+	color: #999;
+}
+#divcontent {
+	width: 1200px;
+	border: 1px solid #dcdcdc;
+	/*height: 965px;*/
+	background-color: white;
+	margin: 20px auto;
+	clear: both;
+	box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.08);
+}
+
+#divcontent .divtop {
+	padding-bottom: 20px;
+	border-bottom: 1px dashed #dcdcdc;
+}
+
+#divcontent .divtitle {
+	height: 45px;
+	background-color: #F5F5F5;
+}
+
+#divcontent .divtitle div {
+	line-height: 45px;
+	margin-left: 29px;
+	font-family: PingFangSC-Regular;
+	font-size: 12px;
+	color: #666;
+	letter-spacing: 0;
+	cursor: pointer;
+}
+#divcontent .divtitle .line{
+	background: #d2d2d2 none repeat scroll 0 0;
+	display: inline-block;
+	height: 20px;
+	margin: 0 25px;
+	width: 1px;
+	vertical-align: middle;
+	font-style: normal;
+}
+
+#divcontent .divcon {
+	margin-top: 20px;
+	margin-left: 20px;
+	margin-right: 40px;
+}
+#spanQType{
+	float: left;
+}
+#divcontent .divcon #divAlisa{
+	margin-left:30px;
+}
+#goback{
+	float: right;
+	margin-right:20px;
+}
+#divcontent .divtitle #goback:hover{
+	color: #295;
+}
+#divcontent .divcon .divquestiontype {
+	font-size: 14px;
+	color: #666;
+	margin-left: 20px;
+	padding-bottom:10px;
+	margin-bottom: 10px;
+	border-bottom:1px dotted #eee;
+}
+
+#divcontent .divtitle .one3 {
+	float: right;
+	margin-right: 20px;
+}
+
+#divcontent .divcon .divQContent {
+	margin-left: 10px;
+	font-size: 14px;
+	color: #222222;
+	line-height: 22px;
+	padding-bottom: 10px;
+}
+
+#divcontent .divcon .divQContent p {
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+
+#divcontent .divcon .div4 {
+	margin-top: 25px;
+	margin-right: 20px;
+}
+
+#divcontent .divcon .four1 {
+	height: 50px;
+	line-height: 50px;
+}
+
+#divcontent .divcon .four1 span {
+	margin-left: 22px;
+	border: 1px solid #EBEBEB;
+	border-radius: 50%;
+	padding: 4.5px 8.7px;
+	cursor: pointer;
+	background: #FFFFFF;
+	box-shadow: inset 0 0 4px 0 rgba(0, 0, 0, 0.10);
+}
+
+#divcontent .divcon .four1 .active {
+	background: #2F96E9;
+	color: white;
+}
+
+#divcontent .divcon .four1 .active1 {
+	background: #FE6422;
+	color: white;
+}
+
+#divcontent .divcon .four1 .active2 {
+	background: #EFEFEF;
+}
+
+#divcontent .div3 {
+	width: 913px;
+	height: 50px;
+}
+
+#divcontent .div4>span {
+	float: right;
+	font-size: 14px;
+	color: #FFFFFF;
+	border: 1px solid #2f96e9;
+	background-color: #2f96e9;
+	padding: 4px 18px;
+	border-radius: 3px;
+	margin-top: -28px;
+}
+
+#divcontent .divbotton .divanswer {
+	height: 25px;
+	line-height: 25px;
+	margin-top:15px;
+}
+
+
+/*设置正确答案等颜色*/
+
+#divcontent .divbotton .divanswer .spananswer {
+	color: #FE6422;
+}
+
+#divcontent .divbotton .divanswer .results {
+	color: #2F96E9;
+}
+
+#divcontent .divbotton .divanswer .p6 {
+	position: relative;
+	right: 25px;
+}
+
+#divcontent .divbotton p {
+	margin-left: 30px;
+	font-size: 14px;
+	color: #222222;
+	letter-spacing: 0;
+}
+
+#divcontent .divbotton .divan p {
+	line-height: 30px;
+	margin-left: 30px;
+	font-size: 14px;
+	color: #222222;
+	letter-spacing: 0;
+}
+
+#divcontent .divbotton .divan {
+	font-size: 14px;
+	margin:15px 30px;
+	font-weight: bold;
+	overflow: hidden;
+}
+#divcontent .divbotton .divan img{
+	vertical-align: middle;
+}
+
+#divcontent .divbotton .div7 {
+	width: 900px;
+	margin-left: 49px;
+}
+
+#divcontent .divbotton .div7 div {
+	margin-bottom: 10px;
+}
+
+#divcontent .divbotton .divnodetitle {
+	height: 50px;
+	background-color: #F5F5F5;
+}
+
+#divcontent .divbotton .divnodetitle>span {
+	line-height: 50px;
+	padding-right: 130px;
+}
+
+#divcontent .divbotton .divnodetitle .spannodeone {
+	border: 1px solid #17b55b;
+	line-height: 20px;
+	padding: 3px 20px;
+	background-color: #17b55b;
+	margin-top: 12px;
+	border-radius: 3px;
+	margin-left: 30px;
+	color: white;
+	font-size: 14px;
+	cursor: pointer;
+}
+#divcontent .divbotton .divnodetitle .spannodeone:hover{
+	background-color: #295;
+}
+#save_btn{
+	padding: 6px 16px;background: #17b55b;border: 0px;color: white;border-radius: 4px;cursor: pointer;
+}
+#save_btn:hover{
+	background-color: #295;
+}
+#divcontent .divbotton .divnodetitle .spantotalnodes {
+	margin-left: 1px;
+	line-height: 50px;
+	font-size: 14px;
+}
+
+#divcontent .divbotton .divnodetitle span {
+	line-height: 20px;
+}
+#spannodes{
+	color: red;
+	margin-right:0;
+	padding: 0 5px;
+}
+
+#divcontent .divbotton .divnodetitle .spanques {
+	float: right;
+	padding: 4px 18px;
+	margin-top: 11px;
+	background-color: #2F96E9;
+	border-radius: 3px;
+	color: white;
+	font-size: 14px;
+}
+/*做笔记*/
+#nodesDiv{
+	width: 100%;
+	display: none;
+	margin-top:20px;
+}
+.nodes_cont{
+	margin:0 50px 10px;
+}
+.nodes_sub{
+	padding: 0 50px;
+	height: 36px;
+}
+.nodes_sub_inp{
+	float: left;
+	width: 500px;
+}
+#inp_text{
+	vertical-align: top;
+	padding:6px 5px;
+	border:1px solid #E5E5E5;
+	outline: none;
+	margin:0;
+	font-size: 13px;
+}
+.show_eye{
+	display: inline-block;
+	margin-top: 5px;
+	position: absolute;
+	margin-left: 100px;
+	font-size: 12px;
+}
+.show_eye input,.show_eye span{
+	float: left;
+}
+.show_eye span{
+	padding-top:3px;
+}
+.validateCodeRefresh{
+	margin-left: 10px;
+	position: absolute;
+	margin-top: 6px;
+	text-decoration: none;
+	color: #007AFF;
+	font-size: 13px;
+}
+.nodes_sub_btn{
+	float: right;
+}
+#nodesContent{
+	width: 1076px;
+	display: block;
+	border:1px solid #E5E5E5;
+	min-height: 120px;
+	padding:10px;
+}
+/*设置没找到资源的img大小*/
+
+.divvideo img {
+	position: relative;
+	width: 161px;
+	height: 86px;
+}
+
+.divvideo {
+	float: right;
+	margin-right: 30px;
+	text-align: center;
+	margin-bottom: 20px;
+}
+
+.divvideo .computer {
+	font-size: 14px;
+	margin-top: 15px !important;
+	width: 80px;
+	margin: 0 auto;
+	background-color: #FE6422;
+	color: #FFFFFF;
+	padding: 7px 14px;
+}
+
+.nodes table {
+	width: 100%;
+}
+
+.nodes table td {
+	border-bottom: dashed 1px #DCDCDC;
+	padding: 10px;
+}
+
+.nodes table td .spanName {
+	font-size: 14px;
+	color: #007AFF;
+	margin-left: 30px;
+}
+.nodes table td .spanUserPhoto img
+{
+	width: 20px;
+	height: 20px;
+	border-radius: 50%;
+	position: absolute;
+}
+.nodes table td .spanTime {
+	font-size: 14px;
+	color: #939393;
+}
+
+.nodes table td .spanContent {
+	display: block;
+	font-size: 14px;
+	color: #444;
+	padding-top:10px;
+	padding-left:30px;
+}
+
+.divPage{
+	margin-top: 10px;
+	width: 1200px;
+	height: 70px;
+	text-align: center;
+	line-height: 70px;
+	clear: both;
+}
+.divPage a{
+	padding: 6px 12px;
+	border: solid 1px #DCDCDC;
+	border-radius: 6px;
+	font-size: 14px;
+	color: #999;
+	text-decoration: none;
+}
+.divPage a:hover{
+	background: #BFBFC7;
+	color: white;
+}
+.divPage .curr{
+	border: solid 1px #BFBFC7;
+	background: #BFBFC7;
+	color: white;
+}
+.divPage .disabled
+{
+	display: none;
+}

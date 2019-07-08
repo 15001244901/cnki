@@ -1,0 +1,31 @@
+.icona-shoucang {
+    background-image: url("../../img/spriter-a.png");
+    background-position: -318px -200px;
+    /*height: 10px;*/
+    /*width: 10px;*/
+    /*border: 1px solid #fff;*/
+}
+.icona-quxiaosc {
+    background-image: url("../../img/spriter-a.png");
+    background-position: -318px -325px;
+    /*height: 14px;*/
+    /*width: 14px;*/
+    /*border: 1px solid #fff;*/
+}
+/*.icona-shoucang:hover{*/
+	/*border: 1px solid #30bf89;*/
+/*}*/
+/*.icona-quxiaosc:hover{*/
+    /*border: 1px solid #30bf89;*/
+/*}*/
+.icona-jiexi {
+    background-image: url("../../img/spriter-a.png");
+    background-position: -317px -226px;
+    /*height: 14px;*/
+    /*width: 14px;*/
+    border-color:#30bf89;
+    border: 1px solid #fff;
+}
+/*.icona-jiexi:hover{*/
+	/*border: 1px solid #30bf89;*/
+/*}*/

@@ -1,0 +1,72 @@
+*{margin:0;padding:0;}
+ul,ol{list-style: none;}
+a{text-decoration: none;}
+a:hover{text-decoration: none;}
+
+.auto{margin:0 auto;}
+.fl{float: left;}
+.fr{float: right;}
+.text1{text-align: center;}
+
+.wid5{width: 5%;}
+.wid8{width: 8%;}
+.wid10{width: 10%;}
+.wid12{width: 12%;}
+.wid40{width: 40%;}
+.wid50{width: 50%;}
+.wid70{width: 70%;}
+
+#teacher{
+    margin: 20px 0;
+    font-family: "微软雅黑";
+    font-size: 14px;
+}
+.teacher_container li>div{
+    float: left;
+    font-size: 14px;
+}
+td{
+    text-align: center;
+}
+.sel{
+    width: 40px;
+    line-height: 80px;
+    text-align: center;
+}
+.photo{
+    text-align: center;
+}
+.photo img{
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+}
+
+.name{
+    line-height: 20px;
+    font-size: 12px;
+}
+.infor{
+
+}
+
+.course a{
+    padding:3px 10px;
+    display: inline-block;
+    border-radius: 5px;
+}
+
+thead tr th{
+    text-align: center;
+    padding:10px 0;
+}
+table{
+    border-collapse:collapse;
+}
+td,th{
+    border:1px solid #ddd;
+    padding:10px;
+}
+.nav-tabs{
+    margin-bottom:20px;
+}

@@ -1,0 +1,360 @@
+@charset "utf-8";
+body,
+h1,
+h2,
+h3,
+p,
+ul,
+ol,
+form,
+fieldset,
+figure {
+	margin: 0;
+	padding: 0;
+}
+
+div,
+figure,
+img,
+input,
+button {
+	box-sizing: border-box;
+}
+
+body {
+	font-family: "Helvetica Neue", Helvetica, Arial, "Microsoft Yahei UI", "Microsoft YaHei", SimHei, "\5B8B\4F53", simsun, sans-serif;
+}
+
+img {
+	display: block;
+	max-width: 100%;
+}
+
+* {
+	padding: 0;
+	margin: 0;
+}
+
+ul,
+ol {
+	list-style: outside none none;
+}
+
+a {
+	text-decoration: none;
+}
+
+.none {
+	display: none;
+}
+
+.sm-visible {
+	display: none;
+}
+
+.clearfix:after {
+	content: ".";
+	height: 0;
+	visibility: hidden;
+	display: block;
+	clear: both;
+}
+
+#header {
+	width: 100%;
+	height: 90px;
+	top: 0;
+	z-index: 9999;
+	background-color: white;
+}
+
+#header .center {
+	max-width: 1200px;
+	width: 1200px;
+	height: 70px;
+	margin: 0 auto;
+}
+
+#header .logo {
+	width: 285px;
+	height: 70px;
+	text-indent: -9999px;
+	float: left;
+	margin-top: -5px;
+}
+
+#header .link {
+	height: 70px;
+	line-height: 70px;
+	color: #333333;
+}
+
+#header .link li {
+	float: left;
+	margin: 0;
+}
+
+#header .link a {
+	color: #333;
+	padding: 10px 43px;
+}
+
+#header .link span {
+	color: #DCDCDC;
+	margin: 0 0 0 -4.5px;
+}
+
+#header .link a:hover,
+#header .active2 a {
+	background-color: #3db06e;
+	color: white !important;
+}
+#header .active a {
+	color: #fff;
+}
+
+a {
+	color: #999;
+}
+
+.username {
+	color: #333;
+	float: left;
+	margin-left: 10px;
+	margin-top: 14px;
+	line-height: 23px;
+	text-align: left;
+	font-size: 11px;
+}
+
+.userhead {
+	float: left;
+	margin-left: 40px;
+}
+
+.username li {
+	margin: -9px 0;
+}
+
+#div {
+	width: 1200px;
+	/*min-height: 800px;*/
+	background-color: white;
+	margin: 0 auto;
+	margin-top: 20px;
+	box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.08)
+}
+
+
+/*1234*/
+
+#div .div1 {
+	/*width: 1120px;*/
+	height: 120px;
+}
+
+#div .div1 div {
+	/*margin-bottom: 30px;*/
+	padding-top: 30px;
+	text-align: center;
+	font-family: PingFangSC-Medium;
+	font-size: 20px;
+	color: #30bf89;
+	letter-spacing: 0;
+}
+#div .div1 table {
+	width: 100%;
+	text-align: center;
+}
+#div .div1 table td{
+	width: 33.3%;
+	text-align: center;
+}
+#div .div1 table td span{
+	font-size: 14px;
+}
+
+
+
+#style {
+	float: left;
+	width: 100px;
+	font-size: 18px;
+	background-color: #F8F8F8;
+	padding: 0 0 0 30px;
+}
+
+#style1 {
+	font-size: 14px;
+}
+
+#style1 .big {
+	color: #000000;
+	font-size: 20px;
+}
+
+.style2 {
+	width: 120px;
+	height: 25px;
+	border: 1px solid #DCDCDC;
+	border-radius: 3px;
+}
+
+#div .div2 {
+	width: 1200px;
+	/*height: 65px;*/
+	/*background: #F3F9FC;*/
+	border-top: 2px solid #E5E5E5;
+	border-bottom: 1px solid #DCDCDC;
+	/*font-family: PingFangSC-Regular;*/
+	font-size: 14px;
+	color: rgba(34, 34, 34, 0.8);
+	letter-spacing: 0;
+	border-right: 0;
+	border-left: 0;
+}
+
+#div .div2 .div21 {
+	/*margin-top: 17px;*/
+	/*margin-bottom: 17px;*/
+	background: #F3F9FC;
+	height: 60px;
+	line-height: 60px;
+}
+
+#div .div2>div>span {
+	margin-left: 45px;
+}
+
+#div .div2>div>button {
+	margin-left: 30px;
+	cursor: pointer;
+	color: white;
+	width: 60px;
+	height: 30px;
+	background: #2F96E9;
+	border: 1px solid #1478C8;
+	border-radius: 3px;
+}
+
+#div .div3 {
+	width: 1200px;
+	/*height: 45px;*/
+	/*background: #F8F8F8;*/
+	;
+}
+
+#div .div3 .one {
+	/*width: 1160px;*/
+	width: 100%;
+	height: 40px;
+	margin: 0 auto;
+	font-family: PingFangSC-Regular;
+	font-size: 14px;
+	color: rgba(34, 34, 34, 1);
+	letter-spacing: 0;
+}
+
+#div .div3 .one tr {
+	width: 100px;
+	height: 45px;
+}
+
+#div .div3 .one tr td {
+	text-align: center;
+	border-bottom: 1px solid #ebebeb;
+}
+
+#div .div3 .title {
+	color: rgba(34, 34, 34, 0.8);
+	background: #F5F5F5;
+}
+
+.look {
+	padding: 2.5px 6px;
+	background: #FFFFFF;
+	border: 1px solid #30bf89;
+	border-radius: 3px;
+	color:#30bf89;
+	font-size: 12px;
+	padding:5px 8px;
+}
+.nolook {
+	padding: 2.5px 6px;
+	background: #FFFFFF;
+	border: 1px solid #888;
+	border-radius: 3px;
+	color:#888;
+	font-size: 12px;
+	padding:5px 8px;
+}
+
+
+/*设置字体颜色*/
+
+#div .div3 .black {
+	color: #000000;
+	font-size: 20px;
+}
+
+#div .div3 .black1 {
+	color: red;
+	font-size: 20px;
+}
+
+#div .div4 {
+	width: 1200px;
+	height: 50px;
+	/*margin-top: 150px;*/
+}
+
+#div .div4 div {
+	line-height: 50px;
+	text-align: center;
+}
+
+#div .div4 div span {
+	margin: 0 10px;
+}
+
+
+/*进度表*/
+
+#schedule {
+	background-color: #01FF00;
+	border: 0;
+}
+
+#schedule1 {
+	padding-left: 220px;
+}
+/*#back{*/
+	/*display: inline-block;*/
+	/*padding:5px 5px;*/
+	/*font-size: 14px;*/
+	/*color: #333;*/
+/*}*/
+/*#back:hover{*/
+	/*color: #3db06e;*/
+/*}*/
+/*#back img{*/
+	/*display: inline;*/
+	/*vertical-align: bottom;*/
+/*}*/
+#div .div4{
+	text-align: center;
+}
+#back{
+	clear: both;
+	color: #666;
+	font-size: 13px;
+	display: inline-block;
+	padding:5px 10px;
+	margin:10px auto 0;
+	border:1px solid #666;
+	border-radius:3px;
+}
+#back:hover{
+	color: #3db06e;
+	border:1px solid #3db06e;
+}

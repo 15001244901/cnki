@@ -1,0 +1,382 @@
+body {
+	font-family: "Helvetica Neue", Helvetica, Arial, "Microsoft Yahei UI", "Microsoft YaHei", SimHei, "\5B8B\4F53", simsun, sans-serif;
+}
+
+
+
+ul,
+ol {
+	list-style: outside none none;
+}
+
+a {
+	text-decoration: none;
+	color: #999;
+	color: #222222;
+}
+
+
+.divcontent {
+	width: 1200px;
+	/*height: 893px;*/
+	background-color: #FFFFFF;
+	box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.08);
+	margin: 20px auto 0;
+	clear: both;
+}
+#divcontent{
+	min-height: 600px;
+	background-color: #FFFFFF;
+}
+
+#title_search{
+	/*border-bottom:1px solid #ccc;*/
+	overflow: hidden;
+}
+.divcontent .divtitle {
+	width:500px;
+	height: 75px;
+	line-height: 75px;
+	text-align: center;
+	font-size: 16px;
+	color: #1D272C;
+	margin-left:20px;
+	position: relative;
+	float: left;
+}
+.divcontent .divtitle span{
+	float: left;
+}
+.divcontent .divtitle a{
+	color: #A9A9A9;
+	display: block;
+	width:112px;
+	color: #222222;
+}
+#bottom_line{
+	width:110px;
+	height:0;
+	border:1px solid #17b55b;
+	position: absolute;
+	top:73px;
+    left:112px;
+	/*left:17.5px;*/
+}
+.divcontent .divtitle .active a {
+	color: #17b55b;
+}
+
+.divcontent .divtitle .one1 a {
+	padding-left: 20px;
+	padding-right: 20px;
+}
+
+.divcontent .divtitle span a:hover {
+	color: #17b55b;
+}
+
+.divcontent .divsearch {
+	width: 1160px;
+	margin:0 auto;
+	overflow: hidden;
+	min-height: 51px;
+}
+.divsearch>div{
+	text-align: left;
+	float: left;
+	margin-top: 18px;
+	list-style: none;
+	font-weight: 400;
+	color: #333;
+	font-size:14px;
+	height:16px;
+	line-height: 16px;
+}
+.divcontent .divsearch .subject {
+	color: #222222;
+	font-size: 16px;
+}
+
+.divcontent .divsearch .active span {
+	background-color: #17b55b;
+	opacity: 1;
+	color: #FFFFFF;
+}
+
+.divcontent .divsearch ul {
+	margin-left: 10px;
+	width: 1100px;
+	float: left;
+	margin-bottom: 10px;
+	overflow: hidden;
+}
+
+.divcontent .divsearch ul li {
+	float: left;
+	/*box-sizing: border-box;*/
+	margin-top: 10px;
+	padding: 0 10px;
+	line-height: 30px;
+}
+
+.divcontent .divsearch ul li span {
+	font-size: 13px;
+	opacity: 0.6;
+	color: #222222;
+	padding: 5px 11px;
+	/*margin-left: 20px;*/
+	border-radius: 3px;
+	/*line-height: 60px;*/
+}
+
+.divcontent .divsearch a span:hover {
+	background-color: #17b55b;
+	opacity: 1;
+	color: #FFFFFF;
+}
+#style1 {
+	position: absolute;
+	margin-top: 20px;
+	margin-left: 200px;
+	margin-left: 250px;
+	margin-left: 594px;
+	color: #222222;
+	opacity: 0.3;
+}
+
+.divcontent .divmodel {
+	width: 1160px;
+	height:52px;
+	line-height: 52px;
+	overflow: hidden;
+	margin:0 auto 20px;
+}
+.divcontent .divmodel .spanview {
+	font-size: 14px;
+	color: #333;
+}
+
+.divcontent .divmodel .active {
+	font-size: 12px;
+	color: #222222;
+	cursor: pointer;
+	margin-left: 10px;
+}
+
+.divcontent .divmodel .two2 {
+	font-size: 12px;
+	color: #222222;
+	opacity: 0.3;
+	margin-left: 18px;
+	cursor: pointer;
+}
+
+#table {
+	width: 1200px;
+	height: 44px;
+	line-height: 44px;
+	border-bottom:1px solid #ccc;
+	clear: both;
+}
+
+#table span {
+	margin-left: 20px;
+	font-size: 16px;
+	color: #222222;
+}
+.span_title{
+	float: left;
+}
+
+#divcontent .section {
+	margin-top: 20px;border:1px solid #dcdcdc;width: 1160px;min-height:109px;margin:10px auto 0;
+	background: url('../../img/baike.png') no-repeat 14px center;
+}
+#divcontent .section:hover{
+	border:1px solid #19b478;
+}
+#divcontent .div5 {
+	/*width: 1200px;*/padding-top: 18px;
+	height: 30px;
+}
+
+#divcontent .div5 .three1 {
+	width:1020px;
+	margin-left: 100px;
+	font-size: 15px;
+	color: #30bf89;
+	float: left;
+}
+#divcontent .div5 .three1 a{
+	display:block;
+	overflow: hidden;
+	text-overflow:ellipsis;
+	white-space: nowrap;
+}
+#divcontent .div5 .three1 a:hover{
+	text-decoration: underline;
+}
+
+#divcontent .div5 .three2 {
+	margin-right: 15px;
+	font-size: 12px;
+	color: #222222;
+	float: right;
+}
+
+#divcontent .div6 {
+	clear: both;padding-top: 10px;
+	height: 30px;
+}
+
+#divcontent .div6 .one6 {
+	/*text-indent:2em;*/
+	heigth:40px;
+	float: left;
+	font-size: 14px;
+	color: #666;
+	margin-left: 100px;
+	margin-right:20px;
+}
+
+#divcontent .div6 .one7 {
+	float: right;
+	margin-right: 40px;
+	font-size: 12px;
+	color: #4D6C88;
+	padding: 4px 10px;
+	margin-top: 5px;
+	background-color: #efd8d8;
+}
+
+#divcontent .div6 .two6 {
+	float: right;
+	margin-right: 15px;
+	font-size: 12px;
+	color: #fff;
+	padding: 4px 10px;
+	margin-top: 5px;
+	background-color:#48DE89;
+}
+
+#divcontent .div7 {
+	width: 700px;
+	/*height: 60px;*/
+	margin-left: 114px;
+	font-size: 14px;
+	color: #222222;
+	opacity: 0.5;
+}
+
+#divcontent .div8 {
+	width: 1086px;
+	/*height: 35px;*/
+	margin-top: 12px;
+	margin-left: 74px;
+	/*border-bottom: 1px solid #F5F5F5;*/
+	border-bottom: dashed 1px #DCDCDC;
+}
+
+#divcontent .div8>span {
+	font-size: 14px;
+	color: #222222;
+	float: left;
+	margin-left: 40px;
+}
+
+/*#div .div9 {
+	margin-top: 10px;
+	width: 1200px;
+	height: 70px;
+	text-align: center;
+	line-height: 70px;
+}
+
+#div .div9 span {
+	padding: 3px 8px;
+	border-radius: 3px;
+	background: #F8F8F8;
+	border: 1px solid #D7D7D7;
+	border-radius: 3px;
+	font-size: 14px;
+	color: #222222;
+	cursor: pointer;
+}
+
+#div .div9 .active {
+	background-color: #2F96E9;
+	color: #FFFFFF;
+}*/
+
+#divcontent .list {
+	width: 1200px;
+}
+
+#divcontent .list table {
+	font-size: 14px;
+	width: 1160px;
+	margin: 0 auto;
+}
+
+#divcontent .list tr td {
+	padding: 10px 0;
+	line-height:40px;
+	border-bottom: 1px dotted #DCDCDC;
+	color: #555;
+}
+
+#divcontent .list .td1 {
+	width: 160px;
+	padding-left: 20px;
+	/*text-indent: 40px;*/
+}
+
+#divcontent .list .td2 {
+	width: 340px;
+	/*text-indent: 40px;*/
+}
+
+#divcontent .list .td3 {
+	width: 100px;
+	/*text-indent: 40px;*/
+}
+
+#divcontent .list .td4 {
+	width: 100px;
+	/*text-indent: 40px;*/
+}
+
+#divcontent .list .td5 {
+	width: 500px;
+	padding-right: 20px;
+	/*text-indent: 40px;*/
+}
+
+.divPage{
+	margin-top: 10px;
+	width: 1200px;
+	height: 70px;
+	text-align: center;
+	line-height: 70px;
+	clear: both;
+}
+.divPage a{
+	padding: 6px 12px;
+	border: solid 1px #DCDCDC;
+	border-radius: 6px;
+	font-size: 14px;
+	color: #999;
+}
+.divPage a:hover{
+	background: #BFBFC7;
+	color: white;
+}
+.divPage .curr{
+	border: solid 1px #BFBFC7;
+	background: #BFBFC7;
+	color: white;
+}
+.divPage .disabled
+{
+	display: none;
+}

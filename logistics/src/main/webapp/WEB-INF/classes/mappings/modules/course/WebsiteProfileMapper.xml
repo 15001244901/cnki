@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="WebsiteProfileMapper">
+
+	<resultMap id="WebsiteProfileResult" type="com.hsun.ywork.modules.course.entity.WebsiteProfile">
+		<result property="id" column="ID" />
+		<result property="type" column="TYPE" />
+		<result property="desciption" column="DESCIPTION" />
+		<result property="explain" column="EXPLAIN" />
+	</resultMap>
+
+	<sql id="yw_website_profile_columns">
+	YW_WEBSITE_PROFILE.ID,
+	YW_WEBSITE_PROFILE.TYPE,
+	YW_WEBSITE_PROFILE.DESCIPTION,
+	YW_WEBSITE_PROFILE.EXPLAIN
+	</sql>
+
+	<sql id="yw_website_profile_properties">
+	#{id},
+	#{type},
+	#{desciption},
+	#{explain}
+	</sql>
+	<!-- 查询所有配置 -->
+	<select id="getWebsiteProfileList" resultMap="WebsiteProfileResult">
+		SELECT <include refid="yw_website_profile_columns"/> FROM YW_WEBSITE_PROFILE
+	</select>
+	<!-- 修改配置 -->
+	<update id="updateWebsiteProfile" parameterType="com.hsun.ywork.modules.course.entity.WebsiteProfile">
+		UPDATE YW_WEBSITE_PROFILE SET
+		DESCIPTION = #{desciption}
+		WHERE TYPE = #{type}
+	</update>
+	<!-- 根据类型获得 配置-->
+	<select id="getWebsiteProfileByType" resultMap="WebsiteProfileResult" parameterType="java.lang.String">
+		SELECT <include refid="yw_website_profile_columns" />
+		FROM YW_WEBSITE_PROFILE WHERE YW_WEBSITE_PROFILE.TYPE = #{value}
+	</select>
+	<insert id="addWebsiteProfileByType" parameterType="com.hsun.ywork.modules.course.entity.WebsiteProfile" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
+		INSERT INTO YW_WEBSITE_PROFILE(
+		<include refid="yw_website_profile_columns" />
+		)
+		VALUE(
+		<include refid="yw_website_profile_properties" />
+		)
+	</insert>
+</mapper>

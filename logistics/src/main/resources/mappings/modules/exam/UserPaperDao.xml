@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hsun.ywork.modules.exam.dao.UserPaperDao">
+    
+	<sql id="paperColumns">
+		a.id AS "id",
+		a.name AS "name",
+		a.cid AS "cid",
+		a.status AS "status",
+		a.starttime AS "starttime",
+		a.endtime AS "endtime",
+		a.duration AS "duration",
+		a.showtime AS "showtime",
+		a.totalscore AS "totalscore",
+		a.passscore AS "passscore",
+		a.ordertype AS "ordertype",
+		a.papertype AS "papertype",
+		a.remark AS "remark",
+		a.data AS "data",
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		u1.name as "createBy.name",
+		a.showkey AS "showkey",
+		a.showmode AS "showmode"
+	</sql>
+	
+	<sql id="paperJoins">
+		left outer join sys_user u1 on(u1.id = a.create_by)
+	</sql>
+    
+	<select id="get" resultType="Paper">
+		SELECT 
+			<include refid="paperColumns"/>
+		FROM yw_exam_paper a
+		<include refid="paperJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="Paper">
+		SELECT 
+			<include refid="paperColumns"/>
+		FROM yw_exam_paper a
+		<include refid="paperJoins"/>
+		<where>
+			a.isoffline != 1 and a.id in(select pid from yw_exam_paper_uo n where n.ouid = #{opt.uid} and n.pid not in(select pid from yw_exam_history h where h.status!=0 and h.uid=#{opt.uid}))
+			<choose>
+				<when test="opt.isExpired == 1">
+					AND a.endtime &lt; now()
+				</when>
+				<otherwise>
+					AND a.endtime >= now()
+				</otherwise>
+			</choose>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="Paper">
+		SELECT 
+			<include refid="paperColumns"/>
+		FROM yw_exam_paper a
+		<include refid="paperJoins"/>
+		<where>
+			a.isoffline != 1 and a.id in(select pid from yw_exam_paper_uo n where n.ouid = #{opt.ouid} and n.pid not in(select pid from yw_exam_history h where h.status!=0 and h.uid=#{opt.uid}))
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO yw_exam_paper(
+			id,
+			name,
+			cid,
+			status,
+			starttime,
+			endtime,
+			duration,
+			showtime,
+			totalscore,
+			passscore,
+			ordertype,
+			papertype,
+			remark,
+			data,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			showkey,
+			showmode
+		) VALUES (
+			#{id},
+			#{name},
+			#{cid},
+			#{status},
+			#{starttime},
+			#{endtime},
+			#{duration},
+			#{showtime},
+			#{totalscore},
+			#{passscore},
+			#{ordertype},
+			#{papertype},
+			#{remark},
+			#{data},
+			#{createBy.id},
+			#{createDate},
+			#{updateBy.id},
+			#{updateDate},
+			#{showkey},
+			#{showmode}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE yw_exam_paper SET 	
+			name = #{name},
+			cid = #{cid},
+			status = #{status},
+			starttime = #{starttime},
+			endtime = #{endtime},
+			duration = #{duration},
+			showtime = #{showtime},
+			totalscore = #{totalscore},
+			passscore = #{passscore},
+			ordertype = #{ordertype},
+			papertype = #{papertype},
+			remark = #{remark},
+			data = #{data},
+			update_by = #{updateBy.id},
+			update_date = #{updateDate},
+			showkey = #{showkey},
+			showmode = #{showmode}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		DELETE FROM yw_exam_paper
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

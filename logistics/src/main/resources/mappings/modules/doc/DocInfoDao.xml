@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hsun.ywork.modules.doc.dao.DocInfoDao">
+    
+	<sql id="docInfoColumns">
+		a.id AS "id",
+		a.doctype as "doctype",
+		a.title AS "title",
+		a.domain AS "domain",
+		a.directoryid as "directory.id",
+		(select name from yw_docinfo_directory where id = d.parent_id) as "directory.parent.name",
+		d.name as "directory.name",
+		d.parent_id as "directory.parent.id",
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.summary AS "summary",
+		a.keywords AS "keywords",
+		a.update_by AS "updateBy.id",
+		a.filesize AS "filesize",
+		a.showtype AS "showtype",
+		a.content AS "content",
+		a.files AS "files",
+		a.update_date AS "updateDate",
+		a.pvcount AS "pvcount",
+		a.del_flag AS "delFlag",
+		a.downloadcount AS "downloadcount",
+		a.remarks AS "remarks",
+		u1.name as "createBy.name",
+		u2.name as "updateBy.name",
+
+		a.fileno as "fileno",
+		a.edition as "edition",
+		a.publicdate as "publicdate"
+	</sql>
+	
+	<sql id="docInfoJoins">
+		join sys_user u1 on(u1.id = a.create_by)
+		join sys_user u2 on(u2.id = a.update_by)
+		left outer join yw_docinfo_directory d on(d.id = a.directoryid)
+	</sql>
+    
+	<select id="get" resultType="DocInfo">
+		SELECT 
+			<include refid="docInfoColumns"/>
+		FROM yw_docinfo a
+		<include refid="docInfoJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="DocInfo">
+		SELECT 
+			<include refid="docInfoColumns"/>
+		FROM yw_docinfo a
+		<include refid="docInfoJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="directory != null and directory != ''">
+				AND a.directoryid = #{directory.id}
+			</if>
+			<if test="doctype != null and doctype != ''">
+				AND a.doctype = #{doctype}
+			</if>
+			<if test="domain != null and domain != ''">
+				AND a.domain = #{domain}
+			</if>
+			<if test="keywords != null and keywords != ''">
+				AND (a.keywords LIKE
+				<if test="dbName == 'oracle'">'%'||#{keywords}||'%'</if>
+				<if test="dbName == 'mssql'">'%'+#{keywords}+'%'</if>
+				<if test="dbName == 'mysql'">concat('%',#{keywords},'%')</if>
+				OR a.title LIKE
+				<if test="dbName == 'oracle'">'%'||#{keywords}||'%'</if>
+				<if test="dbName == 'mssql'">'%'+#{keywords}+'%'</if>
+				<if test="dbName == 'mysql'">concat('%',#{keywords},'%')</if>
+				OR a.summary LIKE
+				<if test="dbName == 'oracle'">'%'||#{keywords}||'%'</if>
+				<if test="dbName == 'mssql'">'%'+#{keywords}+'%'</if>
+				<if test="dbName == 'mysql'">concat('%',#{keywords},'%')</if>
+				OR a.fileno LIKE
+				<if test="dbName == 'oracle'">'%'||#{keywords}||'%'</if>
+				<if test="dbName == 'mssql'">'%'+#{keywords}+'%'</if>
+				<if test="dbName == 'mysql'">concat('%',#{keywords},'%')</if>
+				)
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="DocInfo">
+		SELECT 
+			<include refid="docInfoColumns"/>
+		FROM yw_docinfo a
+		<include refid="docInfoJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO yw_docinfo(
+			id,
+			doctype,
+			title,
+			domain,
+			directoryid ,
+			create_by,
+			create_date,
+			summary,
+			keywords,
+			update_by,
+			filesize,
+			showtype,
+			content,
+			files,
+			update_date,
+			pvcount,
+			del_flag,
+			downloadcount,
+			remarks,
+
+			fileno,
+			edition,
+			publicdate
+		) VALUES (
+			#{id},
+			#{doctype},
+			#{title},
+			#{domain},
+			#{directory.id},
+			#{createBy.id},
+			#{createDate},
+			#{summary},
+			#{keywords},
+			#{updateBy.id},
+			#{filesize},
+			#{showtype},
+			#{content},
+			#{files},
+			#{updateDate},
+			#{pvcount},
+			#{delFlag},
+			#{downloadcount},
+			#{remarks},
+
+			#{fileno},
+			#{edition},
+			#{publicdate}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE yw_docinfo SET
+			doctype = #{doctype},
+			title = #{title},
+			domain = #{domain},
+			directoryid = #{directory.id},
+			summary = #{summary},
+			keywords = #{keywords},
+			update_by = #{updateBy.id},
+			filesize = #{filesize},
+			showtype = #{showtype},
+			content = #{content},
+			files = #{files},
+			update_date = #{updateDate},
+			pvcount = #{pvcount},
+			downloadcount = #{downloadcount},
+			remarks = #{remarks},
+
+			fileno = #{fileno},
+			edition = #{edition},
+			publicdate = #{publicdate}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		UPDATE yw_docinfo SET
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

@@ -1,0 +1,222 @@
+body{
+    background: #ede7f6;
+}
+#container{
+    min-height: 400px;
+    /*background: #ede7f6;*/
+}
+.container{
+    width: 100%;
+    background: #fff;
+}
+/*左侧*/
+.cont_left{
+    background: #F5F7F9;
+    padding:20px 0;
+    min-height:400px;
+}
+
+.cont_left_cont{
+    /*margin-top: 20px;*/
+}
+.cont_left_cont_title li{
+    width: 49%;
+    padding:0;
+}
+.cont_left_cont_title li a{
+    display: block;
+    color: #333;
+    padding:6px 12px;
+}
+.cont_left_cont_title li.btn-info a{
+    color:#fff;
+}
+.cont_left_cont_title li a:hover{
+    text-decoration: none;
+}
+
+.compony_name{
+    height: 36px;
+    line-height: 36px;
+    font-size: 15px;
+    background-color: #17b55b;
+    border-radius: 3px;
+    margin-bottom: 10px;
+}
+.compony_name .glyphicon{
+    color: #F5F7FF;
+    font-size: 12px;
+}
+.compony_name em{
+    font-style: normal;
+    color: #F5F7FF;
+}
+.show_set:hover .set_part_btn{
+    display: block;
+}
+.set_part_btn{
+    width: 100px;
+    position: absolute;
+    z-index: 2;
+    right: 0;
+    background: #fff;
+    border:1px solid #eee;
+    border-radius: 3px;
+    color: #333;
+    padding:5px 0;
+    display: none;
+}
+.set_part_btn p{
+    margin:0;
+    height: 24px;
+    line-height: 22px;
+    padding:0 10px;
+    text-align: center;
+    cursor: pointer;
+}
+.set_part_btn p:hover{
+    background: #5bc0de;
+    color: #fff;
+}
+em.sel_click{
+    cursor: pointer;
+}
+
+/*保存部门失败*/
+._fail,._ok{
+    line-height: 30px;
+    display: none;
+    text-align: left;
+}
+._fail{
+    color: #c9302c;
+}
+._ok{
+    color: #449d44;
+}
+._fail .glyphicon, ._ok .glyphicon {
+    top: 2px;
+}
+/*右侧*/
+.cont_right{
+    min-height: 400px;
+    background: #fff;
+    border-right: 1px solid #EDEDED;
+    padding-left: 20px;
+}
+.cont_right_title{
+    margin-top: 21px;
+}
+.cont_right_title p{
+    line-height: 30px;
+    height: 30px;
+}
+.cont_right_title p span{
+
+}
+.cont_right_title b{
+    font-size: 20px;
+    font-weight: normal;
+}
+
+.cont_right_title_nav{
+    margin-left: 10px;
+    padding-top: 4px;
+}
+
+/*下级部门*/
+.cont_right_cont_title{
+    font-size: 18px;
+    line-height: 20px;
+    height: 20px;
+    margin-bottom: 20px;
+
+}
+.cont_right_cont_title span{
+    margin-right: 10px;
+    font-size: 14px;
+    color: #555;
+}
+.set_part{
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+.set_part a{
+    padding-top: 4px;
+    padding-bottom: 4px;
+}
+.cont_right_cont1 .list-group-item:hover{
+    background: #EEEEEE;
+}
+.list-group-item.bg{
+    background: #EEEEEE;
+}
+.list-group-item span.fr{
+    position: relative;
+    top: 4px;
+}
+.list-group-people{
+    display: none;
+}
+.list-group-people li{
+    padding-left: 30px;
+}
+/*部门人员列表*/
+.cont_right_cont2 .list-group-item{
+    overflow: hidden;
+    clear: both;
+}
+.cont_right_cont2 .list-group-item span{
+    display: block;
+    float: left;
+}
+.cont_right_cont2 .employee_name{
+    line-height: 21px;
+}
+.cont_right_cont2 .employee_name span{
+    padding-left:13px;
+}
+.cont_right_cont2 .employee_name span a{
+    padding:2px 5px 3px;
+    cursor: pointer;
+    font-size: 13px;
+    border-radius: 2px;
+}
+.cont_right_cont2 .employee_name span a:hover{
+    background: #e6e6e6;
+}
+.employee_container .nodata{
+    min-height: 200px;
+}
+.employee_container .list-group-item:first-child{
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+}
+/*分页*/
+.employee_page a{
+    padding:3px 8px;
+    -webkit-border-radius:1px;
+    -moz-border-radius:1px;
+    border-radius:1px
+}
+.employee_page a:hover{
+    background: #dff0d8;
+    text-decoration: none;
+}
+.employee_page .disabled{
+    cursor: default;
+}
+.employee_page .disabled:hover{
+    background: none;
+}
+.employee_page  .curr{
+    background: #dff0d8;
+    cursor: default;
+}
+
+.isprompt{
+    padding-left:30px;
+    font-size: 12px;
+    color: #d9534f;
+    font-style: normal;
+}

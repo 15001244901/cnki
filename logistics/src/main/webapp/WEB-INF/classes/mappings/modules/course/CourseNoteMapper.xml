@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="CourseNoteMapper">
+
+        <resultMap id="CourseNoteResult" type="com.hsun.ywork.modules.course.entity.CourseNote">
+            <result property="id" column="ID"/>
+             <result property="courseId" column="COURSE_ID"/>
+            <result property="kpointId" column="KPOINT_ID"/>
+            <result property="userId" column="USER_ID"/>
+            <result property="content" column="CONTENT"/>
+            <result property="updateTime" column="UPDATE_TIME"/>
+            <result property="status" column="STATUS"/>
+        </resultMap>
+		
+		<resultMap type="com.hsun.ywork.modules.course.entity.QueryCourseNote" id="QueryCourseNoteResult" extends="CourseNoteResult">
+			<result property="nickname" column="nickname"/>
+			<result property="email" column="email"/>
+			<result property="pointName" column="pointName"/>
+		</resultMap>
+		
+		<resultMap type="com.hsun.ywork.modules.course.entity.QueryCourseNote" id="QueryUserCourseNoteResult" extends="CourseNoteResult">
+			<result property="pointName" column="pointName"/>
+			<result property="courseName" column="courseName"/>
+		</resultMap>
+		
+        <sql id="yw_course_note_columns">
+            yw_course_note.id,
+            yw_course_note.COURSE_ID,
+            yw_course_note.KPOINT_ID,
+            yw_course_note.USER_ID,
+            yw_course_note.CONTENT,
+            yw_course_note.UPDATE_TIME,
+            yw_course_note.STATUS
+        </sql>
+
+        <sql id="yw_course_note_properties">
+            #{id},
+            #{courseId},
+            #{kpointId},
+            #{userId},
+            #{content},
+            #{updateTime},
+            #{status}
+        </sql>
+
+        <insert id="createCourseNote" parameterType="com.hsun.ywork.modules.course.entity.CourseNote" keyColumn="id" keyProperty="id" useGeneratedKeys="true" >
+            insert INTO yw_course_note (<include refid="yw_course_note_columns"/>) VALUES (<include refid="yw_course_note_properties"/>)
+        </insert>
+
+        <delete id="deleteCourseNoteById" parameterType="Long">
+            delete from yw_course_note
+            where
+                id = #{value}
+        </delete>
+
+        <update id="updateCourseNote" parameterType="com.hsun.ywork.modules.course.entity.CourseNote">
+            update yw_course_note SET
+            	COURSE_ID = #{courseId},
+                KPOINT_ID = #{kpointId},
+                USER_ID = #{userId},
+                CONTENT = #{content},
+                UPDATE_TIME = #{updateTime}
+            where
+                KPOINT_ID = #{kpointId}
+                and USER_ID = #{userId}
+        </update>
+
+        <select id="getCourseNoteById" resultMap="CourseNoteResult" parameterType="Long">
+            select
+            <include refid="yw_course_note_columns"/>
+            from yw_course_note
+            where
+                id = #{value}
+        </select>
+		
+        <select id="getCourseNoteList" resultMap="CourseNoteResult" parameterType="com.hsun.ywork.modules.course.entity.CourseNote">
+            select
+            <include refid="yw_course_note_columns"/>
+            from yw_course_note
+        </select>
+        
+         <select id="getCourseNoteByKpointIdAndUserId" resultMap="CourseNoteResult" parameterType="Map">
+            select
+            <include refid="yw_course_note_columns"/>
+            from yw_course_note
+            <where>
+            KPOINT_ID = #{kpointId} and
+            USER_ID = #{userId} and
+            STATUS=0
+            </where>
+        </select>
+        
+        <!-- 查询课程笔记列表 后台 -->
+        <select id="getCourseNoteListPage" parameterType="Map" resultMap="QueryCourseNoteResult">
+	        select <include refid="yw_course_note_columns"/>,
+	        user_user.nickname,
+	        user_user.email,
+	        yw_course_kpoint.name pointName,
+            yw_course.name courseName
+	        from yw_course_note
+	        left join user_user on yw_course_note.USER_ID = user_user.id
+	        left join yw_course_kpoint on yw_course_note.KPOINT_ID=yw_course_kpoint.id and yw_course_kpoint.STATUS=0
+            left join yw_course on yw_course_note.COURSE_ID= yw_course.id
+	        <where>
+	        <if test="e.pointName != null and e.pointName!=''">
+	        yw_course_kpoint.name like CONCAT('%',#{e.pointName},'%')
+	        </if>
+	        <if test="e.keyword !=null and e.keyword!=''">
+	        and (user_user.nickname like CONCAT('%',#{e.keyword},'%') or user_user.email like CONCAT('%',#{e.keyword},'%'))
+	        </if>
+	        <if test="e.startDate!=null and e.startDate!='' ">
+       			and<![CDATA[ yw_course_note.UPDATE_TIME >=]]>CONCAT(#{e.startDate},'00:00:00')
+       		</if>
+       		<if test="e.endDate!=null and e.endDate!='' ">
+       			and<![CDATA[ yw_course_note.UPDATE_TIME <=]]>CONCAT(#{e.endDate},'23:59:59')
+       		</if>
+	        </where>
+	        order by yw_course_note.id desc
+	        <include refid="publicMapper.pageEnd" />
+        </select>
+        
+        <select id="getCourseNoteListPageCount" parameterType="Map" resultType="int">
+        	select count(1) from yw_course_note
+        	left join user_user on yw_course_note.USER_ID = user_user.id
+	        left join yw_course_kpoint on yw_course_note.KPOINT_ID=yw_course_kpoint.id and yw_course_kpoint.STATUS=0
+        	 <where>
+	        <if test="e.pointName != null and e.pointName!=''">
+	        yw_course_kpoint.name like CONCAT('%',#{e.pointName},'%')
+	        </if>
+	        <if test="e.keyword !=null and e.keyword!=''">
+	        and (user_user.nickname like CONCAT('%',#{e.keyword},'%') or user_user.email like CONCAT('%',#{e.keyword},'%'))
+	        </if>
+	        <if test="e.startDate!=null and e.startDate!='' ">
+       			and<![CDATA[ yw_course_note.UPDATE_TIME >=]]>CONCAT(#{e.startDate},'00:00:00')
+       		</if>
+       		<if test="e.endDate!=null and e.endDate!='' ">
+       			and<![CDATA[ yw_course_note.UPDATE_TIME <=]]>CONCAT(#{e.endDate},'23:59:59')
+       		</if>
+	        </where>
+        </select>
+        
+        <!-- 更新显示隐藏状态 -->
+        <update id="updateCourseNoteListStatus" parameterType="com.hsun.ywork.modules.course.entity.CourseNote">
+	        update yw_course_note
+	        set yw_course_note.STATUS=#{status}
+	        where yw_course_note.id=#{id}
+        </update>
+        
+        <select id="getQueryCourseNoteById" parameterType="Long" resultMap="QueryCourseNoteResult">
+         select <include refid="yw_course_note_columns"/>,
+	        user_user.nickname,
+	        user_user.email,
+	        yw_course_kpoint.name pointName
+	        from yw_course_note
+	        left join user_user on yw_course_note.USER_ID = user_user.id
+	        left join yw_course_kpoint on yw_course_note.KPOINT_ID=yw_course_kpoint.id and yw_course_kpoint.STATUS=0
+	        where  yw_course_note.id=#{id}
+        </select>
+        
+        <select id="getUserCourseNoteByUserId" parameterType="Map" resultMap="QueryUserCourseNoteResult">
+	        select <include refid="yw_course_note_columns"/>,
+	        yw_course_kpoint.name pointName,
+	        yw_course.name courseName
+	        from yw_course_note
+	        left join yw_course_kpoint on yw_course_note.KPOINT_ID=yw_course_kpoint.id and yw_course_kpoint.STATUS=0
+	        left join yw_course on yw_course_note.COURSE_ID=yw_course.id
+	        where yw_course_note.USER_ID=#{e} and yw_course_note.STATUS=0
+        	order by yw_course_note.id desc
+        	<include refid="publicMapper.pageEnd" />
+        </select>
+        <select id="getUserCourseNoteByUserIdCount" parameterType="Map" resultType="int">
+	        select count(1)
+	        from yw_course_note
+	        where yw_course_note.USER_ID=#{e} and yw_course_note.STATUS=0
+        </select>
+        
+</mapper>

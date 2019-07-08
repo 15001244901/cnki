@@ -1,0 +1,217 @@
+.mobile_page{
+    display: none;
+}
+/*问答-2017-12-28*/
+.search_qa{
+    border:1px solid #e2e2e2;
+    border-radius:15px;
+    padding:5px 10px ;
+    color: #888;
+}
+.search_qa i{
+    font-size: 16px;
+    cursor: pointer;
+}
+.search_qa i:hover{
+    color:#3db06e;
+}
+.search_qa input{
+    border:none;
+}
+@media (min-width: 320px) and (max-width: 768px) {
+    .c-infor-tabTitle.c-tab-title a{
+        width:32%;
+        border:none;
+        padding:0;
+        text-align: center;
+    }
+
+    .search_qa{
+        width:93%;
+        margin:20px 0;
+    }
+    .search_qa input{
+        width:93%;
+    }
+
+    .q-head-pic{
+        width:50px;
+    }
+    .q-head-pic p{
+        text-align: center;
+    }
+    .taglist{
+        margin-top: 0;
+    }
+    .q-all-list ul li .q-txt-box section{
+        margin-left:0;
+        clear: both;
+    }
+    .q-infor-box section section{
+        margin-left:0;
+        clear: both;
+    }
+    .q-infor-box .starttime{
+        line-height: 26px;
+    }
+    .good_zan{
+        display: block;
+        width: 100%;
+        text-align: right;
+    }
+    .qa_infor_ask{
+        padding-left: 0;
+    }
+
+    .q-c-list dl dt{
+        text-align: left;
+    }
+    .q-c-list dl dd{
+        position: relative;
+        left:-10px;
+    }
+    .q-c-list dl dd label input, .q-c-list dl dd textarea, .tags-content{
+        width:94%;
+    }
+
+    .i-question .q-c-list .q-c-jy{
+        top:10px;
+    }
+
+    /*课程收藏*/
+    .u-r-cont .mt40{
+        min-height: 100% !important;
+    }
+    .u-sys-news dl dt{
+        width:85px;
+    }
+
+    .c-infor-tabTitle.c-tab-title{
+        display: none;
+    }
+    section.tar{
+        margin-top:0 !important;
+        line-height:29px;
+    }
+
+    /*我的问答*/
+    .mobile_hide{
+        display: none;
+    }
+    .mobile_top0{
+        margin-top:0;
+    }
+    /*分页*/
+    .paging{
+        display: none;
+    }
+    .mobile_page{
+        display: block;
+        width:100%;
+        display: flex;
+        display: -webkit-flex;
+        text-align: center;
+        line-height:30px;
+        margin-top:20px;
+        border:1px solid #ddd;
+    }
+    .mobile_page a{
+        color: #333;
+        text-decoration: none;
+    }
+    .mobile_page a:active{
+        text-decoration: none;
+    }
+    .mobile_page #prevpages,.mobile_page #nextpages{
+        flex: 1;
+    }
+    .mobile_page .mobile_pagesize{
+        flex:2;
+        border-left:1px solid #ddd;
+        border-right:1px solid #ddd;
+    }
+    .mobile_page .mobile_pagesize_container{
+        position: fixed;
+        top:50px;
+        left:0;
+        right:0;
+        bottom:50px;
+        background: rgba(0,0,0,0.3);
+        z-index: 9;
+        overflow: hidden;
+        display: none;
+    }
+    .mobile_pagesize_container .mobile_pagenumber{
+        background: #fff;
+        max-height:200px;
+        width:100%;
+        position: absolute;
+        bottom:-200px;
+        overflow-y: scroll;
+        -webkit-overflow-scrolling: touch;
+        transition: bottom 0.4s;
+    }
+    .mobile_pagesize_container .mobile_pagenumber a{
+        display: block;
+    }
+    .mobile_pagenumber .page_title{
+        background: #eee;
+        border-bottom:1px solid #ddd;
+    }
+    .mobile_pagenumber .num_list{
+        margin:0 15px;
+        border-bottom: 1px solid #f4f4f4;
+    }
+    .mobile_pagenumber .now_page{
+        color: #3db06e;
+    }
+
+
+    .mobile_page .undisable{
+        background: #ddd;
+        color: #fff;
+    }
+
+    body,html{
+        overflow: visible;
+    }
+
+    .zindex3{
+        z-index: 3 !important;
+    }
+
+    /*视频大厅*/
+    .p-h-v-wrap{
+        background:#131A20;
+    }
+    #i-art-comment{
+        padding-top:20px;
+    }
+    #p-h-box{
+        padding-right:0;
+        margin-right:-15px;
+    }
+    .p-h-r-ele{
+        position: relative;
+        width:100%;
+        height: auto;
+    }
+    .p-h-r-title, #p-h-r-cont{
+        display: block !important;
+        padding-top:10px;
+        margin-top:0;
+    }
+    .p-h-m-tp{
+        display: none;
+    }
+    #p-h-r-cont{
+        top:1px;
+    }
+    
+}
+@media (max-width: 375px){
+    .replay_list_infor .fl{
+        width:100%;
+        text-align: right;
+    }
+}

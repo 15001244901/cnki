@@ -1,0 +1,250 @@
+body{
+    /*background: #F0F0F2;*/
+    background: #F0F0F2;
+}
+.pl0{
+    padding-left:0;
+}
+.pr0{
+    padding-right:0;
+}
+.padding0{
+    padding-left:0;
+    padding-right:0;
+}
+.ml8{
+    margin-left:8px;
+}
+.page-container{
+    max-width:960px ;
+    margin: 0 auto;
+}
+#cont_head{
+    max-width:960px;
+    overflow: hidden;
+    margin: 20px auto 0;
+    background: #fff;
+    /*box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16),0 6px 6px rgba(0, 0, 0, 0.16), 0 -1px 6px rgba(0, 0, 0, 0.22);*/
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.22);
+}
+.page-container{
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.22);
+}
+.portlet {
+    box-shadow: 0px 0px 0px rgba(0, 0, 0, 0.16), 0 0px 0px rgba(0, 0, 0, 0.22);
+}
+.head_logo{
+    float: left;
+}
+.userhead{
+    float: right;
+    margin-right: 20px;
+}
+.userhead div{
+    float: left;
+}
+.userhead div img{
+    margin-top:8px;
+    margin-right: 6px;
+}
+.userhead div span{
+    display: block;
+}
+.no_login{
+    float: right;
+    line-height: 60px;
+}
+.no_login span,.no_login a{
+    padding:4px 10px;
+    background:#1DA4E6 ;
+    color: #fff;
+    border-radius: 3px;
+    font-weight: bold;
+    margin-right:10px;
+    cursor: pointer;
+}
+.no_login a{
+    margin-right:18px;
+}
+.no_login span:hover,.no_login a:hover{
+    background:#0362fd ;
+}
+.people_list{
+    background: #6A6464;
+    padding:0;
+    height:100%;
+    list-style: none;
+    height:534px;
+    margin: 0;
+    overflow: hidden;
+    /*margin-right:20px;*/
+    /*display: block;*/
+}
+.people_list>div{
+    overflow: hidden;
+}
+.people_list li,.ones_list .part_name{
+    height: 48px;
+    line-height: 47px;
+}
+
+.ones_list li{
+    opacity: 0.6;
+}
+.ones_list li.opd5{
+    opacity: 1;
+}
+.news-total a{
+    height:46px;
+}
+.ones_list .part_name{
+    border-top:1px solid #585252;
+    cursor: pointer;
+    /*box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2), 0 3px 6px rgba(0, 0, 0, 0.26);*/
+}
+.ones_list .part_name a{
+    margin-left:20px;
+    /*width:143px;*/
+    float: left;
+    overflow: hidden;
+    text-overflow:ellipsis;
+    white-space: nowrap;
+}
+.people_list li>a,.ones_list>div a {
+    display: block;
+    font-size: 14px;
+    color: #fff;
+    text-decoration: none;
+    transition: all 0.5s;
+    font-family: "\5fae\8f6f\96c5\9ed1", "\5b8b\4f53", arial
+}
+
+/*.people_list li>a{*/
+    /*border-top:1px solid #7f7f7f;*/
+/*}*/
+
+.people_list li>a.active{
+    background:#938E8E ;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2), 0 3px 6px rgba(0, 0, 0, 0.26);
+}
+.people_list li>a:focus{
+    background: #333;
+}
+.people_list li>a:hover{
+    background:#938E8E ;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2), 0 3px 6px rgba(0, 0, 0, 0.26);
+}
+.people_list li img{
+    border-radius: 50%;
+    display: inline-block;
+    margin-left:10px;
+    margin-right:5px;
+    margin-bottom: 1px;
+    vertical-align: middle;
+    width:35px;
+    height:35px;
+}
+
+.part_list{
+    padding:0;
+    /*padding:5px 0;*/
+    /*min-height: 48px;*/
+    background: #7f7f7f;
+}
+.people_list .fa{
+    float: right;
+    margin-top:16px;
+    margin-right:10px;
+    display: none;
+}
+.people_list .fa.bj{
+    color: #efefef;
+}
+#pflet{
+    float: left;
+    width:23%;
+    margin-bottom:20px;
+}
+/*发送失败*/
+.message .isfail{
+    color: #e26a6a;
+    font-size: 13px;
+}
+/*系统推送消息*/
+.news{
+    font-size: 12px;
+    text-align: center;
+}
+.news>div{
+    max-width:90%;
+    display: inline-block;
+    text-align: left;
+    padding:5px 10px;
+    -webkit-border-radius:3px;
+    -moz-border-radius:3px;
+    border-radius:3px;
+    background:#fafafa;
+    color: #E26A6A ;
+    /*color: #000;*/
+}
+/*加载更多*/
+.load_more{
+    font-size: 12px;
+    text-align: center;
+}
+.load_more a{
+    color:#3590c1;
+    padding-left: 15px;
+}
+.load_more a span{
+    position: relative;
+    top:1px;
+}
+
+.load_more .more_news{
+    background: url("../../img/rightSlider/more.png") no-repeat center left;
+}
+
+
+.portlet-title{
+    height:40px;
+}
+.caption{
+    margin-left:8px;
+}
+#chats{
+    float: right;
+    width:76%;
+}
+.portlet > .portlet-body {
+    clear: right;
+}
+.chats .out .body{
+    text-align: left;
+}
+/*提交按钮*/
+/*提交按钮*/
+#send_to{
+    /*padding:5px 15px;*/
+    text-align: center;
+    font-weight: bold;
+    margin-top: 0;
+    color:#fff;
+    /*background-color: #3598dc;*/
+    background-color: #938E8E;
+    transition: all 0.3s;
+    text-decoration: none;
+    border-radius: 2px;
+    display: block;
+    height:94px;
+    line-height: 94px;
+    width:92px;
+    position: absolute;
+    right:0;
+    top:40px;
+
+}
+#send_to:hover{
+    /*background-color: #0362FD;*/
+    background-color:#6A6464;
+}

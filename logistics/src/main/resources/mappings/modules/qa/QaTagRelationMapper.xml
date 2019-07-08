@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="QaTagRelationMapper">
+
+	<resultMap id="QaTagRelationResult" type="com.hsun.ywork.modules.qa.entity.QaTagRelation">
+		<result property="id" column="ID" />
+		<result property="questionsId" column="QUESTIONS_ID" />
+		<result property="questionsTagId" column="QUESTIONS_TAG_ID" />
+		
+		<result property="tagName" column="tagName" />
+	</resultMap>
+	
+	<!-- 表全部的属性 -->
+	<sql id="yw_qa_tag_relation_columns">
+		yw_qa_tag_relation.ID,
+		yw_qa_tag_relation.QUESTIONS_ID,
+		yw_qa_tag_relation.QUESTIONS_TAG_ID
+	</sql>
+
+	<sql id="yw_qa_tag_relation_properties">
+		#{id},
+		#{questionsId},
+		#{questionsTagId}
+	</sql>
+
+	<!-- 添加 -->
+	<insert id="createQuestionsTagRelation" parameterType="com.hsun.ywork.modules.qa.entity.QaTagRelation"
+		useGeneratedKeys="true" keyColumn="ID" keyProperty="id">
+		insert INTO yw_qa_tag_relation (
+		<include refid="yw_qa_tag_relation_columns" />
+		) VALUES (
+		<include refid="yw_qa_tag_relation_properties" />
+		)
+	</insert>
+
+	<!-- 查询 -->
+	<select id="queryQuestionsTagRelation" resultMap="QaTagRelationResult" parameterType="com.hsun.ywork.modules.qa.entity.QaTagRelation">
+		select
+		<include refid="yw_qa_tag_relation_columns" />
+		,yw_qa_tag.QUESTIONS_TAG_Name as tagName
+		FROM yw_qa_tag_relation
+		left join yw_qa_tag on yw_qa_tag.`QUESTIONS_TAG_ID`=yw_qa_tag_relation.QUESTIONS_TAG_ID
+		<where>
+			<if test="questionsId!=null and questionsId!=0">
+				and yw_qa_tag_relation.QUESTIONS_ID = #{questionsId}
+			</if>
+		</where>
+	</select>
+</mapper>

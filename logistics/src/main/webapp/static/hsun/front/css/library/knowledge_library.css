@@ -1,0 +1,284 @@
+body {
+	font-family: "Helvetica Neue", Helvetica, Arial, "Microsoft Yahei UI", "Microsoft YaHei", SimHei, "\5B8B\4F53", simsun, sans-serif;
+}
+
+.divcontent {
+	width: 1200px;
+	margin: 0 auto;
+	margin-top: 20px;
+	background: #FFFFFF;
+	box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.08);
+}
+#title_search{
+	/*border-bottom:1px solid #ccc;*/
+	overflow: hidden;
+}
+#section {
+	width: 20%;
+	height: 75px;
+	text-align: center;
+	line-height: 90px;
+	/*border-bottom: 1px solid #ccc;*/
+	font-size: 18px;
+	color: #1D272C;
+	letter-spacing: 0;
+	clear: both;
+    position: relative;
+	float: left;
+	line-height: 75px;
+	margin-left:20px;
+
+}
+#bottom_line{
+    width:110px;
+    height:0;
+    border: 1px solid #17b55b;
+    position: absolute;
+    /*left:602.5px;*/
+	left:122.5px;
+    top:73px;
+}
+
+#section span {
+	height: 160px;
+}
+
+#section span a {
+	color: #A9A9A9;
+	padding-left: 20px;
+	padding-right: 20px;
+}
+
+#section span a:hover,
+#section span.active a {
+	/*color: #2F96E9;*/
+	color: #17b55b;
+}
+
+#divsearch {
+	width: 1200px;
+	/*background-color: #F3F9FC;*/
+	/*float: left;*/
+	height:55px;
+	overflow: hidden;
+	margin-bottom: 20px;
+}
+#divsearch>div{
+	text-align: left;
+	float: left;
+	margin-left: 20px;
+	margin-top: 22px;
+	font-weight: 400;
+	font-size: 14px;
+	color: #333;
+	height:16px;
+	line-height: 16px;
+}
+@-moz-document url-prefix(){
+	#divsearch>div{
+		margin-top: 23px;
+	}
+}
+#divsearch ul {
+	width: 830px;
+	float: left;
+	margin-left: 10px;
+}
+
+#divsearch ul li {
+	/*line-height: 38px;*/
+	float: left;
+	padding: 10px;
+	box-sizing: border-box;
+}
+
+#divsearch .subject {
+	font-family: PingFangSC-Medium;
+	font-size: 16px;
+	color: #222222;
+	letter-spacing: 0;
+}
+
+#divsearch ul li a:hover,
+#divsearch ul li.active a {
+	background-color: #17b55b;
+	color: white;
+	opacity: 1;
+}
+
+#divsearch ul li a {
+	padding: 4px 10px;
+	border-radius: 3px;
+	font-size: 13px;
+	color: #222222;
+	opacity: 0.6;
+}
+/*搜索结果样式*/
+.search_list{
+	clear: both;
+	overflow: hidden;
+	text-align: center;
+	border:1px solid #dcdcdc;
+}
+.search_list:hover{
+	border:1px solid #19b478;
+}
+.search_list>div{
+	float: left;
+}
+.search_list>div>img{
+	margin:14px 14px;
+	display: block;
+}
+.search_list_img{
+	/*width:120px;*/
+}
+.search_list_infor{
+	width:1000px;
+	margin-top:20px;
+	margin-bottom:14px;
+	text-align: left;
+}
+.search_list_infor_name{
+	font-size: 15px;
+	color: #30bf89;
+}
+.search_list_infor_type{
+	margin-top:25px;
+	font-size: 13px;
+}
+.search_list_infor_type span{
+	margin-right:15px;
+}
+#table {
+	width: 1200px;
+	height: 45px;
+	/*background: #EFEFEF;*/
+	clear: both;
+	margin: 0 auto 20px;
+	border-bottom: 1px solid #ccc;
+}
+
+#table .spantitle {
+	font-size: 16px;
+	float: left;
+	line-height: 42px;
+	margin-left: 20px;
+	color: #222222;
+}
+
+#table .spantitle i {
+	color: #17b55b;
+	font-size: 20px;
+}
+
+#table .spancount {
+	font-size: 12px;
+	line-height: 40px;
+	margin-right: 2%;
+	color: #222222;
+	float: right;
+	opacity: 0.69;
+}
+
+.content {
+	width: 1200px;
+	/*height: 1000px;*/
+	/*margin-top: -50px;*/
+	min-height: 400px;
+}
+
+.content .menu-one {
+	width: 1160px;
+	margin: 0 auto;
+	text-align: left;
+	min-height: 250px;
+}
+
+.content .header {
+	width: 1160px;
+	height: 50px;
+	line-height: 50px;
+}
+
+.content .header .txt {
+	font-size: 15px;
+	color: #222222;
+}
+
+.content .header>i {
+	cursor: pointer;
+}
+
+.content .center {
+	width: 300px;
+	height: 50px;
+	float: right;
+	font-weight: normal;
+	font-size: 10px;
+}
+
+.content .center span {
+	border: 1px solid darkgray;
+	border-radius: 4px;
+	padding: 4px 7px;
+	margin: 1px -15px;
+	margin-left: 20px;
+}
+
+.content .center .right {
+	color: #666;
+	border: none;
+	float: right;
+	clear: both;
+	padding: 0 15px;
+}
+
+.content .center .active {
+	background-color: #FFAA33;
+}
+
+.content .menu-two {
+	margin-top: 10px;
+	display: none;
+}
+.content .menu-two li a{
+	color: #444;
+}
+.content .menu-two span {
+	padding: 5px;
+	float: right;
+	width:10px;
+	height:10px;
+	margin-right: 10px;
+	opacity: 0.5;
+}
+.content .menu-two span:hover{
+	opacity: 1;
+}
+.content .menu-two span a {
+	color: #222222;
+}
+
+.content .menu-two .active {
+	background-color: #FE8922;
+	color: #FFFFFF;
+	opacity: 1;
+	border: none;
+}
+
+.content hr {
+	/*width: 970px;*/
+	margin-left: 30px;
+	height: 8px;
+	border: none;
+	border-top: 1px solid #eee;
+}
+
+.content .menu-two li {
+	margin: 0 0 0 30px;
+	font-size: 14px;
+}
+.load_img{
+	height: 100%;
+}

@@ -1,0 +1,74 @@
+ul,ol{
+    list-style: none;
+    padding-left:0;
+}
+#istree{
+    width:250px;
+    height:240px;
+    border:1px solid #ddd;
+    padding:20px 10px;
+    -webkit-border-radius:5px;
+    -moz-border-radius:5px;
+    border-radius:5px;
+    position: absolute;
+    background: #fff;
+    display: none;
+}
+.istree{
+    height:200px;
+}
+.bg{
+    background: url("../../../front/img/edit_item_random_two/spriter-a.png") no-repeat;
+}
+.dash_line {
+    background: url(../../../front/img/edit_item_random_two/dash-line.png) repeat-y;
+}
+
+.title_radio1{
+    background-position: -402px -118px;
+}
+.title_radio2{
+    background-position: -402px -95px;
+}
+.title_dash{
+    margin-left:5px;
+    background: url('../../../front/img/edit_item_random_two/dash.png') repeat-x center;
+}
+.dash_pos{
+    background-position: 6px 0;
+}
+.one_title{
+    line-height: 30px;
+    height:30px;
+
+}
+.one_title em{
+    display: inline-block;
+    width:13px;
+    height:13px;
+    position: relative;
+    top:1px;
+    margin-right:5px;
+    cursor: pointer;
+}
+.one_title span{
+    cursor: pointer;
+}
+.one_title span:hover{
+    color: #23527c;
+}
+.bg_color1{
+    background: #f5e3d1;
+}
+.one_title i{
+    font-style: normal;
+    font-size: 12px;
+    padding-left:5px;
+}
+.one_title i:hover{
+    color: #a94442;
+    cursor: pointer;
+}
+.ml19{
+    margin-left:19px;
+}

@@ -1,0 +1,455 @@
+body {
+	/*font-family: "Helvetica Neue", Helvetica, Arial, "Microsoft Yahei UI", "Microsoft YaHei", SimHei, "\5B8B\4F53", simsun, sans-serif;*/
+	font-family: "微软雅黑";
+}
+.textarea_cont{
+	display: none;
+}
+.right img{
+	vertical-align: middle;
+}
+.div2{
+	padding-bottom: 20px;
+}
+#div{
+	width: 1200px;
+	/*height: 745px;*/
+	/*background-color: white;*/
+	margin: 20px auto;
+	box-shadow: 0 0 8px 0 rgba(0,0,0,0.08);
+	/*height: 700px;*/
+	min-height: 820px; 
+	background: white;
+	overflow: hidden;
+	padding-bottom: 20px;
+}
+#div .one{
+	padding: 30px 0 20px 0;
+	text-align: center;
+    color: #333;
+    font-size: 18px;
+    font-weight: 700;
+}
+
+#div .twos{
+	width: 1200px;
+	height: 40px;
+	text-align: center;
+}
+#div .two span{
+	line-height: 40px;
+	padding: 25px;
+}
+.style{
+	border: 2px solid #222222;
+	border-left:none ;
+	border-right:none ;
+	border-top:none ;
+	width: 100px;
+	background-color: #fff;
+}
+#div .left{
+	width: 197px;
+	/*height: 588px;*/
+	float: left;
+	margin-left: 20px;
+	/*margin-top: 10px;*/
+	padding-bottom: 20px;
+	/*position: absolute;*/
+}
+#div .pos{
+    position: fixed;
+    top:0;
+}
+#div .right{
+	width: 953px;
+	/*height: 648px;*/
+	/*float: right;*/
+	/*margin-top: 10px;*/
+	/*margin-right: 20px;*/
+	overflow: hidden;
+	border: 1px solid #EBEBEB;
+	/*position: absolute;*/
+	margin-right:15px;
+	top: 206px;
+	float: right;
+	/*margin-left: 230px;*/
+}
+#div .right td{
+	text-align: center;
+}
+#div .div1{
+	width: 925px;
+	height: 45px;
+	background-color: #F8F8F8;
+}
+#div .div1 div{
+	line-height: 45px;
+	margin-left: 29px;
+	font-family: PingFangSC-Regular;
+	font-size: 14px;
+	color: #222222;
+	letter-spacing: 0;
+}
+#div .div2 table{
+	margin-top:15px;
+	/*width: 880px;*/
+	/*height: 300px;*/
+	/*margin: 20px;*/
+}
+#div .div2 .one1{
+	background: #f5f5f5;
+	height: 40px;
+	line-height: 38px;
+	font-size: 14px;
+	color: #222222;
+	padding-left: 20px;
+	/*margin-left: 20px;*/
+}
+#div .div2 .two1{
+	margin-left: 39px;
+	font-size: 14px;
+	color: #222222;
+	padding-bottom: 20px;
+	padding-top: 20px;
+	line-height: 22px;
+	overflow: hidden;
+}
+#div .div2 .two1 p{
+    float: left;
+    width:95%;
+}
+#div .div2 .two1 .que_num{
+	padding-right:5px;
+}
+#div .div2 .two1 .que_num i,#div .div2 .two1 i{
+	color: #888;
+	font-style: normal;
+	padding:0 3px;
+}
+#div .div2 .three1{
+	font-size: 14px;
+	color: #222222;
+	margin: 0px 40px;
+    clear: both;
+	/*padding-bottom: 15px;*/
+}
+#div .div2 .three1>div{
+	margin-bottom:5px;
+	line-height: 20px;
+	padding:2px 0;
+	font-size: 13px;
+}
+#div .div2 .three1 span{
+	/*margin-left: 39px;*/
+	/*display: block;*/
+	/*line-height: 10px;*/
+}		
+#div .div2 .four1{
+	/*height: 50px;*/
+	line-height: 50px;
+}
+#div .div2 .four1 span{
+	margin-left: 39px;
+	border: 1px solid #EBEBEB;
+	border-radius: 50%;
+	padding: 4.5px 8.7px;
+	cursor: pointer;
+    /*box-shadow: inset 0 0 4px 0 rgba(0,0,0,0.10);*/
+}
+#div .div2 .four1 .active{
+	background: #2F96E9;
+	color: white;
+}
+#div .div2 .four1 .active2{
+	background: #EFEFEF;
+	color: #222222;
+}
+.width95{
+	width:90%;
+}
+#div hr{
+	 width: 880px;
+	 margin-left: 21px;
+     height: 1px;
+	 border: none;
+	 border-bottom: 1px solid rgba(235,235,235,0.7);
+}
+#div .left .one2{
+	width: 197px;
+	height: 75px;
+	background: #BCCDDC;
+	border-radius: 3px;
+	position: relative;
+    text-align: center;
+}
+#div .left .one2 span{
+	font-family: LucidaGrande;
+    font-weight: bold;
+	font-size: 30px;
+	color: #FFFFFF;
+    float: left;
+    width:32.9%;
+    display: block;
+    /*padding:10px 10px 15px;*/
+    margin-top:10px;
+    /*padding-bottom: 10px;*/
+	/*position: absolute;*/
+	/*margin-left: 70px;*/
+	/*margin-top: 23px;*/
+}
+#div .left .one2 i{
+    font-style: normal;
+    font-size: 12px;
+    color: #fff;
+    float: left;
+    display: inline-block;
+    width:33%;
+}
+#spanHour{
+    /*margin-left:15px;*/
+    border-right-color: #efefef ;
+    border-right-width: 1px;
+    border-right-style: dotted;
+}
+#spanMinute{
+    border-right-color: #efefef ;
+    border-right-width: 1px;
+    border-right-style: dotted;
+}
+#style3{
+	font-family: FontAwesome;
+	font-size: 28px;
+	color: #FFFFFF;
+	letter-spacing: 0;
+	position: absolute;
+	margin-left:85px;
+	margin-top: 11px;
+	cursor: pointer;
+}
+#div .left .one3{
+	width: 197px;
+	height: 75px;
+	background: #9CD1C7;
+	border-radius: 3px;
+	position: relative;
+	margin-top: 13px;
+}
+#div .left .one3 span{
+	font-family: LucidaGrande;
+	font-size: 14px;
+	color: #FFFFFF;
+	position: absolute;
+	margin-left: 75px;
+	margin-top: 23px;
+}
+#div .left .one4{
+	width: 200px;
+	/*height: 150px;*/
+	position: relative;
+	background-color: #F8F8F8;
+	border: 1px solid #EBEBEB;
+	border-radius: 3px;
+	margin-top: 13px;
+	padding: 5px;
+	line-height: 28px;
+    height:200px;
+    overflow-x: auto;
+}
+/*#div .left .two2 span{
+	border: 1px solid #e19c89;
+	border-radius: 3px;
+	padding: 0px 2px;
+	color: white;
+	background-color: #e19c89;
+	font-family: PingFangSC-Medium;
+	font-size: 14px;
+	color: #FFFFFF;
+	letter-spacing: 0;
+	cursor: pointer;
+}*/
+/*已答*/
+#div .left .two2 .yesAnswer{
+	border: 1px solid #db856d;
+	border-radius: 3px;
+	padding: 0px 2px;
+	color: white;
+	background: #db856d;
+	font-family: PingFangSC-Medium;
+	font-size: 14px;
+	color: #FFFFFF;
+	letter-spacing: 0;
+	cursor: pointer;
+	/*display:-moz-inline-box;
+	display:inline-block;
+	width: 20px;*/
+}
+/*未答*/
+#div .left .two2 .notAnswer{
+	border: 1px solid #a3bcc9;
+	border-radius: 3px;
+	padding: 0px 2px;
+	color: white;
+	background: #a3bcc9;
+	font-family: PingFangSC-Medium;
+	font-size: 14px;
+	color: #FFFFFF;
+	letter-spacing: 0;
+	cursor: pointer;
+}
+/*未答鼠标移上去*/
+#div .left .two2 .notAnswer:hover{
+	border: 1px solid #2F96E9;
+	background: #2F96E9;
+}
+#div .left .two5{
+	font-size: 12px;
+	color: #222222;
+	letter-spacing: 0;
+}
+#div .left .two5 span{
+	margin-left: 8px;
+}
+#div .left .div3{
+	width: 197px;
+	height: 75px;
+	position: relative;
+	background: #DBC6BC;
+	border-radius: 3px;
+	margin-top: 13px;
+	cursor: pointer;
+}
+#div .left .div3 span{
+	font-family: LucidaGrande;
+	font-size: 14px;
+	color: #FFFFFF;
+	position: absolute;
+	margin-left: 68px;
+	margin-top: 23px;
+}
+#div .left .div4{
+	width: 197px;
+	height: 75px;
+	position: relative;
+	background: #DAADAD;
+	border-radius: 3px;
+	margin-top: 13px;
+}
+#div .left .div5{
+	width: 197px;
+	height: 75px;
+	position: relative;
+	background: #A6C9E2;
+	border-radius: 3px;
+	margin-top: 13px;
+}
+#div .left .div4 span{
+	font-family: LucidaGrande;
+	font-size: 14px;
+	color: #FFFFFF;
+	position: absolute;
+	margin-left: 68px;
+	margin-top: 23px;
+}
+#div .left .div5 span{
+	font-family: LucidaGrande;
+	font-size: 14px;
+	color: #FFFFFF;
+	position: absolute;
+	margin-left: 68px;
+	margin-top: 23px;
+}
+/*单选样式*/
+.radio
+{
+	border: 0;
+	clip: rect(0 0 0 0);
+	height: 1px;
+	margin: -1px;
+	overflow: hidden;
+	padding: 0;
+	position: absolute;
+	width: 1px;
+}
+.labelRadio
+{
+	border: solid 1px #DCDCDC;
+	height: 40px;
+	width: 40px;
+	border-radius: 50%;
+	padding: 5px 10px;
+	margin-left: 15px;
+	color: black;
+}
+.chooseRadio
+{
+	border: solid 1px #FE6422;
+	background: #FE6422;
+	color: white;
+}
+/*多选样式*/
+.checkbox
+{
+	border: 0;
+	clip: rect(0 0 0 0);
+	height: 1px;
+	margin: -1px;
+	overflow: hidden;
+	padding: 0;
+	position: absolute;
+	width: 1px;
+}
+.labelCheckbox
+{
+	border: solid 1px #DCDCDC;
+	height: 40px;
+	width: 40px;
+	border-radius: 20%;
+	padding: 5px 10px;
+	margin-left: 15px;
+	color: black;
+}
+.chooseCheckbox
+{
+	border: solid 1px #FE6422;
+	background: #FE6422;
+	color: white;
+}
+/*判断题*/
+.labelTrueFalse
+{
+	border: solid 1px #DCDCDC;
+	height: 40px;
+	width: 40px;
+	border-radius: 20%;
+	padding: 5px 10px;
+	margin-left: 15px;
+	color: black;
+}
+.chooseTrueFalse
+{
+	border: solid 1px #FE6422;
+	background: #FE6422;
+	color: white;
+}
+/*填空题输入框样式*/
+.questionInput
+{
+	border: 0px;
+	padding:5px 5px;
+	border-bottom: solid 1px #000000;
+}
+/*简答题*/
+.questionTextArea
+{
+	width: 600px;
+	height: 120px;
+	border: solid 1px #DCDCDC;
+	resize: none;
+}
+/*左侧答题卡修改*/
+.item1_title{
+    font-size: 12px;
+    color: #555;
+}
+

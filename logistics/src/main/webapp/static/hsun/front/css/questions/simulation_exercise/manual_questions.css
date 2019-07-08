@@ -1,0 +1,443 @@
+body {
+	font-family: "Helvetica Neue", Helvetica, Arial, "Microsoft Yahei UI", "Microsoft YaHei", SimHei, "\5B8B\4F53", simsun, sans-serif;
+}
+
+#divcontent {
+	width: 1200px;
+	margin: 20px auto;
+	box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.08);
+	min-height: 820px;
+	background: white;
+}
+
+#divcontent .divname {
+	padding: 30px 0 20px 0;
+	text-align: center;
+	color: #333;
+	font-size: 18px;
+	font-weight: 700;
+}
+
+#divcontent .twos {
+	width: 1200px;
+	height: 40px;
+	text-align: center;
+}
+
+#divcontent .two span {
+	line-height: 40px;
+	padding: 25px;
+}
+
+.style {
+	border: 2px solid #222222;
+	border-left: none;
+	border-right: none;
+	border-top: none;
+	width: 100px;
+}
+
+#divcontent .left {
+	width: 197px;
+	margin-left: 20px;
+	float: left;
+	padding-bottom: 20px;
+}
+#divcontent .pos{
+	position: fixed;
+	top:0;
+}
+#divcontent form{
+	overflow: hidden;
+	padding-bottom: 20px;
+}
+
+#divcontent .right {
+	width: 953px;
+	/*height: 648px;*/
+	/*overflow-y: auto;*/
+	overflow: hidden;
+	border: 1px solid #EBEBEB;
+	margin-right:15px;
+	/*position: absolute;*/
+	float: right;
+	top: 206px;
+	/*margin-left: 230px;*/
+}
+
+#divcontent .div1 {
+	width: 925px;
+	height: 45px;
+	background-color: #F8F8F8;
+}
+
+#divcontent .div1 div {
+	line-height: 45px;
+	margin-left: 29px;
+	font-family: PingFangSC-Regular;
+	font-size: 14px;
+	color: #222222;
+	letter-spacing: 0;
+}
+
+#divcontent .div2 {
+	/*width: 880px;*/
+	/*height: 300px;*/
+	/*margin: 20px;*/
+}
+
+#divcontent .div2 .one1 {
+	background: #f5f5f5;
+	height: 40px;
+	line-height: 38px;
+	font-size: 14px;
+	color: #222222;
+	padding-left: 20px;
+	/*margin-left: 20px;*/
+}
+
+#divcontent .div2 .two1 {
+	margin-left: 39px;
+	font-size: 14px;
+	color: #222222;
+	padding-bottom: 20px;
+	padding-top: 20px;
+	line-height: 22px;
+}
+
+#divcontent .div2 .three1 {
+	font-size: 14px;
+	color: #222222;
+	margin:0px 40px;
+	/*padding-bottom: 15px;*/
+}
+
+#divcontent .div2 .three1 div {
+	height: 24px;
+	/*margin-top: 10px;*/
+	/*margin: 10px 0px;*/
+	/*margin-left: 39px;*/
+	/*display: block;*/
+	/*line-height: 10px;*/
+}
+#divcontent .div2 .four1 {
+	margin-top: 20px;
+}
+
+fieldset {
+	padding: 10px;
+	padding-left: 20px;
+	margin: 0px 20px;
+	margin-bottom: 10px;
+	width: 870px;
+	color: #222222;
+	border: solid 1px #DCDCDC;
+}
+
+legend {
+	font-size: 14px;
+	padding: 5px;
+	font-weight: 100;
+	color: #72C7FF;
+}
+
+fieldset div {
+	font-size: 14px;
+	margin-left: 10px;
+}
+
+#divcontent .left .lefttime {
+	width: 197px;
+	height: 75px;
+	background: #BCCDDC;
+	border-radius: 3px;
+	position: relative;
+}
+
+#divcontent .left .lefttime span {
+	font-family: LucidaGrande;
+	font-size: 14px;
+	color: #FFFFFF;
+	position: absolute;
+	margin-left: 70px;
+	margin-top: 23px;
+}
+
+#style3 {
+	font-family: FontAwesome;
+	font-size: 28px;
+	color: #FFFFFF;
+	letter-spacing: 0;
+	position: absolute;
+	margin-left: 85px;
+	margin-top: 11px;
+	cursor: pointer;
+}
+#style5 {
+	font-family: FontAwesome;
+	font-size: 28px;
+	color: #FFFFFF;
+	letter-spacing: 0;
+	position: absolute;
+	margin-left: 85px;
+	margin-top: 11px;
+	cursor: pointer;
+}
+#style4 {
+	font-family: FontAwesome;
+	font-size: 28px;
+	color: #FFFFFF;
+	letter-spacing: 0;
+	position: absolute;
+	margin-left: 85px;
+	margin-top: 11px;
+	cursor: pointer;
+}
+
+#divcontent .left .one3 {
+	width: 197px;
+	height: 75px;
+	background: #9CD1C7;
+	border-radius: 3px;
+	position: relative;
+	margin-top: 13px;
+}
+
+#divcontent .left .one3 span {
+	font-family: LucidaGrande;
+	font-size: 14px;
+	color: #FFFFFF;
+	position: absolute;
+	margin-left: 75px;
+	margin-top: 23px;
+}
+
+#divcontent .left .divcard {
+	width: 200px;
+	/*height: 150px;*/
+	position: relative;
+	background-color: #F8F8F8;
+	border: 1px solid #EBEBEB;
+	border-radius: 3px;
+	margin-top: 13px;
+	padding: 5px;
+	line-height: 28px;
+}
+
+
+/*#divcontent   .left .two2 span{
+	border: 1px solid #e19c89;
+	border-radius: 3px;
+	padding: 0px 2px;
+	color: white;
+	background-color: #e19c89;
+	font-family: PingFangSC-Medium;
+	font-size: 14px;
+	color: #FFFFFF;
+	letter-spacing: 0;
+	cursor: pointer;
+}*/
+
+
+/*已答*/
+
+#divcontent .left .divcard2 .yesAnswer {
+	border: 1px solid #db856d;
+	border-radius: 3px;
+	padding: 0px 2px;
+	color: white;
+	background: #db856d;
+	font-family: PingFangSC-Medium;
+	font-size: 14px;
+	color: #FFFFFF;
+	letter-spacing: 0;
+	cursor: pointer;
+	/*display:-moz-inline-box;
+	display:inline-block;
+	width: 20px;*/
+}
+
+
+/*未答*/
+
+#divcontent .left .divcard2 .notAnswer {
+	border: 1px solid #a3bcc9;
+	border-radius: 3px;
+	padding: 0px 2px;
+	color: white;
+	background: #a3bcc9;
+	font-family: PingFangSC-Medium;
+	font-size: 14px;
+	color: #FFFFFF;
+	letter-spacing: 0;
+	cursor: pointer;
+}
+
+
+/*未答鼠标移上去*/
+
+#divcontent .left .divcard2 .notAnswer:hover {
+	border: 1px solid #2F96E9;
+	background: #2F96E9;
+}
+
+#divcontent .left .divcardstate {
+	font-size: 12px;
+	color: #222222;
+	letter-spacing: 0;
+}
+
+#divcontent .left .divcardstate span {
+	margin-left: 8px;
+}
+
+#divcontent .left .divstop {
+	width: 197px;
+	height: 75px;
+	position: relative;
+	background: #DBC6BC;
+	border-radius: 3px;
+	margin-top: 13px;
+}
+
+#divcontent .left .divstop span {
+	font-family: LucidaGrande;
+	font-size: 14px;
+	color: #FFFFFF;
+	position: absolute;
+	margin-left: 68px;
+	margin-top: 23px;
+}
+
+#divcontent .left .div4 {
+	width: 197px;
+	height: 75px;
+	position: relative;
+	background: #DAADAD;
+	border-radius: 3px;
+	margin-top: 13px;
+}
+
+#divcontent .left .divsave {
+	width: 197px;
+	height: 75px;
+	position: relative;
+	background: #A6C9E2;
+	border-radius: 3px;
+	margin-top: 13px;
+}
+
+#divcontent .left .div4 span {
+	font-family: LucidaGrande;
+	font-size: 14px;
+	color: #FFFFFF;
+	position: absolute;
+	margin-left: 68px;
+	margin-top: 23px;
+}
+
+#divcontent .left .divsave span {
+	font-family: LucidaGrande;
+	font-size: 14px;
+	color: #FFFFFF;
+	position: absolute;
+	margin-left: 68px;
+	margin-top: 23px;
+}
+
+
+/*单选样式*/
+
+.radio {
+	border: 0;
+	clip: rect(0 0 0 0);
+	height: 1px;
+	margin: -1px;
+	overflow: hidden;
+	padding: 0;
+	position: absolute;
+	width: 1px;
+}
+
+.labelRadio {
+	border: solid 1px #DCDCDC;
+	height: 40px;
+	width: 40px;
+	border-radius: 50%;
+	padding: 5px 10px;
+	margin-left: 15px;
+	color: black;
+}
+
+.chooseRadio {
+	border: solid 1px #FE6422;
+	background: #FE6422;
+	color: white;
+}
+
+
+/*多选样式*/
+
+.checkbox {
+	border: 0;
+	clip: rect(0 0 0 0);
+	height: 1px;
+	margin: -1px;
+	overflow: hidden;
+	padding: 0;
+	position: absolute;
+	width: 1px;
+}
+
+.labelCheckbox {
+	border: solid 1px #DCDCDC;
+	height: 40px;
+	width: 40px;
+	border-radius: 20%;
+	padding: 5px 10px;
+	margin-left: 15px;
+	color: black;
+}
+
+.chooseCheckbox {
+	border: solid 1px #FE6422;
+	background: #FE6422;
+	color: white;
+}
+
+
+/*判断题*/
+
+.labelTrueFalse {
+	border: solid 1px #DCDCDC;
+	height: 40px;
+	width: 40px;
+	border-radius: 20%;
+	padding: 5px 10px;
+	margin-left: 15px;
+	color: black;
+}
+
+.chooseTrueFalse {
+	border: solid 1px #FE6422;
+	background: #FE6422;
+	color: white;
+}
+
+
+/*填空题输入框样式*/
+
+.questionInput {
+	border: 0px;
+	border-bottom: solid 1px #000000;
+}
+
+
+/*简答题*/
+
+.questionTextArea {
+	width: 600px;
+	height: 120px;
+	border: solid 1px #DCDCDC;
+	resize: none;
+}

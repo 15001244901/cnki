@@ -1,0 +1,126 @@
+@media screen and (max-width: 800px){
+	.timer .form-inline{
+		display: none;
+	}
+	.timer .now_time{
+		display: inline-block;
+		margin-bottom: 0;
+	}
+}
+@media screen and (max-width: 750px) {
+	.timer .timer_name{
+		display: none;
+	}
+	.timer .now_time{
+		margin-left: 0;
+		float: right;
+		width: 43%;
+	}
+    .timer .month,.timer .week{
+        width:55%;
+    }
+	.timer .isweek,.timer .ismonth{
+		margin-left:0;
+		width:100%;
+	}
+    .isweek .btn,.ismonth .btn{
+        padding-left:0;
+        padding-right:0;
+        width:33.3%;
+    }
+
+	.timer .time_style{
+		width:100%;
+		margin-bottom: 10px;
+	}
+    .timer .time_style select{
+        width:68%;
+        float: left;
+    }
+	.timer .week_year{
+		margin-left:0;
+		float: right;
+        width: 43%;
+	}
+    .go_back2{
+        display: none;
+    }
+    .go_back1{
+        display: block;
+        width:30%;
+    }
+
+
+	/*排行榜*/
+	.rank_list .list-group{
+		width: 100%;
+	}
+	.rank_list .list-group:nth-child(1){
+		margin-bottom: 10px;
+	}
+	.rank_list>div:nth-child(3n-1){
+		padding:0;
+	}
+	.rank_list .rank1{
+		display: none;
+	}
+    .rank_list .rank2{
+        display: none;
+    }
+    .display_rank{
+        display: block;
+    }
+	.rank_list_title{
+		min-height: inherit;
+	}
+    .rank_list .list-group .level{
+        min-height: inherit;
+    }
+	/*人员列表*/
+	.personnel_list img{
+		width: 50px;
+		height: 50px;
+	}
+
+	.all_data .tel{
+		display: none;
+	}
+
+	/*三个圆形榜单*/
+    .index_rank_type{
+        display: block;
+    }
+	.rank_type .rank_type_list .rank_type_radiu{
+		width:60px;
+		height:60px;
+		font-size: 12px;
+	}
+	.rank_type .rank_type_list .rank_type_radiu a i{
+		padding-top:7px;
+		font-size: 14px;
+	}
+	.media-bodying span{
+		display: block;
+		padding-right:0;
+		padding-left: 5px;
+	}
+}
+@media screen and (max-width: 350px){
+
+	/*排行榜*/
+	.rank_list .list-group{
+		width: 100%;
+	}
+	.rank_list .list-group:nth-child(1){
+		margin-bottom: 15px;
+	}
+
+	/*人员列表*/
+	.all_data .tel{
+		display: none;
+	}
+}
+
+@-moz-document url-prefix() {
+  fieldset { display: table-cell; }
+}

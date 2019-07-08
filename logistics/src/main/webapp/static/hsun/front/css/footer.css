@@ -1,0 +1,160 @@
+.bo_foot {
+    margin: 0;
+    margin-top: 20px;
+    background: #474443;
+    /*padding:20px;*/
+    min-height: 100px;
+    overflow: hidden;
+    /*text-align: left;*/
+    clear: both;
+}
+
+.bo_foot * {
+    margin: 0;
+    padding: 0;
+    box-sizing: content-box;
+}
+
+.footer a {
+    text-decoration: none;
+}
+
+.footer {
+    background-color: #1f2536;
+    height: auto;
+    overflow: hidden;
+    padding-bottom: 50px;
+}
+
+.wrapper {
+    width: 1200px;
+    margin: 0 auto;
+}
+
+.footer .foot_nav {
+    height: auto;
+    overflow: hidden;
+    padding-top: 55px;
+    float: left;
+}
+
+.footer .foot_tel {
+    float: right;
+    height: auto;
+    overflow: hidden;
+    margin-top: 58px;
+}
+
+.footer .foot_nav dl {
+    float: left;
+    margin-right: 110px;
+}
+
+.footer .foot_nav dt {
+    font-size: 18px;
+    color: #FFFFFF;
+    margin-bottom: 15px;
+}
+
+.footer .foot_nav dd {
+    margin-bottom: 5px;
+}
+
+.footer .foot_nav dd p, .footer .foot_nav dd a {
+    font-size: 14px;
+    color: #9099b2;
+}
+
+.footer .foot_nav dd p, .footer .foot_nav dd a {
+    font-size: 14px;
+    color: #9099b2;
+}
+
+.footer .foot_nav dl.last {
+    margin-right: 0;
+}
+
+.footer .foot_tel .img {
+    float: left;
+}
+
+.footer .foot_tel .img img {
+    width: 105px;
+    height: 105px;
+    display: block;
+}
+
+.footer .foot_tel .foot_txt {
+    margin-left: 35px;
+}
+
+.footer .foot_tel .foot_txt {
+    float: right;
+}
+
+.footer .foot_tel .foot_txt .foot_sub {
+    padding-left: 25px;
+    position: relative;
+}
+
+.footer .foot_tel .foot_txt .foot_sub em {
+    background: url(../img/foot/lf2.png) no-repeat center center;
+    width: 30px;
+    height: 33px;
+    background-size: 30px 33px;
+    display: inline-block;
+    position: absolute;
+    left: -15px;
+    top: 5px;
+}
+
+.footer .foot_tel .foot_txt .foot_sub h2 {
+    font-size: 26px;
+    color: #16b55b;
+    font-weight: normal;
+}
+
+.footer .foot_tel .foot_txt .foot_sub h4 {
+    font-size: 14px;
+    color: #9099b2;
+    font-weight: normal;
+}
+
+.footer .foot_tel .foot_txt .foot_btn {
+    margin-top: 10px;
+}
+
+.footer .foot_tel .foot_txt .foot_btn a {
+    line-height: 40px;
+    color: #fff;
+    font-weight: bold;
+    font-size: 14px;
+    cursor: pointer;
+    width: 115px;
+    height: 40px;
+    display: block;
+    padding-left: 85px;
+    border-radius: 5px;
+    background: #15B55B url(../img/foot/lf3.png) no-repeat 63px center;
+}
+.footer .foot_tel .foot_txt .foot_btn a:hover{
+    background-color: #01d85e;
+}
+.copyright {
+    background-color: #121621;
+    height: 75px;
+    text-align: center;
+    padding-top: 30px;
+}
+
+.copyright p {
+    font-size: 14px;
+    color: #9099b2;
+    margin-bottom: 10px;
+}
+
+.copyright p {
+    font-size: 14px;
+    color: #9099b2;
+    margin-bottom: 10px;
+}

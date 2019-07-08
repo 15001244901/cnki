@@ -1,0 +1,32 @@
+.error_correction{
+	padding:0.4rem 0.2rem;
+}
+.error_correction li{
+	padding-bottom: 0.266667rem;
+	margin-bottom: 0.333333rem;
+	border-bottom:1px solid #ddd;
+}
+.error_correction li h3{
+	font-size: 0.4rem;
+	line-height: 0.613333rem;
+	margin-bottom: 0.2rem;
+}
+.error_correction li h3 span{
+	font-size: 0.32rem;
+	color: #888;
+}
+.error_correction li p{
+	font-size: 0.346667rem;
+	line-height: 0.613333rem;
+	text-indent: 2em;
+}
+.error_correction li .error_msg{
+	margin-top: 0.266667rem;
+	font-size: 0.373333rem;
+}
+.error_correction li .error_msg span{
+	color: #555;
+}
+.error_correction li .error_msg a{
+	color: #555;
+}

@@ -1,0 +1,122 @@
+body {
+	font-family: "Helvetica Neue", Helvetica, Arial, "Microsoft Yahei UI", "Microsoft YaHei", SimHei, "\5B8B\4F53", simsun, sans-serif;
+}
+#divcontent{
+	font-size: 14px;
+	clear: both;
+	width: 1200px;
+	margin: 20px auto;
+	background: #FFFFFF;
+	box-shadow: 0 0 8px 0 rgba(0,0,0,0.08);
+}
+#divcontent .divtitle{
+	height: 83px;
+	background-color: #ffffff;
+	text-align: center;
+	border-bottom: 2px solid #93bace;
+}
+#divcontent .divtitle span{
+	font-size: 20px;
+	color: #2F96E9;
+	line-height: 90px;
+}
+#divcontent .divvalue{
+	background: white;
+}
+#divcontent .divvalue ul{
+	/*width: 1200px;*/
+	/*height: 425px;*/
+	background: #F3F9FC;
+	/*margin: 0;
+	padding: 0;*/
+}
+#divcontent .divvalue ul>li{
+	width: 1200px;
+	line-height: 52px;
+	border: 1px dashed #C3CDD1;
+	border-top: none;
+	border-left:0;
+	border-right:0;
+}
+#divcontent .divvalue ul>li>span{
+	margin-left: 30px;
+	width: 110px;
+	display: block;
+	float: left;
+}
+#divcontent .divvalue ul>li>input{
+	margin-left: 4px;
+}
+.txtinput{
+	width: 384px;
+	height: 30px;
+	background: #FFFFFF;
+	border: 1px solid #C5C5C5;
+	border-radius: 3px;
+	padding-left: 10px;
+}
+#divcontent .divvalue .divpost{
+	width: 1200px;
+	float: left;
+	background: #F3F9FC;
+	border-bottom: 1px solid #C3CDD1;
+}
+#divcontent .divvalue .divpost .divposttitle{
+	float: left;
+	padding: 20px 0;
+	margin-left: 30px;
+}
+#divcontent .divvalue .divpost .divpostvalue{
+	width: 1070px;
+	float: left;
+	padding: 10px;
+}
+#divcontent .divvalue .divpost .divpostvalue span{
+	line-height: 40px;
+	padding: 0 10px;
+}
+#divcontent .divvalue .divpost span a{
+	
+	/*padding: 0 20px;*/
+	color: #222222;
+	padding: 5px 10px ;
+	border-radius: 3px;
+}
+#divcontent .divvalue .divpost span a:hover {
+	background-color: #2F96E9;
+	color: #FFFFFF;
+	border-radius: 3px;
+	padding: 5px 10px;
+}
+#divcontent .divvalue .divpost .divpostvalue .active{
+	background-color: #2F96E9;
+	color: #FFFFFF;
+	border-radius: 3px;
+	padding: 5px 10px;
+}
+
+#divcontent .divvalue .footer{
+	clear: both;
+	text-align: center;
+	padding-top: 40px;
+	padding-bottom: 40px;
+}
+#divcontent .divvalue .footer span a{
+	padding: 5px 15px;
+	border-radius: 3px;
+	color: #222222;
+	font-size: 14px;
+	border: 1px solid #C5C5C5;	
+}
+#divcontent .divvalue .footer .active {
+	background-color: #2F96E9;
+	color: #FFFFFF;
+	padding: 5px 15px;
+	border-radius: 3px;
+}
+#divcontent .divvalue .footer span a:hover{
+	background-color: #2F96E9;
+	color: #FFFFFF;
+	padding: 5px 15px;
+	border-radius: 3px;
+}

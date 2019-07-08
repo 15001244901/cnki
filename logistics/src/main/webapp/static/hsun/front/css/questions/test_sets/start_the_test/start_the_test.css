@@ -1,0 +1,330 @@
+body {
+	font-family: "Helvetica Neue", Helvetica, Arial, "Microsoft Yahei UI", "Microsoft YaHei", SimHei, "\5B8B\4F53", simsun, sans-serif;
+}
+
+
+#div{
+	width: 1200px;
+	/*height: 650px;*/
+	overflow: hidden;
+	padding-bottom: 40px;
+	background-color: white;
+	margin: 20px auto;
+	box-shadow: 0 0 8px 0 rgba(0,0,0,0.08);
+}
+#div .one{
+	padding:20px 0 0 0;
+	text-align: center;
+	font-size: 20px;
+	color: #3db06e;
+}
+#div .twos{
+	height: 50px;
+	line-height: 50px;
+	text-align: center;
+	margin-bottom: 10px;
+	margin-left:20px;
+	margin-right:20px;
+}
+#div .twos span{
+
+}
+.style{
+	border: none;
+	border-left:none ;
+	border-right:none ;
+	border-top:none ;
+	width: 100px;
+}
+#div .div1{
+	width: 300px;
+	/*padding-left: 20px;*/
+	overflow: hidden;
+	float: left;
+	/*background: #F3F9FC;*/
+	line-height: 46px;
+	font-size: 14px;
+	color: rgba(34,34,34,0.8);
+}
+.div1_title{
+	background: #3db06e;
+	line-height: 40px;
+	padding-left:10px;
+	color: #fff;
+	font-size: 15px;
+}
+.div1_cont{
+	padding-top:10px;
+	border:1px solid #dcdcdc;
+	border-right:none;
+}
+#divOffices{
+	float: right;
+	/*padding-top: 10px;*/
+	padding:20px;
+	width:860px;
+	min-height:630px;
+	border:1px solid #dcdcdc;
+	border-top:none;
+}
+#div .div1 .div1_cont>span{
+	/*margin-left: 40px;*/
+	margin-left:10px;
+	display: block;
+	padding-right: 20px;
+}
+.set_container{
+	margin:0 20px;
+}
+.pos_put input{
+	position:relative;
+	top:1px;
+}
+.iskey{
+	margin-left: 74px;
+}
+.style1{
+	width: 185px;
+	height: 30px;
+	border: 1px solid #C5C5C5;
+	border-radius: 3px;
+	text-align: center;
+	color: rgba(34,34,34,0.8);
+}
+#div .div2{
+	width: 860px;
+	float: right;
+	overflow: hidden;
+	/*margin-right: 20px;*/
+	background-color: #f4f4f4 ;
+	line-height: 40px;
+	font-size: 14px;
+	color: rgba(34,34,34,0.8);
+	border:1px solid #dcdcdc;
+	border-bottom:none;
+}
+#div .div2 >span{
+	margin-left: 40px;
+}
+#div .div2 >span:first-child{
+	margin-left: 20px;
+}
+#div .div2 .one1{
+	border: 1px solid #C5C5C5;
+	padding: 6px 16px;
+	border-radius: 3px;
+	background-color: white;
+	color: rgba(34,34,34,1);
+}
+#div .div2 .one1:hover{
+	background: #2f96e9;
+	border:solid 1px #2f96e9;
+	color: white;
+	cursor: pointer;
+}
+#div .div2 .one2{
+	padding: 6px 16px;
+	border-radius: 3px;
+	/*background-color: #2F96E9;*/
+	border: 1px solid #3db06e;
+	color: #3db06e;
+	cursor: pointer;
+}
+#div .div2 .one2:hover{
+	border: 1px solid #FE8922;
+	color:#FE8922 ;
+}
+#div .div2 .one3{
+	border: 1px solid #3db06e;
+	padding: 6px 16px;
+	border-radius: 3px;
+	background-color: white;
+	color:#3db06e ;
+	cursor: pointer;
+}
+#div .div2 .one3:hover{
+	border: 1px solid #FE8922;
+	color:#FE8922 ;
+}
+.part_list{
+	margin-bottom:10px;
+	border:1px solid #EAEAEA;
+	-webkit-border-radius:3px;
+	-moz-border-radius:3px;
+	border-radius:3px;
+}
+.part_list:nth-child(1){
+	margin-top:0;
+}
+.ml30{
+	margin-left: 30px;
+}
+.ml60{
+	margin-left: 60px;
+}
+.ml90{
+	margin-left: 90px;
+}
+.ml120{
+	margin-left: 120px;
+}
+.ml150{
+	margin-left: 150px;
+}
+.ml180{
+	margin-left: 180px;
+}
+.mt20{
+	margin-top:20px;
+}
+.part_list .div3 input{
+	top:2px;
+}
+#div .div3{
+	/*width: 820px;*/
+	background: #EAEAEA;
+	line-height: 45px;
+	font-size: 14px;
+	color: #222222;
+	border-bottom: 1px dashed #EBEBEB;
+}
+
+#div .div3 >span{
+	float: right;
+	cursor: pointer;
+}
+#div .div3 >label{
+	margin-left: 20px;
+}
+#div .div3 .div3_togger{
+	line-height: 45px;
+	color: #777;
+	font-size: 24px;
+	margin-right:10px;
+}
+#div .div3 .div3_togger:hover{
+	color:#3db06e;
+}
+
+#div .div4{
+	/*width: 850px;*/
+	/*margin-left: 20px;*/
+	line-height: 45px;
+	background-color: white;
+	font-size: 14px;
+	color: #222222;
+	border-bottom: 1px solid #F0F0F2;
+	border-left:0;
+	border-right:0;
+}
+#div .div4:last-child{
+	border:none;
+}
+#div .div4>span,#div .div4>label{
+	margin-left: 41px;
+	padding: 0 2px;
+	display: inline-block;
+}
+#div .div5{
+	width: 100%;
+	height: 60px;
+	clear: both;
+	scrollbar-base-color: green;
+	text-align: center;
+	/*padding-top: 25px;*/
+}
+#div .div5 >span{
+	line-height: 60px;
+	margin: 0 10px;
+	padding: 6px 16px;
+	border: 1px solid #C5C5C5;
+	border-radius:3px ;
+	font-size: 14px;
+	color: #222222;
+	cursor: pointer;
+}
+#div .div5 >span a{
+color: #222222;	
+}
+#div .div5 .active{
+	background: #5FC98B;
+	border-radius: 3px;
+	transition: background-color 0.3s;
+	border: 0;
+	
+}
+#div .div5 .active:hover{
+	background: #3db06e;
+}
+#div .div5 .active a{
+color: #FFFFFF !important;	
+}
+/*全选调色*/
+.check_all{
+opacity: 0.8;
+font-family: PingFangSC-Regular;
+font-size: 14px;
+color: #222222;
+letter-spacing: 0;
+}
+/*复选框*/
+.pos{
+	position: fixed;
+	/*left:870px;*/
+}
+
+.set_container{
+	position: relative;
+}
+.offices_list{
+	background: #fff;
+	border:1px solid #dcdcdc;
+	position: absolute;
+	right:-100%;
+	top:0;
+	min-width: 200px;
+	opacity: 0;
+}
+.offices_list_title{
+	line-height:41px;
+	font-size: 14px;
+	display: flex;
+	display: -webkit-flex;
+	justify-content:space-between;
+	align-items: center;
+	background: #3db06e;
+	color: #fff;
+	padding-left:10px;
+}
+.offices_list_container{
+	padding:10px;
+}
+.offices_list li{
+	line-height: 30px;
+	font-size: 14px;
+}
+.offices_list li .list_title label{
+	cursor: pointer;
+}
+
+.offices_list li input{
+	position: relative;
+	top:2px;
+}
+.show_list{
+	float: right;
+	height:41px;
+	line-height: 41px;
+	margin-right:20px;
+	cursor: pointer;
+}
+.show_list:hover,.hide_list:hover{
+	color: #FE8922;
+}
+.hide_list{
+	cursor: pointer;
+	padding:10px;
+}
+.ml20{
+	margin-left:20px;
+}

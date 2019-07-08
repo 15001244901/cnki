@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hsun.ywork.modules.exam.dao.ExamHistoryDao">
+    
+	<sql id="examHistoryColumns">
+		a.id AS "id",
+		a.pid AS "pid",
+		a.uid AS "uid",
+		a.starttime AS "starttime",
+		a.endtime AS "endtime",
+		a.ip AS "ip",
+		a.score AS "score",
+		a.status AS "status",
+		a.data AS "data",
+		a.checks AS "checks",
+		<!-- custom field -->
+		TIMESTAMPDIFF(MINUTE, a.starttime, a.endtime) AS "timecost",
+		u.login_name as "uname",
+		u.name as "urealname",
+		u.no as "uno",
+		o.id as "office.id",
+		o.name as "office.name"
+	</sql>
+	
+	<sql id="examHistoryJoins">
+		LEFT JOIN sys_user u on(u.id = a.uid)
+		LEFT JOIN sys_office o on(o.id = u.office_id)
+	</sql>
+    
+	<select id="get" resultType="ExamHistory">
+		SELECT 
+			<include refid="examHistoryColumns"/>
+		FROM yw_exam_history a
+		<include refid="examHistoryJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="ExamHistory">
+		SELECT 
+			<include refid="examHistoryColumns"/>
+		FROM yw_exam_history a
+		<include refid="examHistoryJoins"/>
+		<where>
+			<if test="pid != null and pid != ''">
+				AND a.pid = #{pid}
+			</if>
+			<if test="uid != null and uid != ''">
+				AND a.uid = #{uid}
+			</if>
+			<if test="urealname != null and urealname != ''">
+				AND u.name LIKE
+				<if test="dbName == 'oracle'">'%'||#{urealname}||'%'</if>
+				<if test="dbName == 'mssql'">'%'+#{urealname}+'%'</if>
+				<if test="dbName == 'mysql'">concat('%',#{urealname},'%')</if>
+			</if>
+			<if test="office != null and office.id != null and office.id != ''">
+				AND o.id = #{office.id}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.endtime desc
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="ExamHistory">
+		SELECT 
+			<include refid="examHistoryColumns"/>
+		FROM yw_exam_history a
+		<include refid="examHistoryJoins"/>
+		<where>
+			
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.endtime desc
+			</otherwise>
+		</choose>
+	</select>
+
+	<select id="getPaperCheckProgress" resultType="ExamHistory">
+		SELECT status AS "status",count(1) AS "checknums" FROM yw_exam_history WHERE pid=#{pid} group by status
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO yw_exam_history(
+			id,
+			pid,
+			uid,
+			starttime,
+			endtime,
+			ip,
+			score,
+			status,
+			data,
+			checks
+		) VALUES (
+			#{id},
+			#{pid},
+			#{uid},
+			#{starttime},
+			#{endtime},
+			#{ip},
+			#{score},
+			#{status},
+			#{data},
+			#{checks}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE yw_exam_history SET 	
+			pid = #{pid},
+			uid = #{uid},
+			starttime = #{starttime},
+			endtime = #{endtime},
+			ip = #{ip},
+			score = #{score},
+			status = #{status},
+			data = #{data},
+			checks = #{checks}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		DELETE FROM yw_exam_history
+		WHERE id = #{id}
+	</update>
+
+	<update id="deleteAllByPid">
+		DELETE FROM yw_exam_history
+		WHERE pid = #{pid}
+	</update>
+
+
+	<update id="batchUpdate" parameterType="java.util.List">
+		<foreach collection="list" item="item" index="index" open="" close="" separator=";">
+			update yw_exam_history
+			<set>
+				score = #{item.score},
+				status = #{item.status},
+				data = #{item.data},
+				checks = #{item.checks}
+			</set>
+			where uid = #{item.uid} and pid = #{item.pid} and status = 1
+		</foreach>
+	</update>
+
+	<select id="findUserHistoryList" resultType="ExamHistory">
+		SELECT
+			<include refid="examHistoryColumns"/>,
+			p.id as "paper.id",
+			p.name as "paper.name",
+			p.name as "papername",
+			p.papertype as "paper.papertype",
+			p.duration as "paper.duration",
+			p.totalscore as "paper.totalscore",
+			p.passscore as "paper.passscore",
+			p.showtime as "paper.showtime",
+			(CASE WHEN p.showtime >= now() THEN 'n' ELSE 'y' END) as "showscore"
+		FROM yw_exam_history a LEFT OUTER JOIN yw_exam_paper p
+		ON(a.pid = p.id)
+		<include refid="examHistoryJoins"/>
+		<where>
+				AND a.status != 0 AND a.uid = #{uid}
+			<if test="papername != null and papername != ''">
+				AND p.name LIKE
+				<if test="dbName == 'oracle'">'%'||#{papername}||'%'</if>
+				<if test="dbName == 'mssql'">'%'+#{papername}+'%'</if>
+				<if test="dbName == 'mysql'">concat('%',#{papername},'%')</if>
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.endtime desc
+			</otherwise>
+		</choose>
+	</select>
+	
+</mapper>

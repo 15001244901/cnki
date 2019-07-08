@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hsun.ywork.modules.exam.dao.QuestionDBDao">
+    
+	<sql id="questionDBColumns">
+		a.id AS "id",
+		a.name AS "name",
+		a.logo AS "logo",
+		a.status AS "status",
+		a.remark AS "remark",
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		u1.name as "createBy.name",
+		u2.name as "updateBy.name",
+		a.del_flag AS "delFlag" ,
+		c.nums as "questionNums"
+	</sql>
+
+	<sql id="questionDBJoins">
+		left outer join sys_user u1 on(u1.id = a.create_by)
+		left outer join sys_user u2 on(u2.id = a.update_by)
+		left outer join (select count(1) nums, q_dbid from yw_exam_question b group by b.q_dbid) c on c.q_dbid = a.id
+	</sql>
+    
+	<select id="get" resultType="QuestionDB">
+		SELECT 
+			<include refid="questionDBColumns"/>
+		FROM yw_exam_question_db a
+		<include refid="questionDBJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="QuestionDB">
+		SELECT 
+			<include refid="questionDBColumns"/>
+		FROM yw_exam_question_db a
+		<include refid="questionDBJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="name != null and name != ''">
+				AND a.name LIKE 
+					<if test="dbName == 'oracle'">'%'||#{name}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{name}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{name},'%')</if>
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="QuestionDB">
+		SELECT 
+			<include refid="questionDBColumns"/>
+		FROM yw_exam_question_db a
+		<include refid="questionDBJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO yw_exam_question_db(
+			id,
+			name,
+			logo,
+			status,
+			remark,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			del_flag
+		) VALUES (
+			#{id},
+			#{name},
+			#{logo},
+			#{status},
+			#{remark},
+			#{createBy.id},
+			#{createDate},
+			#{updateBy.id},
+			#{updateDate},
+			#{delFlag}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE yw_exam_question_db SET 	
+			name = #{name},
+			logo = #{logo},
+			status = #{status},
+			remark = #{remark},
+			update_by = #{updateBy.id},
+			update_date = #{updateDate}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		UPDATE yw_exam_question_db SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

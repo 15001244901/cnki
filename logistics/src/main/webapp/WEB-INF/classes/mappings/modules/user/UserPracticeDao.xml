@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hsun.ywork.modules.user.dao.UserPracticeDao">
+    
+	<sql id="userPracticeColumns">
+		a.id AS "id",
+		a.name AS "name",
+		a.duration AS "duration",
+		a.uid AS "uid",
+		a.totalscore AS "totalscore",
+		a.userscore AS "userscore",
+		a.paper AS "paper",
+		a.answer AS "answer",
+		a.checks AS "check",
+		a.testdate AS "testdate",
+		a.timecost AS "timecost"
+	</sql>
+	
+	<sql id="userPracticeJoins">
+	</sql>
+    
+	<select id="get" resultType="UserPractice">
+		SELECT 
+			<include refid="userPracticeColumns"/>
+		FROM yw_exam_userpractice a
+		<include refid="userPracticeJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="UserPractice">
+		SELECT 
+			<include refid="userPracticeColumns"/>
+		FROM yw_exam_userpractice a
+		<include refid="userPracticeJoins"/>
+		<where>
+
+			<if test="uid != null and uid != ''">
+				AND a.uid = #{uid}
+			</if>
+			
+			<if test="name != null and name != ''">
+				AND a.name LIKE 
+					<if test="dbName == 'oracle'">'%'||#{name}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{name}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{name},'%')</if>
+			</if>
+		</where>
+		ORDER BY a.testdate desc
+	</select>
+	
+	<select id="findAllList" resultType="UserPractice">
+		SELECT 
+			<include refid="userPracticeColumns"/>
+		FROM yw_exam_userpractice a
+		<include refid="userPracticeJoins"/>
+		<where>
+			
+		</where>		
+		ORDER BY a.testdate desc
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO yw_exam_userpractice(
+			id,
+			name,
+			duration,
+			uid,
+			totalscore,
+			userscore,
+			paper,
+			answer,
+			checks,
+			testdate,
+			timecost
+		) VALUES (
+			#{id},
+			#{name},
+			#{duration},
+			#{uid},
+			#{totalscore},
+			#{userscore},
+			#{paper},
+			#{answer},
+			#{check},
+			now(),
+			#{timecost}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE yw_exam_userpractice SET 	
+			name = #{name},
+			duration = #{duration},
+			uid = #{uid},
+			totalscore = #{totalscore},
+			userscore = #{userscore},
+			paper = #{paper},
+			answer = #{answer},
+			checks = #{check},
+			timecost = #{timecost}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		DELETE FROM yw_exam_userpractice
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

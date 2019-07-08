@@ -1,0 +1,111 @@
+#pageNoIpt{
+    width:36px !important;
+    height:30px !important;
+    border-radius: 3px;
+    text-align: center;
+    /*padding:0 10px;*/
+}
+.pagination ul {
+    border-radius: 4px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    display: inline-block;
+    margin-bottom: 0;
+    margin-left: 0;
+    color: #666;
+}
+.pagination input[type="button"]{
+    color: #333;
+    background: #fff ;
+    border:1px solid #ccc;
+    font-size: 14px;
+    border-radius: 3px;
+    height: 30px;
+    line-height: 29px;
+    padding: 0 12px;
+}
+.pagination input[type="button"]:hover{
+    background: #e6e6e6;
+    border-color: #adadad;
+}
+.pagination .pageDesc{
+    color: #666;
+    font: 12px/24px "Microsoft YaHei";
+    padding-left: 1em;
+    line-height: 34px;
+    height:34px;
+}
+.pagination ul>li {
+    display: inline;
+}
+
+.pagination ul>li>a, .pagination ul>li>span {
+    -moz-border-bottom-colors: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    background-color: #ffffff;
+    border-color: #dddddd;
+    border-image: none;
+    border-style: solid;
+    border-width: 1px 1px 1px 0;
+    color: #454545;
+    float: left;
+    line-height: 20px;
+    padding: 6px 16px;
+    text-decoration: none;
+}
+
+.pagination ul>li>a:hover {
+    background-color: #eee;
+    color: #23527c;
+    transition: all 0.3s ease 0s;
+}
+
+
+.pagination ul>.active>a, .pagination ul>.active>a:hover {
+    background-color: transparent;
+    color: #fff;
+}
+
+.pagination ul>.active>a, .pagination ul>.active>span {
+    color: #f2f2f2;
+    cursor: default;
+}
+
+.pagination ul>.disabled>span, .pagination ul>.disabled>a, .pagination ul>.disabled>a:hover
+{
+    background-color: transparent;
+    color: #666;
+    cursor: default;
+}
+.pagination ul>li.bobj>a{
+    background: #0073a9;
+    color: #fff;
+}
+.pagination ul>li.bobj>a:hover{
+    background: #0073a9;
+    color: #fff;
+}
+
+.pagination ul>li:first-child>a, .pagination ul>li:first-child>span {
+    border-bottom-left-radius: 4px;
+    border-left-width: 1px;
+    border-top-left-radius: 4px;
+}
+
+.pagination ul>li:last-child>a, .pagination ul>li:last-child>span {
+    border-bottom-right-radius: 4px;
+    border-top-right-radius: 4px;
+}
+
+.pagination ul>.current>a {
+    background: none repeat scroll 0 0 #2a2a2a;
+    color: #fff;
+    cursor: text;
+}
+
+.pagination ul>.current>a:hover {
+    background: none repeat scroll 0 0 #2a2a2a;
+    color: #fff;
+    text-decoration: none;
+}

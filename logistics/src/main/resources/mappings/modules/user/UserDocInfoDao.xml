@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hsun.ywork.modules.user.dao.UserDocInfoDao">
+    
+	<sql id="userDocInfoColumns">
+		a.id AS "id",
+		a.uid as "uid",
+		a.did as "did"
+	</sql>
+	
+	<sql id="userDocInfoJoins">
+	</sql>
+    
+	<select id="get" resultType="UserDocInfo">
+		SELECT 
+			<include refid="userDocInfoColumns"/>
+		FROM yw_user_docinfo a
+		<include refid="userDocInfoJoins"/>
+		WHERE a.id = #{id}
+	</select>
+
+	<select id="findByUidAndDid" resultType="UserDocInfo">
+		SELECT
+		<include refid="userDocInfoColumns"/>
+		FROM yw_user_docinfo a
+		<include refid="userDocInfoJoins"/>
+		WHERE a.uid = #{0} and a.did = #{1}
+	</select>
+	
+	<select id="findList" resultType="UserDocInfo">
+		SELECT 
+			<include refid="userDocInfoColumns"/>
+		FROM yw_user_docinfo a
+		<include refid="userDocInfoJoins"/>
+		<where>
+			<if test="uid != null and uid != ''">
+				AND a.uid = #{uid}
+			</if>
+			<if test="did != null and did != ''">
+				AND a.did = #{did}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.id DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="UserDocInfo">
+		SELECT 
+			<include refid="userDocInfoColumns"/>
+		FROM yw_user_docinfo a
+		<include refid="userDocInfoJoins"/>
+		<where>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.id DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO yw_user_docinfo(
+			id,
+			uid,
+			did
+		) VALUES (
+			#{id},
+			#{uid},
+			#{did}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE yw_user_docinfo SET
+			 uid = #{uid},
+			 did = #{did}
+		WHERE id = #{id}
+	</update>
+	
+	<delete id="delete">
+		DELETE FROM yw_user_docinfo
+		WHERE uid = #{uid} and did = #{did}
+	</delete>
+	
+</mapper>

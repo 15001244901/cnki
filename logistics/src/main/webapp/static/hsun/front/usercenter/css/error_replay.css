@@ -1,0 +1,396 @@
+body {
+	font-family: "Helvetica Neue", Helvetica, Arial, "Microsoft Yahei UI", "Microsoft YaHei", SimHei, "\5B8B\4F53", simsun, sans-serif;
+}
+
+a {
+	color: #999;
+}
+#divcontent {
+	width: 1200px;
+	/*height: 965px;*/
+	background-color: white;
+	margin: 20px auto;
+	clear: both;
+	box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.08);
+}
+#divAnswered img{
+	vertical-align: middle;
+}
+#divcontent .divtop {
+	margin-top: 20px;
+	padding-bottom: 20px;
+	border: 1px solid #EBEBEB;
+}
+
+#divcontent .divtitle {
+	/*width: 941px;*/
+	height: 45px;
+	background-color: #F8F8F8;
+}
+
+#divcontent .divtitle div {
+	line-height: 45px;
+	margin-left: 29px;
+	font-family: PingFangSC-Regular;
+	font-size: 14px;
+	color: #222222;
+	letter-spacing: 0;
+	cursor: pointer;
+}
+
+#divcontent .divcon {
+	/*width: 880px;*/
+	/*height: 300px;*/
+	margin-top: 20px;
+	margin-left: 20px;
+}
+
+#divcontent .divcon .divquestiontype {
+	height: 40px;
+	font-size: 14px;
+	color: #222222;
+	margin-left: 20px;
+}
+
+#divcontent .divtitle .one3 {
+	float: right;
+	margin-right: 20px;
+}
+
+#divcontent .divcon .divQContent {
+	margin-left: 22px;
+	font-size: 14px;
+	color: #222222;
+	/*line-height: 22px;*/
+	/*white-space: pre-wrap;*/
+	padding-bottom: 10px;
+}
+
+#divcontent .divcon .divQContent p {
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+
+#divcontent .divcon .div4 {
+	margin-top: 25px;
+	margin-right: 20px;
+	/*margin-bottom: 5px;*/
+}
+
+#divcontent .divcon .four1 {
+	height: 50px;
+	line-height: 50px;
+}
+
+#divcontent .divcon .four1 span {
+	margin-left: 22px;
+	border: 1px solid #EBEBEB;
+	border-radius: 50%;
+	padding: 4.5px 8.7px;
+	cursor: pointer;
+	background: #FFFFFF;
+	box-shadow: inset 0 0 4px 0 rgba(0, 0, 0, 0.10);
+}
+
+#divcontent .divcon .four1 .active {
+	background: #2F96E9;
+	color: white;
+}
+
+#divcontent .divcon .four1 .active1 {
+	background: #FE6422;
+	color: white;
+}
+
+#divcontent .divcon .four1 .active2 {
+	background: #EFEFEF;
+}
+
+#divcontent .div3 {
+	width: 913px;
+	height: 50px;
+}
+
+#divcontent .div4>span {
+	float: right;
+	font-size: 14px;
+	color: #FFFFFF;
+	border: 1px solid #2f96e9;
+	background-color: #2f96e9;
+	padding: 4px 18px;
+	border-radius: 3px;
+	margin-top: -28px;
+}
+
+#divcontent .divbotton {
+	border: 1px solid #ebebeb;
+}
+
+#divcontent .divbotton .divanswer {
+	/*width: 943px;*/
+	height: 50px;
+	line-height: 50px;
+	background-color: #F5F5F5;
+}
+
+
+/*设置正确答案等颜色*/
+
+#divcontent .divbotton .divanswer .spananswer {
+	color: #FE6422;
+}
+
+#divcontent .divbotton .divanswer .results {
+	color: #2F96E9;
+}
+
+#divcontent .divbotton .divanswer .p6 {
+	position: relative;
+	right: 25px;
+}
+
+#divcontent .divbotton p {
+	float: left;
+	/*line-height: 50px;*/
+	/*margin: 0px 20px;*/
+	margin-left: 30px;
+	font-size: 14px;
+	color: #222222;
+	letter-spacing: 0;
+}
+
+#divcontent .divbotton .divan p {
+	float: left;
+	line-height: 30px;
+	/*margin: 0px 20px;*/
+	margin-left: 30px;
+	font-size: 14px;
+	color: #222222;
+	letter-spacing: 0;
+}
+
+#divcontent .divbotton .divan {
+	/*height: 50px;*/
+	font-size: 14px;
+	margin-left: 30px;
+	margin-top: 20px;
+	margin-bottom:20px;
+	font-weight: bold;
+	overflow: hidden;
+	/*min-height: 150px;*/
+}
+
+#divcontent .divbotton .div7 {
+	width: 900px;
+	margin-left: 49px;
+}
+
+#divcontent .divbotton .div7 div {
+	margin-bottom: 10px;
+}
+
+#divcontent .divbotton .divnodetitle {
+	/*width: 943px;*/
+	height: 50px;
+	background-color: #F5F5F5;
+	/*position: relative;*/
+	/*bottom: 150px;*/
+}
+
+#divcontent .divbotton .divnodetitle>span {
+	line-height: 50px;
+	padding-right: 130px;
+}
+
+#divcontent .divbotton .divnodetitle .spannodeone {
+	border: 1px solid #2F96E9;
+	line-height: 20px;
+	padding: 3px 20px;
+	background-color: #2F96E9;
+	margin-top: 12px;
+	border-radius: 3px;
+	margin-left: 49px;
+	color: white;
+	cursor: pointer;
+}
+
+#divcontent .divbotton .divnodetitle .spantotalnodes {
+	margin-left: 1px;
+	line-height: 50px;
+	font-size: 14px;
+}
+
+#divcontent .divbotton .divnodetitle span {
+	line-height: 20px;
+	margin-right: 25px;
+}
+
+#divcontent .divbotton .divnodetitle .spanques {
+	float: right;
+	/*border: 1px solid #2F96E9;*/
+	padding: 4px 18px;
+	margin-top: 11px;
+	background-color: #2F96E9;
+	border-radius: 3px;
+	color: white;
+	font-size: 14px;
+}
+
+
+/*设置没找到资源的img大小*/
+
+.divvideo img {
+	position: relative;
+	/*bottom: 25px;*/
+	width: 161px;
+	height: 86px;
+}
+
+.divvideo {
+	float: right;
+	margin-right: 30px;
+	text-align: center;
+	margin-bottom: 20px;
+}
+
+.divvideo .computer {
+	font-size: 14px;
+	margin-top: 15px !important;
+	width: 80px;
+	margin: 0 auto;
+	background-color: #FE6422;
+	color: #FFFFFF;
+	padding: 7px 14px;
+}
+
+.nodes table {
+	width: 100%;
+}
+
+.nodes table td {
+	border-bottom: dashed 1px #DCDCDC;
+	padding: 10px;
+}
+
+.nodes table td .spanName {
+	font-size: 13px;
+	color: #007AFF;
+	margin-left: 30px;
+}
+.nodes table td .spanUserPhoto img
+{
+	width: 20px;
+	height: 20px;
+	border-radius: 50%;
+	position: absolute;
+}
+.nodes table td .spanTime {
+	font-size: 14px;
+	color: #939393;
+}
+
+.nodes table td .spanContent {
+	display: block;
+	padding-top: 15px;
+	padding-bottom: 5px;
+	font-size: 14px;
+	position: relative;
+}
+/*=======纠错回复*/
+.replay{
+	display: inline-block;
+	margin-left: 20px;
+	padding-left: 20px;
+	font-size: 13px;
+	color: #FE6422;
+	background: url('../images/replay.png') no-repeat left center;
+}
+.error_replay{
+	/*padding-left: 30px;*/
+	/*position: absolute;*/
+}
+#alert_replay{
+	display: none;
+}
+.error_replay_cont {
+	border: 1px solid #ccc ;
+	border-radius: 5px;
+}
+.error_replay_cont textarea{
+	min-height: 50px;
+	width: 98%;
+	font-size: 13px;
+	padding: 10px;
+	outline: none;
+	border: none;
+	resize: none;
+}
+.issue{
+	font-size: 14px;
+	border-top: 1px solid #ccc;
+	line-height: 26px;
+	text-align: right;
+	
+}
+.issue span{
+	padding:0 30px;
+	cursor: pointer;
+	display: inline-block;
+	border-left:1px solid #ccc;
+}
+.issue a{
+	cursor: pointer;
+	display: block;
+	float:left;	
+	width: 26px;
+	height: 26px;
+	z-index: 999;
+	background: url('../images/sq.png') no-repeat 10px center;
+}
+.issue:hover{
+	background: #eee;
+}
+/*========回复信息*/
+.error_replay-infor{
+	margin-left: 30px;
+	margin-top: 15px;
+	padding-top: 15px;
+	border-top: 1px solid #eee;
+}
+.nodes table td .error_replay-infor .spanUserPhoto img {
+    border-radius: 2px;
+    height: 20px;
+    position: absolute;
+    width: 20px;
+}
+
+
+.divPage{
+	margin-top: 10px;
+	width: 1200px;
+	height: 70px;
+	text-align: center;
+	line-height: 70px;
+	clear: both;
+}
+.divPage a{
+	padding: 6px 12px;
+	border: solid 1px #DCDCDC;
+	border-radius: 6px;
+	font-size: 14px;
+	color: #999;
+	text-decoration: none;
+}
+.divPage a:hover{
+	background: #BFBFC7;
+	color: white;
+}
+.divPage .curr{
+	border: solid 1px #BFBFC7;
+	background: #BFBFC7;
+	color: white;
+}
+.divPage .disabled
+{
+	display: none;
+}

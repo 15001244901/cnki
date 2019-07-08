@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hsun.ywork.modules.user.dao.UserQuestionDao">
+    
+	<sql id="userQuestionColumns">
+		a.id AS "id",
+		a.dtype as "dtype",
+		a.wtype as "wtype",
+		a.uid AS "uid",
+		a.qid AS "qid",
+		a.qtype as "qtype",
+		a.ukey as "ukey",
+		a.topic as "topic",
+		a.bizid as "bizid"
+	</sql>
+	
+	<sql id="userQuestionJoins">
+	</sql>
+
+	<sql id="questionColumns">
+		a.id AS "id",
+		a.qno as "qno",
+		a.subject as "subject",
+		a.topic as "topic",
+		a.post as "post",
+		a.q_dbid AS "qDbid",
+		a.q_type AS "qType",
+		a.q_level AS "qLevel",
+		a.q_from AS "qFrom",
+		a.q_status AS "qStatus",
+		a.q_content AS "qContent",
+		a.q_key AS "qKey",
+		a.q_resolve AS "qResolve",
+		a.q_data AS "qData",
+		a.q_keyword AS "qKeyword",
+		a.q_stdid AS "qStdid",
+		a.create_by AS "createBy.id",
+		u1.name as "createBy.name",
+		u2.name as "updateBy.name",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.del_flag AS "delFlag",
+		a.q_remark AS "qRemark"
+	</sql>
+
+	<sql id="questionJoins">
+		left outer join sys_user u1 on(u1.id = a.create_by)
+		left outer join sys_user u2 on(u2.id = a.update_by)
+	</sql>
+    
+	<select id="get" resultType="UserQuestion">
+		SELECT 
+			<include refid="userQuestionColumns"/>
+		FROM yw_user_question a
+		<include refid="userQuestionJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="UserQuestion">
+		SELECT 
+			<include refid="userQuestionColumns"/>
+		FROM yw_user_question a
+		<include refid="userQuestionJoins"/>
+		<where>
+			<if test="uid != null and uid != ''">
+				AND a.uid = #{uid}
+			</if>
+			<if test="qid != null and qid != ''">
+				AND a.qid = #{qid}
+			</if>
+			<if test="dtype != null and dtype != ''">
+				AND a.dtype = #{dtype}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="UserQuestion">
+		SELECT 
+			<include refid="userQuestionColumns"/>
+		FROM yw_user_question a
+		<include refid="userQuestionJoins"/>
+		<where>
+			
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO yw_user_question(
+			id,
+			dtype,
+			wtype,
+			uid,
+			qid,
+			ukey,
+			qtype,
+			topic,
+			bizid,
+			create_date
+		) VALUES (
+			#{id},
+			#{dtype},
+			#{wtype},
+			#{uid},
+			#{qid},
+			#{ukey},
+			#{qtype},
+			#{topic},
+			#{bizid},
+			now()
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE yw_user_question SET 	
+			dtype = #{dtype},
+			wtype = #{wtype},
+			uid = #{uid},
+			qid = #{qid},
+			ukey = #{ukey},
+			qtype = #{qtype},
+			topic = #{topic},
+			bizid = #{bizid},
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		DELETE FROM yw_user_question
+		WHERE id = #{id}
+	</update>
+
+	<update id="deleteByUidAndQid">
+		DELETE FROM yw_user_question
+		WHERE uid = #{uid} and qid = #{qid}
+	</update>
+
+	<!-- 删除每日一练记录 -->
+	<update id="deleteUserDayQuestion">
+		DELETE FROM yw_user_question
+		WHERE uid = #{uid} and dtype = 4
+	</update>
+
+	<!-- 删除指定类型的记录（练习、考试、错题） -->
+	<update id="deleteUserQuestion">
+		DELETE FROM yw_user_question
+		WHERE uid = #{uid}
+		<choose>
+			<when test="topic!=null and topic!=''">
+				AND topic in
+				<foreach item="item" index="index" collection="topicList" open="(" separator="," close=")">
+					#{item}
+				</foreach>
+			</when>
+		  	<otherwise>
+				AND topic is null or topic = ''
+			</otherwise>
+		</choose>
+		<if test="dtype!=null and dtype!=''">
+			AND dtype = #{dtype}
+		</if>
+		<if test="wtype!=null and wtype!=''">
+			AND wtype = #{wtype}
+		</if>
+	</update>
+
+	<!-- 根据业务id和记录类型删除记录（练习、考试） -->
+	<update id="deleteByDtypeAndBizid">
+		DELETE FROM yw_user_question
+		WHERE dtype = #{dtype} and bizid = #{bizid}
+	</update>
+
+	<!-- 按知识点练习用 -->
+	<select id="countPractice" resultType="java.util.Map">
+		select
+			d.label as topicname ,
+			d.id as id ,
+			d.parent_id as pid ,
+			(select case when count(*)>0 then 1 else 0 end as isleaf from sys_dict c where c.type = 'dic_exam_questiontopic' and c.parent_id = d.id and c.del_flag = 0) as isleaf ,
+			d.value as topic ,
+			count(u.qid) as unum ,
+			count(q.id) as qnum
+		from sys_dict d left outer join yw_exam_question q
+    on(q.topic = d.value and q.del_flag = 0 and q.q_status = 1)
+		left outer join (select DISTINCT uid,qid,dtype FROM yw_user_question where uid = #{uid} and dtype = 2) u
+		on(q.id = u.qid)
+		where d.del_flag = 0 and d.type = 'dic_exam_questiontopic'
+		group by d.id
+		order by d.sort
+	</select>
+
+	<!-- 试题篮试题分类用 -->
+	<select id="countQuestionBasket" resultType="java.util.Map">
+		select
+		(select d.label from sys_dict d where d.type = 'dic_exam_questiontype' and d.`value` = q.qtype) as qtypelabel ,
+		q.qtype as qtype ,
+		count(q.id) as qnum
+		from yw_user_question q
+		where q.uid = #{uid} and q.dtype = 5
+		group by q.qtype
+	</select>
+
+	<update id="deleteByUidAndQtype">
+		DELETE FROM yw_user_question
+		WHERE uid = #{uid} and qtype = #{qtype}
+	</update>
+
+	<select id="findUserNotPracticeList" resultType="Question">
+		SELECT
+		<include refid="questionColumns"/>
+		FROM yw_exam_question a
+		<include refid="questionJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="userQuestion != null and userQuestion.uid != null and userQuestion.uid != ''">
+				AND a.id NOT IN(select DISTINCT qid from yw_user_question where uid = #{userQuestion.uid} and dtype = 2)
+			</if>
+			<choose>
+				<when test="topic != null and topic != ''">
+					AND a.topic in
+					<foreach item="item" index="index" collection="topicList" open="(" separator="," close=")">
+						#{item}
+					</foreach>
+				</when>
+				<otherwise>
+					AND (a.topic is null or a.topic = '')
+				</otherwise>
+			</choose>
+			<if test="qType != null and qType != ''">
+				AND a.q_type = #{qType}
+			</if>
+			<if test="qStatus != null and qStatus != ''">
+				AND a.q_status = #{qStatus}
+			</if>
+			<if test="post != null and post != ''">
+				AND a.post in (${post})
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.create_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+</mapper>

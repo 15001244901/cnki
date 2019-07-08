@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hsun.ywork.modules.doc.dao.DocInfoDirectoryDao">
+    
+	<sql id="docInfoDirectoryColumns">
+		a.id AS "id",
+		a.parent_id AS "parent.id",
+		a.parent_ids AS "parentIds",
+		a.name AS "name",
+		a.dtype as "dtype",
+		a.rtype AS "rtype",
+		a.type AS "type",
+		a.sort AS "sort",
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.remarks AS "remarks",
+		a.del_flag AS "delFlag" ,
+		(select id from yw_docinfo where directoryid = a.id and del_flag = 0 limit 1) as docId
+		<if test="uid != null and uid != ''">
+			,ud.id as iscollected
+		</if>
+	</sql>
+	
+	<sql id="docInfoDirectoryJoins">
+		<if test="uid != null and uid != ''">
+		LEFT OUTER JOIN yw_user_docinfo ud ON(ud.did = a.id and ud.uid = #{uid})
+		</if>
+	</sql>
+    
+	<select id="get" resultType="DocInfoDirectory">
+		SELECT
+		a.id AS "id",
+		a.parent_id AS "parent.id",
+		a.parent_ids AS "parentIds",
+		a.name AS "name",
+		a.dtype as "dtype",
+		a.rtype AS "rtype",
+		a.type AS "type",
+		a.sort AS "sort",
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.remarks AS "remarks",
+		a.del_flag AS "delFlag"
+		FROM yw_docinfo_directory a
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="DocInfoDirectory">
+		SELECT 
+			<include refid="docInfoDirectoryColumns"/>
+		FROM yw_docinfo_directory a
+		<include refid="docInfoDirectoryJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="parent != null and parent.id != null and parent.id != ''">
+				AND a.parent_id = #{parent.id}
+			</if>
+			<if test="parentIds != null and parentIds != ''">
+				AND a.parent_ids LIKE 
+					<if test="dbName == 'oracle'">'%'||#{parentIds}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{parentIds}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{parentIds},'%')</if>
+			</if>
+			<if test="name != null and name != ''">
+				AND a.name LIKE
+					<if test="dbName == 'oracle'">'%'||#{name}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{name}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{name},'%')</if>
+			</if>
+			<if test="rtype != null and rtype != ''">
+				AND a.rtype = #{rtype}
+			</if>
+			<if test="dtype != null and dtype != ''">
+				AND a.dtype = #{dtype}
+			</if>
+		</where>
+		ORDER BY a.sort ASC
+	</select>
+	
+	<select id="findAllList" resultType="DocInfoDirectory">
+		SELECT 
+			<include refid="docInfoDirectoryColumns"/>
+		FROM yw_docinfo_directory a
+		<include refid="docInfoDirectoryJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>
+		ORDER BY a.sort ASC
+	</select>
+	
+	<select id="findByParentIdsLike" resultType="DocInfoDirectory">
+		SELECT
+			a.id,
+			a.parent_id AS "parent.id",
+			a.parent_ids
+		FROM yw_docinfo_directory a
+		<include refid="docInfoDirectoryJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			AND a.parent_ids LIKE #{parentIds}
+		</where>
+		ORDER BY a.sort ASC
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO yw_docinfo_directory(
+			id,
+			parent_id,
+			parent_ids,
+			name,
+			dtype,
+			rtype,
+			type,
+			sort,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			remarks,
+			del_flag
+		) VALUES (
+			#{id},
+			#{parent.id},
+			#{parentIds},
+			#{name},
+			#{dtype},
+			#{rtype},
+			#{type},
+			#{sort},
+			#{createBy.id},
+			#{createDate},
+			#{updateBy.id},
+			#{updateDate},
+			#{remarks},
+			#{delFlag}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE yw_docinfo_directory SET 	
+			parent_id = #{parent.id},
+			parent_ids = #{parentIds},
+			name = #{name},
+			dtype = #{dtype},
+			rtype = #{rtype},
+			type = #{type},
+			sort = #{sort},
+			update_by = #{updateBy.id},
+			update_date = #{updateDate},
+			remarks = #{remarks}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="updateParentIds">
+		UPDATE yw_docinfo_directory SET 
+			parent_id = #{parent.id}, 
+			parent_ids = #{parentIds}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		UPDATE yw_docinfo_directory SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id} OR parent_id = #{id}
+	</update>
+
+	<select id="findListByUid" resultType="DocInfoDirectory">
+		SELECT
+		<include refid="docInfoDirectoryColumns"/>
+		FROM yw_docinfo_directory a
+		<include refid="docInfoDirectoryJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="uid != null and uid != ''">
+				AND a.id in(select did from yw_user_docinfo where uid = #{uid})
+			</if>
+			<if test="parent != null and parent.id != null and parent.id != ''">
+				AND a.parent_id = #{parent.id}
+			</if>
+			<if test="parentIds != null and parentIds != ''">
+				AND a.parent_ids LIKE
+				<if test="dbName == 'oracle'">'%'||#{parentIds}||'%'</if>
+				<if test="dbName == 'mssql'">'%'+#{parentIds}+'%'</if>
+				<if test="dbName == 'mysql'">concat('%',#{parentIds},'%')</if>
+			</if>
+			<if test="name != null and name != ''">
+				AND a.name LIKE
+				<if test="dbName == 'oracle'">'%'||#{name}||'%'</if>
+				<if test="dbName == 'mssql'">'%'+#{name}+'%'</if>
+				<if test="dbName == 'mysql'">concat('%',#{name},'%')</if>
+			</if>
+			<if test="rtype != null and rtype != ''">
+				AND a.rtype = #{rtype}
+			</if>
+			<if test="dtype != null and dtype != ''">
+				AND a.dtype = #{dtype}
+			</if>
+		</where>
+		ORDER BY a.sort ASC
+	</select>
+	
+</mapper>

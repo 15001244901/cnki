@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="QaMapper">
+
+	<resultMap id="QaResult" type="com.hsun.ywork.modules.qa.entity.Qa">
+		<result property="id" column="ID" />
+		<result property="cusId" column="CUS_ID" />
+		<result property="title" column="TITLE" />
+		<result property="content" column="CONTENT" />
+		<result property="type" column="TYPE" />
+		<result property="status" column="STATUS" />
+		<result property="replyCount" column="REPLY_COUNT" />
+		<result property="browseCount" column="BROWSE_COUNT" />
+		<result property="praiseCount" column="PRAISE_COUNT" />
+		<result property="addTime" column="ADD_TIME" />
+		
+		<result property="showName" column="showName" />
+		<result property="email" column="email" />
+		<result property="picImg" column="picImg" />
+	</resultMap>
+	
+	<!-- 表全部的属性 -->
+	<sql id="yw_qa_columns">
+		yw_qa.ID,
+		yw_qa.CUS_ID,
+		yw_qa.TITLE,
+		yw_qa.CONTENT,
+		yw_qa.TYPE,
+		yw_qa.STATUS,
+		yw_qa.REPLY_COUNT,
+		yw_qa.BROWSE_COUNT,
+		yw_qa.PRAISE_COUNT,
+		yw_qa.ADD_TIME
+	</sql>
+
+	<sql id="yw_qa_properties">
+		#{id},
+		#{cusId},
+		#{title},
+		#{content},
+		#{type},
+		#{status},
+		#{replyCount},
+		#{browseCount},
+		#{praiseCount},
+		#{addTime}
+	</sql>
+
+	<!-- 添加问答 -->
+	<insert id="createQuestions" parameterType="com.hsun.ywork.modules.qa.entity.Qa"
+		useGeneratedKeys="true" keyColumn="id" keyProperty="id">
+		insert INTO yw_qa (
+		<include refid="yw_qa_columns" />
+		) VALUES (
+		<include refid="yw_qa_properties" />
+		)
+	</insert>
+
+	<!-- 删除问答 -->
+	<delete id="deleteQuestionsById" parameterType="long">
+		delete from
+		yw_qa
+		where
+		id = #{value}
+	</delete>
+	
+	<!-- 更新问答 -->
+	<update id="updateQuestions" parameterType="com.hsun.ywork.modules.qa.entity.Qa">
+		update
+		yw_qa
+		SET
+		ID = #{id},
+		CUS_ID = #{cusId},
+		CONTENT = #{content},
+		TYPE = #{type},
+		STATUS = #{status},
+		REPLY_COUNT = #{replyCount},
+		BROWSE_COUNT= #{browseCount},
+		PRAISE_COUNT= #{praiseCount},
+		ADD_TIME = #{addTime}
+		where
+		id =#{id}
+	</update>
+	
+	<!-- 通过id查询问答 -->
+	<select id="getQuestionsById" resultMap="QaResult"
+		parameterType="long">
+		select
+		<include refid="yw_qa_columns" />
+		,sys_user.NAME as showName,sys_user.EMAIL as email ,sys_user.PHOTO as picImg
+		from yw_qa
+		left join sys_user on sys_user.ID=yw_qa.CUS_ID
+		where
+		yw_qa.id = #{value}
+	</select>
+
+	<!-- 查询问答列表 -->
+	<select id="getQuestionsList" resultMap="QaResult" parameterType="java.util.HashMap">
+		select
+		distinct(yw_qa.id),
+		<include refid="yw_qa_columns" />
+		,sys_user.NAME as showName,sys_user.EMAIL as email ,sys_user.PHOTO as picImg
+		from yw_qa
+		left join sys_user on sys_user.ID=yw_qa.CUS_ID
+		left join `yw_qa_tag_relation` on `yw_qa_tag_relation`.QUESTIONS_ID = yw_qa.ID
+		left join `yw_qa_comment` on `yw_qa_comment`.QUESTION_ID = yw_qa.ID
+		<where>
+			<if test="e.id!=null and e.id!=0">
+				and yw_qa.ID = #{e.id}
+			</if>
+			<if test="e.title!=null and e.title!=''">
+				and <![CDATA[ yw_qa.TITLE like CONCAT('%',#{e.title},'%') ]]>
+			</if>
+			<if test="e.type != 0">
+				and yw_qa.TYPE = #{e.type}
+			</if>
+			<if test="e.orderFalg=='status0'">
+				and yw_qa.status =#{e.status}
+			</if>
+			<if test="e.questionsTagId!=null and e.questionsTagId!=0">
+				and yw_qa_tag_relation.QUESTIONS_TAG_ID=#{e.questionsTagId}
+			</if>
+			<if test="e.beginCreateTime!=null and e.beginCreateTime!='' ">
+                 AND <![CDATA[yw_qa.ADD_TIME>#{e.beginCreateTime} ]]>
+             </if>
+             <if test="e.endCreateTime!=null and e.endCreateTime!='' ">
+                 AND <![CDATA[yw_qa.ADD_TIME<#{e.endCreateTime} ]]>
+             </if>
+             <if test="e.cusId!=null and e.cusId!=''"><!-- 我的提问  -->
+				and yw_qa.CUS_ID = #{e.cusId}
+			</if>
+			<if test="e.commentUserId !=null and e.commentUserId !=''"><!-- 我的回答  -->
+				and yw_qa.CUS_ID != #{e.commentUserId} and yw_qa_comment.CUS_ID=#{e.commentUserId}
+			</if>
+		</where>
+		<if test="e.orderFalg=='addTime'">
+			order by yw_qa.ADD_TIME desc
+		</if>
+		<if test="e.orderFalg=='replycount'">
+			order by yw_qa.REPLY_COUNT desc
+		</if>
+		<include refid="publicMapper.pageEnd" />
+	</select>
+
+	<select id="getQuestionsListCount" resultType="int"
+		parameterType="java.util.HashMap">
+		select
+		COUNT(distinct(yw_qa.id))
+		from yw_qa
+		left join `yw_qa_tag_relation` on `yw_qa_tag_relation`.QUESTIONS_ID = yw_qa.ID
+		left join `yw_qa_comment` on `yw_qa_comment`.QUESTION_ID = yw_qa.ID
+		<where>
+			<if test="e.id!=null and e.id!=0">
+				and yw_qa.ID = #{e.id}
+			</if>
+			<if test="e.title!=null and e.title!='' ">
+				and <![CDATA[ yw_qa.TITLE like CONCAT('%',#{e.title},'%') ]]>
+			</if>
+			<if test="e.type != 0">
+				and yw_qa.TYPE = #{e.type}
+			</if>
+			<if test="e.orderFalg=='status0'">
+				and yw_qa.status =#{e.status}
+			</if>
+			<if test="e.questionsTagId!=null and e.questionsTagId!=0">
+				and yw_qa_tag_relation.QUESTIONS_TAG_ID=#{e.questionsTagId}
+			</if>
+			<if test="e.beginCreateTime!=null and e.beginCreateTime!='' ">
+                 AND <![CDATA[yw_qa.ADD_TIME>#{e.beginCreateTime} ]]>
+             </if>
+             <if test="e.endCreateTime!=null and e.endCreateTime!='' ">
+                 AND <![CDATA[yw_qa.ADD_TIME<#{e.endCreateTime} ]]>
+             </if>
+             <if test="e.cusId!=null and e.cusId!=''"><!-- 我的提问  -->
+				and yw_qa.CUS_ID = #{e.cusId}
+			</if>
+			<if test="e.commentUserId !=null and e.commentUserId !=''"><!-- 我的回答  -->
+				and yw_qa.CUS_ID != #{e.commentUserId} and yw_qa_comment.CUS_ID=#{e.commentUserId}
+			</if>
+		</where>
+	</select>
+	
+	<select id="queryQuestionsOrder" parameterType="java.util.HashMap"
+		resultMap="QaResult">
+		select
+		<include refid="yw_qa_columns" />
+		from yw_qa
+		order by yw_qa.REPLY_COUNT desc,yw_qa.PRAISE_COUNT desc,yw_qa.BROWSE_COUNT desc
+		limit #{size}
+	</select>
+	
+	<select id="queryAllQuestionsCount" resultType="int">
+		select count(1) from yw_qa
+	</select>
+</mapper>

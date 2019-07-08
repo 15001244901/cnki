@@ -1,0 +1,270 @@
+/* 试题练习页面
+   ========================================================================== */
+#practice_form{
+	height: 100%;
+}
+input,textarea {
+	/*box-sizing:border-box;
+	-moz-box-sizing:border-box; 
+	-webkit-box-sizing:border-box; */
+	-webkit-appearance:none; /*去除input默认样式*/
+}
+.page{
+	bottom: 0;
+	background: #FAFAFA;
+}
+.page_html{
+    height: 1.333333rem;
+    line-height: 1.333333rem;
+    align-items:center;
+}
+.page_html .page_list{
+	width: 25%;
+}
+.page .page_btnl .icon,.page .page_btnr .icon{
+	font-size: 0.5rem;
+}
+.page .page_btnl.color_default .icon,.page .page_btnr.color_default .icon{
+	color: #999;
+}
+.page .page_table ,.page .page_answer{
+	line-height: 0.5rem;
+	display: flex;
+	-webkit-display:flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+	font-size: 0.3rem;
+
+}
+
+.page .page_table .icon,.page .page_answer .icon{
+	font-size: 0.5rem;
+}
+
+/*试题-题头*/
+.daily_pra_title{
+	justify-content: space-between;
+	line-height: 1rem;
+	width:100%;
+	border-bottom:0.013333rem solid #ddd;
+	position: absolute;
+	top: 1.333333rem;
+	box-sizing:border-box;
+	-moz-box-sizing:border-box; /* Firefox */
+	-webkit-box-sizing:border-box; /* Safari */
+}
+.daily_pra_title span,.daily_pra_title span em{
+	font-size: 0.426667rem;
+}
+.daily_pra_title span em{
+	font-size: 0.4rem;
+}
+.daily_pra_title span b{
+	font-size: 0.5rem;
+}
+.daily_pra_title span i{
+	font-size: 0.346667rem;
+	font-style: normal;
+}
+
+/*试题-内容*/
+.swiper-container{
+	min-height: 100%;
+}
+.daily_ques .question_cont{
+	line-height:0.666667rem;
+	font-size: 0.4rem;
+	padding-top: 0.133333rem;
+	padding-bottom: 0.133333rem;
+	color: #333;
+	font-weight: 500;
+	white-space:normal; 
+	word-break:break-all;
+}
+.daily_ques .question_option{
+
+}
+.daily_ques .question_option .question_option_item{
+	/*justify-content: space-between;*/
+	font-size: 0.373333rem;
+	line-height:0.586667rem;
+	padding:0.2rem 0;
+	padding-left: 0.266667rem;
+	color: #444;
+	border-bottom:0.026667rem dotted #ddd;
+}
+.daily_ques .question_option textarea{
+	height: 3rem;
+	width: 90%;
+	color: #555;
+	padding:0.266667rem;
+	border:1px solid #777;
+	margin-bottom: 0.133333rem;
+	margin-left: 0.2rem;
+	margin-top: 0.2rem;
+	margin-bottom: 0.2rem;
+	font-size:0.373333rem;
+
+	box-sizing:border-box;
+	-moz-box-sizing:border-box; /* Firefox */
+	-webkit-box-sizing:border-box; /* Safari */
+}
+.daily_ques .question_option .question_option_item input[type=text]{
+	padding: 0.266667rem;
+	width: 96%;
+	border:0.013333rem solid #777;
+	color: #555;
+
+	box-sizing:border-box;
+	-moz-box-sizing:border-box; /* Firefox */
+	-webkit-box-sizing:border-box; /* Safari */
+}
+.daily_ques .question_option .question_option_item label{
+	/*flex-grow: 1;*/
+	width: 0.533333rem;
+	height: 0.533333rem;
+	border-radius: 50%;
+	align-items: center;
+	justify-content: center;
+	padding:0.2rem;
+	flex-shrink:0;
+
+}
+.daily_ques .question_option.type_2 .question_option_item label{
+	border-radius: 15%;
+}
+.daily_ques .question_option .question_option_item span{
+	flex-grow: 1;
+	margin-left: 0.2rem;
+	align-items: center;
+	font-weight: 400;
+}
+
+.daily_ques .question_answer{
+	background: #FAFAFA;
+	margin-top: 0.266667rem;
+	padding:0.266667rem;
+}
+.daily_ques .question_answer .show_descript{
+	height: 0.666667rem;
+	line-height: 0.666667rem;
+	padding:0 0.266667rem;
+	font-size: 0.4rem;
+	color: #fff;
+	display: inline-block;
+	background: #FE6E3E;
+	border-top-left-radius: 0.2rem;
+	border-top-right-radius: 0.2rem;
+}
+.daily_ques .question_answer .show_answer,.daily_ques .question_answer .show_infor{
+	font-size: 0.32rem;
+	padding:0.2rem;
+	background: #fff;
+	border:0.013333rem solid #ddd;
+}
+.show_answer .my_answer_content,.question_answer .answer_content,.show_infor .show_analysis_cont{
+	display: inline-block;
+	line-height: 0.533333rem;
+	font-weight: 500;
+	color: #555;
+}
+.type5 .question_answer .answer_content{
+	display: block;
+}
+.show_list em,.show_answer em{
+	color: #888;
+}
+.show_answer .my_answer,.show_infor .show_list{
+	margin-bottom: 0.2rem;
+}
+.show_lever span{
+	color: #FE6E3E;
+}
+.daily_ques .question_answer .show_infor{
+	margin-top: 0.266667rem;
+}
+.show_infor .show_analysis {
+	margin-bottom: 0;
+}
+/* 答题卡
+   ========================================================================== */
+.question_table{
+	position: absolute;
+	top: 100vh;
+	bottom: 0;
+	width: 100%;
+	z-index: 9;
+	overflow: hidden;
+	/*opacity: 0;*/
+	transition: all 0.3s;
+	-webkit-transition:all 0.3;
+	-moz-transition:all 0.3;
+	-o-transition:all 0.3;
+	background: #fff;
+}
+
+.flex_table{
+	display: flex;
+	-webkit-display:flex;
+	-webkit-flex-direction:column;
+	flex-direction:column;
+}
+.flex_main{
+	-webkit-box-flex: 1;
+	-webkit-flex: 1;
+	-ms-flex: 1;
+	flex: 1;
+	width: 100%;
+	height: 100%;
+	overflow-y: scroll;
+	-webkit-overflow-scrolling: touch;
+}
+.question_table_list div{
+	margin-top: 0.266667rem;
+	padding: 0.2rem;
+}
+.question_table_list div span{
+	width:1.066667rem;
+	height:1.066667rem;
+	text-align: center;
+	line-height: 1.066667rem;
+	border-radius: 0.08rem;
+	font-weight: 500;
+	font-size: 0.4rem;
+	border:1px solid #ddd;
+	margin:0.133333rem;
+}
+.question_table_list div .now_pos{
+	border-radius: 50%;
+}
+.question_table_list div span.bg_success,.question_table_list div span.bg_danger{
+	color: #fff;
+}
+.table_warn{
+	height:0.8rem;
+	line-height:0.8rem;
+	font-size: 0.346667rem
+}
+.table_warn span{
+	margin:0 0.133333rem;
+}
+.table_warn i{
+	display: inline-block;
+	width: 0.293333rem;
+	height: 0.293333rem;
+	margin-right: 0.066667rem;
+	border-radius: 0.026667rem;
+	border:1px solid #ddd;
+	position: relative;
+	top: 0.026667rem;
+}
+.table_warn .now_pos{
+	border-radius: 50%;
+}
+
+/* 考试页面
+   ========================================================================== */
+.confirm_shade{
+	z-index: 9;
+}

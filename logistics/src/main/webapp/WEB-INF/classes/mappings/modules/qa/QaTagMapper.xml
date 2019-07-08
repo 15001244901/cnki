@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="QaTagMapper" >
+
+    <resultMap id="QaTagResult" type="com.hsun.ywork.modules.qa.entity.QaTag">
+    <result property="questionsTagId" column="QUESTIONS_TAG_ID" />
+    <result property="questionsTagName" column="QUESTIONS_TAG_NAME" />
+    <result property="status" column="STATUS" />
+    <result property="createTime" column="CREATE_TIME" />
+    <result property="parentId" column="PARENT_ID" />
+    </resultMap>
+
+    <sql id="yw_qa_tag_columns">
+    YW_QA_TAG.QUESTIONS_TAG_ID,
+    YW_QA_TAG.QUESTIONS_TAG_NAME,
+    YW_QA_TAG.STATUS,
+    YW_QA_TAG.CREATE_TIME,
+    YW_QA_TAG.PARENT_ID
+    </sql>
+
+    <sql id="yw_qa_tag_properties">
+    #{questionsTagId},
+    #{questionsTagName},
+    #{status},
+    #{createTime},
+    #{parentId}
+    </sql>
+
+	<!-- 添加专业 -->
+    <insert id="createQuestionsTag" parameterType="com.hsun.ywork.modules.qa.entity.QaTag" useGeneratedKeys="true" keyColumn="QUESTIONS_TAG_ID" keyProperty="questionsTagId">
+    INSERT INTO YW_QA_TAG (<include refid="yw_qa_tag_columns"/>)
+    VALUES (<include refid="yw_qa_tag_properties"/>)
+    </insert>
+	
+	<!-- 查询所有专业列表 -->
+	<select id="getQuestionsTagList" parameterType="com.hsun.ywork.modules.qa.entity.QaTag" resultMap="QaTagResult">
+	SELECT <include refid="yw_qa_tag_columns"/> FROM YW_QA_TAG
+	WHERE YW_QA_TAG.STATUS=0
+	<if test="parentId>0">
+	AND YW_QA_TAG.PARENT_ID = #{parentId}
+	</if>
+	<if test="questionsTagId>0">
+	AND YW_QA_TAG.QUESTIONS_TAG_ID=#{questionsTagId}
+	</if>
+    ORDER BY YW_QA_TAG.PARENT_ID,YW_QA_TAG.QUESTIONS_TAG_ID
+	</select>
+	<!-- 修改专业父ID -->
+	<update id="updateQuestionsTagParentId" parameterType="java.util.Map">
+	UPDATE YW_QA_TAG SET
+	YW_QA_TAG.PARENT_ID=#{parentId}
+	WHERE YW_QA_TAG.QUESTIONS_TAG_ID=#{questionsTagId}
+	</update>
+	<!-- 修改专业名 -->
+	<update id="updateQuestionsTag" parameterType="com.hsun.ywork.modules.qa.entity.QaTag">
+	UPDATE YW_QA_TAG SET
+	YW_QA_TAG.QUESTIONS_TAG_NAME=#{questionsTagName}
+	WHERE YW_QA_TAG.QUESTIONS_TAG_ID=#{questionsTagId}
+	</update>
+	<!-- 设置专业的状态为删除状态 -->
+	<update id="deleteQuestionsTag" parameterType="int">
+	UPDATE YW_QA_TAG SET STATUS=1 WHERE YW_QA_TAG.QUESTIONS_TAG_ID=#{value}
+	</update>
+</mapper>

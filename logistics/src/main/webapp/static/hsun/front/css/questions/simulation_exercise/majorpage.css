@@ -1,0 +1,968 @@
+body {
+	font-family: "Helvetica Neue", Helvetica, Arial, "Microsoft Yahei UI", "Microsoft YaHei", SimHei, "\5B8B\4F53", simsun, sans-serif;
+}
+* {
+	padding: 0;
+	margin: 0;
+}
+
+#JKDiv_0,
+#JKDiv_1,
+#JKDiv_2 {
+	background-color: white;
+	box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.08);
+	margin: 0 auto;
+	width: 1200px;
+	margin-top: 15px;
+	margin-bottom: 20px;
+	min-height: 400px;
+}
+
+.navigation_bar {
+	text-align: center;
+	background-color: white;
+	height: 78px;
+	line-height: 93px;
+	margin: 20px auto -17px;
+	width: 1200px;
+	clear: both;
+	box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.08);
+}
+
+.navigation_bar span {
+	margin-left: 30px;
+	cursor: pointer;
+}
+
+
+/*下按知识点练习弹出框*/
+
+#div5 {
+	background-color: white;
+	width: 900px;
+	border: 1px solid #000000;
+	margin: 0 auto;
+	position: relative;
+	bottom: 270px;
+}
+
+#div5 .one5 {
+	position: absolute;
+	top: 10px;
+	float: right;
+	right: 12px;
+}
+
+a {
+	color: white;
+}
+
+
+/*弹出框内容*/
+
+#hr1 hr {
+	width: 90%;
+	height: 1px;
+	border: 0;
+	background-color: #F5F5F5;
+}
+
+#title {
+	/*width: 90%;*/
+	margin: 0 auto;
+	background-color: #F5F5F5;
+	line-height: 40px;
+	text-align: left;
+	padding-left: 20px;
+}
+
+
+/*加border*/
+
+#bodys {
+	border: 1px solid #F5F5F5;
+	width: 90%;
+	margin: 20px auto 0 auto;
+	text-align: center;
+	padding-top: 20px;
+	padding-bottom: 90px;
+}
+
+#title-two {
+	font-size: 17px;
+	color: #000000 !important;
+}
+
+#choice {
+	color: #000000 !important;
+}
+
+#ul li {
+	float: left;
+	margin-right: 50px;
+	width: 200px;
+	line-height: 30px;
+	border: 1px solid #35B056;
+	padding: 15px 0 0 0;
+	border-radius: 4px;
+	color: #35B056;
+	padding-bottom: 10px;
+	text-align: center;
+}
+
+.choice {
+	padding-bottom: 20px;
+}
+
+#ul {
+	margin: 20px 0 20px 170px;
+}
+
+#ul li .p5 {
+	color: #35B056;
+}
+
+
+/*上按知识点练习弹出框*/
+
+
+/*导航栏设置*/
+
+.parentDiv .navigation_bar {
+	clear: both;
+	height: 78px;
+	line-height: 90px;
+	font-family: PingFangSC-Regular;
+	font-size: 18px;
+	color: rgba(34, 34, 34, 0.6);
+	letter-spacing: 0;
+	margin: 0 auto;
+}
+
+.parentDiv .navigation_bar span {
+	margin-right: 30px;
+}
+
+
+/*知识点，已做总体数设置*/
+
+#head {
+	background-color: #F3F9FC;
+	width: 1200px;
+	height: 60px;
+	border-top: 2px solid #e3e4e4
+}
+
+#head span {
+	padding-right: 100px;
+	margin-left: 220px;
+}
+
+.navigation_bar .spansubjecttitle {
+	color: #30bf89;
+	border-bottom: 2px solid #30bf89;
+	padding-bottom: 20px;
+}
+
+
+/*下按知识点练习*/
+
+
+/*表头*/
+
+#divtitle .spansubject {
+	margin-left: 40px;
+}
+
+#divtitle .spantotal {
+	margin-left: 749px;
+}
+
+#divtitle .spanhandle {
+	margin-left: 225px;
+}
+
+
+/*表头*/
+
+#number2-1 {
+	margin-top: 0px;
+	width: 1200px;
+	min-height: 400px;
+	padding-bottom:60px;
+}
+
+#number2-1 #table {
+	width: 1160px;
+	text-align: left;
+	margin: 0 auto;
+	min-height: 250px;
+}
+
+#table tr {
+	width: 1160px;
+	line-height: 45px;
+}
+
+#table tr td {
+	border-bottom: 1px solid #ebebeb;
+}
+
+#number2-1 #table tr .td1 {
+	width: 70%;
+	padding-left: 20px;
+}
+
+#number2-1 #table tr .td2 {
+	width: 20%;
+}
+
+#number2-1 #table tr .td3 {
+	width: 20%;
+}
+
+.td1,
+.td2 {
+	font-family: PingFangSC-Regular;
+	font-size: 14px;
+	color: #222222;
+	letter-spacing: 0;
+	line-height: 14px;
+}
+
+#number2-1 #table tr .td3 a {
+	font-family: PingFangSC-Regular;
+	font-size: 12px;
+	color: rgba(34, 34, 34, 0.6) !important;
+	letter-spacing: 0;
+	width: 70px;
+	height: 27px;
+	padding: 4px 10px;
+	background: #FFFFFF;
+	border: 1px solid #C5C5C5;
+	border-radius: 3px;
+	position: relative;
+	left: 25px;
+	bottom: 1.5px;
+}
+
+#divtitle {
+	width: 1200px;
+	height: 45px;
+	line-height: 45px;
+	background-color: #F8F8F8;
+	border-bottom: 1px solid #EBEBEB;
+	border-top: 1px solid #EBEBEB;
+}
+
+#divtitle span {
+	float: left;
+}
+
+.spansubject,
+.spanhandle,
+.spantotal {
+	font-family: PingFangSC-Regular;
+	font-size: 14px;
+	color: #zzzzzz;
+	opacity: 0.8;
+	letter-spacing: 0;
+}
+
+
+/*上按知识点练习*/
+
+
+/*下智能组卷练习*/
+
+#table2 {
+	width: 1200px;
+	margin: 0 auto;
+	color: #7B7B7B;
+	background: #F3F9FC;
+	font-size: 14px;
+	color: rgba(34, 34, 34, 0.8);
+}
+
+input[type="text"] {
+	padding: 0 !important;
+}
+
+#table2 .firstChild td {
+	border-top: 2px solid #E3E4E4;
+}
+
+#table2 .twoChild {
+	border-bottom: 2px solid #93BACE;
+}
+
+#table2 .threeChild {
+	height: 95px;
+	border-bottom: 0;
+	background: white;
+}
+
+#table2 .threeChild {
+	border-top: 2px solid #93BACE;
+	border-bottom: 0;
+}
+
+#table2 .all td {
+	text-align: left;
+	width: 120px;
+	border-bottom: 1px solid #D6D0D0;
+}
+
+#table2 .last td {
+	border-bottom: 1px solid #D6D0D0;
+}
+
+#table2 .all {
+	line-height: 50px;
+	border-right: 0;
+	border-left: 0;
+}
+
+#table2 .last {
+	height: 50px;
+	width: 1200px;
+}
+
+#table2 .all td span {
+	margin-left: 30px;
+	text-align: left;
+	width: 120px;
+	display: block;
+	float: left;
+}
+#table2 .all td span a{
+	color: #999;
+	/*border: solid 1px #DCDCDC;*/
+	padding: 3px 10px;
+	border-radius: 4px;
+	cursor: pointer;
+}
+#table2 .all td span .active{
+	color: #999;
+	border: solid 1px #D2EDDA;
+	background: #D2EDDA;
+	padding: 3px 10px;
+	border-radius: 4px;
+	cursor: pointer;
+}
+#table2 .all td span a:hover{
+	background: #D2EDDA;
+	border: solid 1px #D2EDDA;
+
+}
+
+#table2 input {
+	width: 384px;
+	height: 30px;
+	background: #FFFFFF;
+	border: 1px solid #C5C5C5;
+	border-radius: 3px;
+	font-size: 12px;
+	color: rgba(34, 34, 34, 0.5);
+}
+
+input[type="range"] {
+	-webkit-appearance: none;
+	border: 0 solid #969896;
+	width: 800px;
+	padding: 0 !important;
+}
+
+#input {
+	width: 300px;
+	height: 30px;
+	float: left;
+	margin: 0 auto;
+	letter-spacing: 0;
+	font-family: PingFangSC-Regular;
+	font-size: 12px;
+	color: rgba(34, 34, 34, 0.5);
+	letter-spacing: 0;
+}
+
+
+/*设置滑块*/
+
+
+/*设置滑块*/
+
+#table2 .remark {
+	font-size: 12px;
+	color: #BFBFC0;
+	position: relative;
+	left: -5px;
+}
+
+#table2 .remark .radios {
+	display: block;
+	width: 5px;
+	height: 5px;
+	border-radius: 2.5px;
+	background-color: #F49600;
+	position: relative;
+	left: 35px;
+	top: 12px;
+}
+
+#table2 .first {
+	font-size: 14px;
+	color: #222222;
+	/*margin-left: -10px;*/
+}
+
+#table2 .first2 {
+	margin-right: 10px;
+}
+
+#click span {
+	position: relative;
+	top: 10px;
+	margin-right: 10px;
+}
+
+#click .change {
+	font-family: PingFangSC-Regular;
+	font-size: 14px;
+	color: #222222;
+	letter-spacing: 0;
+	padding: 7.5px 31px;
+	background: #FFFFFF;
+	border: 1px solid #C5C5C5;
+	border-radius: 3px;
+}
+
+#click .give {
+	font-family: PingFangSC-Medium;
+	font-size: 14px;
+	color: #FFFFFF;
+	letter-spacing: 0;
+	background: #30bf89;
+	border-radius: 3px;
+	padding: 7.5px 17px;
+}
+
+
+/*套题练习*/
+
+
+/*试卷名称，试卷分类*/
+
+#select {
+	width: 1200px;
+	height: 60px;
+	line-height: 60px;
+	background: #F3F9FC;
+	text-align: left;
+	padding-left: 40px;
+	font-family: PingFangSC-Regular;
+	font-size: 14px;
+	color: rgba(34, 34, 34, 0.8);
+	letter-spacing: 0;
+	clear: both;
+	margin: 0 auto;
+	border-bottom: 1px solid #ebebeb;
+	border-top: 2px solid #E3E4E4;
+}
+
+input[type="button"] {
+	vertical-align: middle !important;
+}
+
+#select .isAudit {
+	width: 118px;
+	height: 30px;
+	opacity: 0.8;
+	background: #FFFFFF;
+	border: 1px solid #979797;
+	border-radius: 3px;
+}
+
+select {
+	padding: 0 !important;
+	font-family: PingFangSC-Regular;
+	font-size: 13px !important;
+	color: rgba(34, 34, 34, 0.8);
+	letter-spacing: 0;
+}
+
+#select .button1 {
+	background: #30bf89;
+	border: 1px solid #17b55b;
+	border-radius: 3px;
+	padding: 5px 12px;
+	margin-left: 20px;
+	font-family: PingFangSC-Medium;
+	font-size: 14px;
+	color: #FFFFFF;
+	letter-spacing: 0;
+}
+
+
+/*模拟测试1，模拟测试2*/
+
+#table3 {
+	width: 1160px;
+	margin: 0 auto;
+	font-family: PingFangSC-Regular;
+	font-size: 14px;
+	color: #222222;
+	letter-spacing: 0;
+	min-height: 250px;
+}
+
+#table3 tr {
+	height: 45px;
+	width: 1160px;
+	background: #FFFFFF;
+}
+
+#table3 tr td {
+	margin-right: 100px;
+	margin-left: 40px;
+	border-bottom: 1px solid #EBEBEB;
+}
+
+#table3 tr .f1 {
+	width: 800px;
+	text-align: left;
+	padding-left: 20px;
+}
+
+#table3 tr .f2 {
+	width: 216px;
+	text-align: right;
+	padding-right: 20px;
+}
+
+#table3 tr .f2 span {
+	position: relative;
+	top: -1px;
+	background: #FFFFFF;
+	border: 1px solid #C5C5C5;
+	border-radius: 3px;
+	padding: 5px 10px;
+	font-family: PingFangSC-Regular;
+	font-size: 12px;
+	color: rgba(34, 34, 34, 0.6);
+	letter-spacing: 0;
+}
+
+
+/*滑块部分*/
+
+.range2 {
+	position: relative;
+	width: 900px;
+	bottom: 27px;
+	left: 35px;
+	height: 2px;
+	font-size: 0;
+	line-height: 0;
+	border: 1px inset rgba(34, 34, 34, 0.2);
+}
+.rangeScores {
+	position: relative;
+	width: 200px;
+	bottom: 27px;
+	left: 35px;
+	height: 2px;
+	font-size: 0;
+	line-height: 0;
+	border: 1px inset rgba(34, 34, 34, 0.2);
+}
+
+.mea {
+	position: absolute;
+	bottom: -10px;
+	left: -10px;
+	width: 10px;
+	height: 10px;
+	border: 10px solid #FFFFFF;
+	box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.38);
+	border-radius: 10px;
+}
+
+#value2,
+#value3 {
+	/*position: relative;*/
+	right: 530px;
+	bottom: 37px;
+}
+
+.divPaperName
+{
+	background-color: #ffffff;
+	border: 1px solid #dcdcdc;
+	border-radius: 5px;
+	display: none;
+	height: 200px;
+	margin-left: 200px;
+	position: absolute;
+	text-align: center;
+	top: 300px;
+	width: 800px;
+}
+.divPaperName h1
+{
+	font-size: 30px;
+	font-weight: normal;
+	margin-top: 20px;
+	text-align: center;
+}
+.divPaperName input
+{
+	height: 40px;
+	margin-top: 20px;
+	width: 700px;
+	-moz-user-select: text;
+	background-color: #fff;
+	border: 1px solid rgba(0, 0, 0, 0.2);
+	border-radius: 3px;
+	height: 40px;
+	line-height: 21px;
+	margin-bottom: 15px;
+	outline: 0 none;
+	padding: 10px 15px;
+}
+.divPaperName .one5{
+	font-size: 16px;
+	margin: 20px auto;
+	text-align: center;
+}
+.divPaperName .one5 a
+{
+	background-color: #30bf89;
+	border-radius: 3px;
+	color: #ffffff;
+	padding: 5px 25px;
+}
+.divPage{
+	margin-top: 10px;
+	width: 1200px;
+	height: 70px;
+	text-align: center;
+	line-height: 70px;
+	clear: both;
+}
+.divPage a{
+	padding: 6px 12px;
+	border: solid 1px #DCDCDC;
+	border-radius: 6px;
+	font-size: 14px;
+	color: #999;
+}
+.divPage a:hover{
+	background: #BFBFC7;
+	color: white;
+}
+.divPage .curr{
+	border: solid 1px #BFBFC7;
+	background: #BFBFC7;
+	color: white;
+}
+.divPage .disabled
+{
+	display: none;
+}
+/*=========后改表格*/
+.section {
+	background: rgba(0, 0, 0, 0) url("../../../img/kaoshi.png") no-repeat scroll 14px center;
+	border: 1px solid #dcdcdc;
+	margin: 10px auto 0;
+	min-height: 109px;
+	width: 1160px;
+}
+.section:hover{
+	border: 1px solid #19b478;
+}
+.div5 {
+	height: 30px;
+	padding-top: 20px;
+}
+.div5 .three1 {
+	color: #30bf89;
+	float: left;
+	font-size: 16px;
+	margin-left: 100px;
+}
+.div5 .three2 {
+	color: #777;
+	float: right;
+	font-size: 12px;
+	margin-right: 15px;
+}
+.div6 {
+	clear: both;
+	height: 30px;
+	padding-top: 20px;
+}
+.div6 .one6 {
+	color: #777;
+	float: left;
+	font-size: 14px;
+	margin-left: 100px;
+}
+.div6 a {
+	float: right;
+	font-size: 12px;
+	margin-right: 15px;
+	width:30px;
+	height:30px;
+	background-image:url('../../../img/btn_icon.png') ;
+	background-repeat: no-repeat;
+	vertical-align: middle;
+}
+
+/*没有信息*/
+.no_info{
+	background:url('../../../img/no-info.png') no-repeat center center;
+}
+/*开始练习*/
+.exam{
+	background-position: -160px -240px;
+}
+.exam:hover{
+	background-position: -160px -280px;
+}
+/*重新练习*/
+.replay_exam{
+	background-position: -120px 0;
+}
+.replay_exam:hover{
+	background-position: -120px -40px;
+}
+/*继续练习*/
+.going_exam{
+	background-position: -120px -80px;
+}
+.going_exam:hover{
+	background-position: -120px -120px;
+}
+/*提示弹出框*/
+.t_scale01{
+	transform: scale(0.001,0.001);
+	opacity: 0;
+}
+.t_scale08{
+	display: none;
+}
+.t_scale1{
+	transform: scale(1,1);
+	opacity: 1;
+}
+#this_alert{
+	position: fixed;
+	top:0;
+	left:0;
+	right:0;
+	bottom:0;
+	background: rgba(0 ,0 ,0 , 0.4);
+	transition: all 0.3s;
+	display: none;
+	z-index: 90;
+}
+.this_alert{
+	width:400px;
+	height:200px;
+	background: #fff;
+	position: relative;
+	/*top:50%;*/
+	left:50%;
+	margin-left:-200px;
+	margin-top:170px;
+	border: 1px solid #e7e7e7;
+	border-radius:10px;
+	padding:20px;
+	text-align: center;
+	transition: all 0.3s;
+	transition-delay: 0.1s;
+}
+.this_alert_title{
+	font-size:20px;
+	color: #333;
+}
+.this_alert_title i{
+	display: inline-block;
+	width:50px;
+	height:50px;
+	background: url("../../../img/prompt.png") no-repeat;
+	background-position: 0 -100px;
+	vertical-align: middle;
+}
+.this_alert p{
+	margin-top:10px;
+	line-height: 26px;
+	color: #555;
+}
+.this_alert_btn{
+	display: block;
+	margin:20px auto;
+	width:100px;
+	height:30px;
+	line-height: 30px;
+	color: #fff;
+	background: #f7795b;
+	border-radius: 10px;
+}
+.this_alert_btn:hover{
+	background: #FD6E3D;
+}
+#this_alert_close{
+	width:30px;
+	height:30px;
+	position: absolute;
+	top:6px;
+	font-size: 30px;
+	color: #777;
+	right:6px;
+	cursor: pointer;
+}
+#this_alert_close:hover{
+	color: #FD6E3D;
+}
+
+/*按知识点练习更改成树结构*/
+.cursor_down{
+	cursor: pointer;
+}
+.cursor_down:hover{
+	color: #399D60;
+}
+.cursor_down:hover i{
+	color: #399D60;
+}
+.posr{
+	position: relative;
+	top:-1px ;
+}
+/*@media screen and (-webkit-min-device-pixel-ratio:0){*/
+	/*.posr{*/
+		/*top:-1px;*/
+	/*}*/
+/*}*/
+.ml30{
+	margin-left:30px;
+}
+.ml60{
+	margin-left:60px;
+}
+.ml90{
+	margin-left:86px;
+}
+.mr30{
+	margin-right:30px;
+}
+.wid90{
+	width:90%;
+}
+.fz16{
+	font-size: 16px;
+	width:16px;
+	text-align: center;
+
+}
+.fz20{
+	font-size: 20px;
+	width:20px;
+	text-align: center;
+}
+.tree_paper_title{
+	height:50px;
+	background: #f6f7f8;
+	border-top: 2px solid #e3e4e4;
+	border-bottom: 1px solid #e7e7e7;
+}
+
+.tree_paper_list li,.tree_paper_list ul{
+	clear: both;
+}
+.one_list{
+	overflow: hidden;
+	border-bottom: 1px solid #F0F0F0;
+}
+.one_list:hover{
+	background: #fafafa;
+}
+._cont_name,._cont_num,._cont_btn{
+	display: block;
+	float: left;
+	height:60px;
+	line-height: 60px;
+	color: #333;
+	font-size: 14px;
+}
+._cont_name{
+	width: 78%;
+}
+._cont_name i{
+	vertical-align: middle;
+	margin-right: 10px;
+	color: #A6ADBA;
+}
+._cont_name .fz20{
+	font-size: 20px;
+}
+.icolor{
+	color: #399D60;
+}
+.icolor i{
+	color: #399D60;
+}
+
+._cont_num{
+	width: 30%;
+	text-align: center;
+}
+._cont_name span{
+	opacity: 0.6;
+	font-size: 12px;
+}
+._cont_name em{
+	font-style: normal;
+}
+._cont_name .had_num{
+    margin-left:15px;
+}
+._cont_btn{
+	width: 22%;
+	text-align: right;
+}
+/*._cont_btn a{*/
+/*background: #f6f6f6;*/
+/*border: 1px solid #e7e7e7;*/
+/*border-radius: 2px;*/
+/*box-shadow: 1px 2px 1px #eee;*/
+/*color: #333;*/
+/*padding: 6px 15px;*/
+/*margin-left:15px;*/
+/*}*/
+/*._cont_btn a:hover{*/
+/*background: #399D60;*/
+/*border: 1px solid #399D60;*/
+/*box-shadow:none;*/
+/*color: #fff;*/
+/*}*/
+._cont_btn a {
+	display: inline-block;
+	font-size: 12px;
+	margin-left: 15px;
+	width:30px;
+	height:30px;
+	background-image:url('../../../img/btn_icon.png') ;
+	background-repeat: no-repeat;
+	vertical-align: middle;
+}
+.hide{
+	display: none;
+}
+.tree_paper_cont>li>ul>li>ul>li .ml60{
+	margin-left:86px;
+}
+.tree_paper_cont ul{
+	display: none;
+}

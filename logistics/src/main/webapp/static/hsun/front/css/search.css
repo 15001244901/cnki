@@ -1,0 +1,52 @@
+/*搜索*/
+.bo_search{
+    /*width:1200px;*/
+    /*margin: 20px auto 0;*/
+    float: right;
+    overflow: hidden;
+    margin-top:6px;
+    margin-right:20px;
+    text-align: center;
+    padding:10px 0 6px;
+    background: #fff;
+}
+.bo_search>div{
+    display: inline-block;
+    border:1px solid #3db06e;
+    background: #3db06e;
+}
+.spansearch{
+    display: inline-block;
+    height:40px;
+    line-height: 40px;
+    float:left;
+    -webkit-transition: background 0.5s;
+    -moz-transition: background 0.5s;
+    -ms-transition: background 0.5s;
+    -o-transition: background 0.5s;
+    transition: background 0.5s;
+
+}
+.spansearch:hover{
+    background: #399d60 ;
+}
+.bo_search>div a i{
+    width:60px;
+    color: #fff;
+    /*font-size: 16px;*/
+    /*padding:0 10px;*/
+}
+.bo_search .txtsearch{
+    width:357px;
+    border:none;
+    height:40px;
+    outline: none;
+    padding:5px;
+    float: left;
+}
+
+/*没有信息*/
+.no_info{
+    min-height: 250px;
+    background:url('../img/no-info.png') no-repeat center center;
+}

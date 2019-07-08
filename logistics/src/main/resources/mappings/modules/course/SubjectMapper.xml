@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="SubjectMapper">
+
+	<resultMap id="SubjectResult" type="com.hsun.ywork.modules.course.entity.Subject">
+		<result property="subjectId" column="SUBJECT_ID" />
+		<result property="subjectName" column="SUBJECT_NAME" />
+		<result property="status" column="STATUS" />
+		<result property="createTime" column="CREATE_TIME" />
+		<result property="parentId" column="PARENT_ID" />
+		<result property="sort" column="sort" />
+	</resultMap>
+
+	<sql id="yw_subject_columns">
+		YW_SUBJECT.SUBJECT_ID,
+		YW_SUBJECT.SUBJECT_NAME,
+		YW_SUBJECT.STATUS,
+		YW_SUBJECT.CREATE_TIME,
+		YW_SUBJECT.PARENT_ID,
+		YW_SUBJECT.sort
+	</sql>
+
+	<sql id="yw_subject_properties">
+		#{subjectId},
+		#{subjectName},
+		#{status},
+		#{createTime},
+		#{parentId},
+		#{sort}
+	</sql>
+
+	<!-- 添加专业 -->
+	<insert id="createSubject" parameterType="com.hsun.ywork.modules.course.entity.Subject" useGeneratedKeys="true" keyColumn="SUBJECT_ID" keyProperty="subjectId">
+		INSERT INTO YW_SUBJECT (
+		<include refid="yw_subject_columns" />
+		)
+		VALUES (
+		<include refid="yw_subject_properties" />
+		)
+	</insert>
+
+	<!-- 查询所有专业列表 -->
+	<select id="getSubjectList" parameterType="com.hsun.ywork.modules.course.entity.QuerySubject" resultMap="SubjectResult">
+		SELECT
+		<include refid="yw_subject_columns" />
+		FROM YW_SUBJECT
+		WHERE YW_SUBJECT.STATUS=0
+		<if test="parentId>-1">
+			AND YW_SUBJECT.PARENT_ID = #{parentId}
+		</if>
+		<if test="subjectId!=null and subjectId!=-1">
+			AND YW_SUBJECT.SUBJECT_ID=#{subjectId}
+		</if>
+		ORDER BY sort desc
+	</select>
+	<!-- 修改专业父ID -->
+	<update id="updateSubjectParentId" parameterType="java.util.Map">
+		UPDATE YW_SUBJECT SET
+		YW_SUBJECT.PARENT_ID=#{parentId}
+		WHERE YW_SUBJECT.SUBJECT_ID=#{subjectId}
+	</update>
+	<!-- 修改专业名 -->
+	<update id="updateSubject" parameterType="com.hsun.ywork.modules.course.entity.Subject">
+		UPDATE YW_SUBJECT SET
+		YW_SUBJECT.SUBJECT_NAME=#{subjectName}
+		WHERE YW_SUBJECT.SUBJECT_ID=#{subjectId}
+	</update>
+	<!-- 设置专业的状态为删除状态 -->
+	<update id="deleteSubject" parameterType="int">
+		UPDATE YW_SUBJECT SET STATUS=1
+		WHERE
+		YW_SUBJECT.SUBJECT_ID=#{value}
+		or YW_SUBJECT.PARENT_ID=#{value}
+	</update>
+
+	<update id="updateSubjectSort" parameterType="com.hsun.ywork.modules.course.entity.Subject">
+		UPDATE YW_SUBJECT SET
+		YW_SUBJECT.sort=#{sort}
+		WHERE YW_SUBJECT.SUBJECT_ID=#{subjectId}
+	</update>
+	
+	<!-- 根据父级ID查找子项目集合 -->
+	<select id="getSubjectListByOne" parameterType="Long" resultMap="SubjectResult">
+ 		select <include refid="yw_subject_columns" /> 
+ 			from yw_subject 
+ 		where 
+ 			parent_id=#{value,jdbcType=INTEGER} and status=0
+ 	</select>
+ 	
+ 	<select id="getSubjectBySubject" parameterType="com.hsun.ywork.modules.course.entity.Subject" resultMap="SubjectResult">
+ 		select <include refid="yw_subject_columns" />
+ 			from yw_subject
+ 		where
+ 			subject_Id=#{subjectId,jdbcType=INTEGER}
+ 	</select>
+</mapper>

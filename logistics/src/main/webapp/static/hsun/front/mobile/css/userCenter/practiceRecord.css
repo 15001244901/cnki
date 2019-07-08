@@ -1,0 +1,99 @@
+.record_list ul{
+	width: 100%;
+	overflow: hidden;
+}
+.record_list li{
+	width: 118vw;
+	
+	transition: all 0.5s;
+	-webkit-transition:all 0.5s;
+	-moz-transition:all 0.5s;
+	-o-transition:all 0.5s;
+}
+.record_list li:nth-child(2n){
+	background: #eee;
+}
+.exam_logo .icon{
+	font-size: 1.333333rem
+}
+.exam_title{
+	font-size: 0.4rem;
+	line-height: 0.666667rem;
+	margin-top: 0.133333rem;
+	white-space:normal; 
+	word-break:break-all;
+}
+.exam_data{
+	font-size: 0.32rem;
+	line-height: 0.533333rem;
+	color: #666;
+}
+.exam_data i{
+	font-style: normal;
+}
+.exam_infor{
+	padding:0.2rem;
+	width: 100vw;
+	box-sizing:border-box;
+	-moz-box-sizing:border-box; /* Firefox */
+	-webkit-box-sizing:border-box; /* Safari */
+}
+.record_list .del_btn{
+	width: 18vw;
+	font-size: 0.453333rem;
+}
+
+/*分页*/
+.page{
+	/*position: static;*/
+	display: none;
+}
+.page .page_html{
+    border-bottom: 0.013333rem solid #ddd
+}
+.page_num{
+	overflow-y: auto;
+	-webkit-overflow-scrolling: touch; 
+}
+.page .page_num .page_num_list{
+	font-size: 0.4rem;
+	padding:0.2rem 0;
+}
+.page .page_num .page_num_list li{
+	padding:0.2rem;
+	border-bottom: 1px solid #fff;
+}
+
+/*删除面板*/
+.del_item{
+	position: fixed;
+	bottom: 0;
+	top: 0;
+	width: 100%;
+	background: rgba(0,0,0,0.3);
+	z-index: 9;
+	display: none;
+}
+.del_item .del_item_panel{
+	width: 100%;
+	background: #eee;
+	position: absolute;;
+	bottom: -2.68rem;
+	z-index: 5;
+	overflow:hidden;
+	height: 2.68rem;
+	transition: all 0.2s;
+	-webkit-transition: all 0.2s;
+}
+.del_item .del_item_panel div{
+	background: #fff;
+	line-height: 1.333333rem;
+	font-size: 0.4rem;
+	text-align: center;
+}
+.del_item .del_item_panel div:nth-child(1){
+	/*margin-bottom: 0.2rem;*/
+	color: #d9534f;
+	border-top: 1px solid #ddd;
+	border-bottom: 1px solid #ddd;
+}

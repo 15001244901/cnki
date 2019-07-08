@@ -1,0 +1,143 @@
+.fl{
+	float: left;
+}
+.fr{
+	float: right;
+}
+.ess_infor{
+	width: 280px;
+	font-size: 14px;
+} 
+.ess_infor_title{
+	background: #3db06e;
+    color: #fff;
+    font-size: 14px;
+    margin-bottom: 1px;
+	height: 40px;
+	padding:0 20px;
+    line-height: 40px;
+    /*position: relative;*/
+}
+.ess_up{
+	cursor: pointer;
+}
+.ess_infor ul{
+	list-style: none;
+	border-left: 1px solid #DFDFDF;
+	border-right: 1px solid #DFDFDF;
+	border-bottom: 1px solid #DFDFDF;
+}
+.ess_infor ul li{
+	line-height: 45px;
+	padding:0 20px;
+	border-bottom: 1px solid #DFDFDF;
+}
+.ess_infor ul li b{
+	display: inline-block;
+	width: 17%;
+	
+}
+.ess_infor ul li span{
+	display: inline-block;
+	width: 29%;
+	
+}
+.ess_infor ul span{
+	color: #999;
+}
+.ess_infor ul div{
+	padding:10px 20px 30px;
+	line-height: 26px;
+}
+.ess_infor ul div b{
+	min-width: 17%;
+	display: inline-block;
+	
+}
+.ess_infor ul div span{
+	width: 83px;
+	display: inline-block;
+}
+.ess_infor ul div p span{
+	width: 170px;
+	font-weight:100;
+}
+.ess_infor ul div .p_width0{
+	width: 60px;
+}
+.ess_infor ul div .p_width1{
+	width: 60px;
+}
+.ess_infor ul div p{
+	font-weight:bold;
+}
+.item_infor ul{
+	font-size: 14px;
+	list-style: none;
+	padding:10px 20px 30px; 
+	border-left: 1px solid #DFDFDF;
+	border-right: 1px solid #DFDFDF;
+	border-bottom: 1px solid #DFDFDF;
+}
+.item1_title{
+	line-height: 24px;
+	height: 24px;
+	margin-bottom: 10px;
+}
+.item1_num{
+	clear: both;
+}
+.item1_num span{
+	display: inline-block;
+	width:22px;
+	/*padding:0 7px;*/
+	height: 22px;
+	line-height: 22px;
+	font-size: 12px;
+	text-align: center;cursor: pointer;
+	margin-right: 10px;
+	margin-bottom:10px;
+	border: 1px solid #DFDFDF;
+}
+.item1_num .item_active{
+	background: #3db06e ;
+	color: #fff;
+}
+.item1_num .item_active:hover{
+	background: #ff822d;
+}
+.item_num{
+	margin-bottom:15px;
+}
+.get_set{
+	display: inline-block;
+	position: absolute;
+	top: -29px;right: -1px;
+	/*padding-top: 5px;
+	padding-bottom: 5px;*/
+}
+/*@-moz-document url-prefix(){*/
+	/*.get_set{*/
+		/*top: -31px;*/
+	/*}*/
+/*}*/
+.get_set span{
+	display: none;
+	cursor: pointer;
+	padding: 5px 10px;
+	height: 17px;
+	line-height: 17px;
+	border-right: 1px solid #3db06e ;
+	border-top:1px solid #3db06e ;
+	border-bottom:1px solid #3db06e ;
+	color: #3db06e;
+	background: #fff;
+	font-size: 13px;
+	float: left;
+}
+.jie_xi{
+	border-left:1px solid #3db06e ;
+}
+.ask_list:hover .get_set span{
+	display: inline-block ;
+}

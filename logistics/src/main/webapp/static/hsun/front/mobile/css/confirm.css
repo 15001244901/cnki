@@ -1,0 +1,58 @@
+.confirm_prictice{
+	width: 8rem;
+	height: 6rem;
+	background: rgba(0,0,0,0.8);
+	border-radius: 0.133333rem;
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	margin-left: -4rem;
+	margin-top: -3rem;
+	color: #fff;
+	z-index: 9;
+}
+.confirm_prictice h3{
+	font-size: 0.42rem;
+	margin-top: 0.8rem;
+}
+.confirm_prictice h4{
+	font-size: 0.34rem;
+}
+.confirm_prictice div{
+	margin-top: 0.8rem;
+	align-items:center;
+	justify-content:space-around;
+}
+.confirm_prictice a{
+	color:#fff;
+	font-size: 0.4rem;
+	border:0.013333rem solid #fff;
+	padding:0.133333rem 0.266667rem;
+	text-decoration: none;
+}
+.confirm_prictice a:active{
+	text-decoration: none;
+	background-color: #ddd;
+}
+.confirm_prictice div .active{
+	border-color:#888;
+	color: #888;
+}
+.confirm_prictice div .active:active{
+	background:none;
+}
+.confirm_prictice .icon{
+	font-size: 1.333333rem;
+	color: #fff;
+	margin:0 auto;
+}
+.confirm_prictice .confirm_qx{
+	position: absolute;
+	top: 0;
+	right: 0;
+	font-size: 0.666667rem;
+	display: inline-block;
+	height: 0.933333rem;
+	width: 0.933333rem;
+	line-height: 0.933333rem;
+}

@@ -1,0 +1,296 @@
+body {
+	font-family: "Helvetica Neue", Helvetica, Arial, "Microsoft Yahei UI", "Microsoft YaHei", SimHei, "\5B8B\4F53", simsun, sans-serif;
+}
+a{
+	color: #999;
+}
+
+#div{
+    font-size: 14px;
+    color: rgba(34,34,34,0.8);
+    letter-spacing: 0;
+	width: 1200px;
+	margin: 20px auto auto auto;
+	clear: both;
+	background-color: white;
+	box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.08);
+}
+#div .abc{
+	position:relative;
+	height: 75px;
+	background-color: #ffffff;
+	text-align: center;
+	border-bottom: 2px solid #7CE3A7;
+}
+#section{
+	margin: 10px;
+	height: 70px;
+	line-height: 70px;
+	text-align: left;
+	border:1px solid #DCDCDC;
+	font-family: "宋体";
+	font-size: 18px;
+	color: #1D272C;
+	letter-spacing: 0;
+	clear: both;
+	background: #EEEEEE;
+}
+#section span{
+	font-weight: 600;
+	display: inline-block;
+	padding-left: 50px;
+	margin-left: 12px;
+	color: #555;
+	background: url('../../../../img/online_test.png') no-repeat left center;
+}
+
+#div .abc .paper{
+	font-family: PingFangSC-Medium;
+	font-size: 20px;
+	color: #30bf89;
+	letter-spacing: 0;
+	line-height: 90px;
+}
+#div .abc .title-two{
+	position:absolute;
+	left: 700px;
+	bottom:25px;
+}
+#div .abc .time{
+margin-right: 100px;
+margin-left: 150px;
+}
+#div .abc .start{
+font-family: PingFangSC-Medium;
+font-size: 14px;
+color: #FFFFFF;
+letter-spacing: 0;
+background: #FE8922;
+border-radius: 3px;
+padding: 5.5px 17px;
+}
+/*表头*/
+#number2-1 {
+	margin-top: 0px;
+	width: 1200px;
+	min-height: 400px;
+}
+
+#number2-1 #table {
+	width: 100%;
+	text-align: left;
+	margin: 0 auto;
+}
+/*下按知识点练习*/
+#table tr{
+	width:1160px;
+	height: 45px;
+	
+}
+
+#number2-1 #table tr .td1 {
+	width: 50%;
+	padding-left: 20px;
+	border-bottom: 1px solid #EBEBEB;
+}
+
+#number2-1 #table tr .td2 {
+	width: 25%;
+	border-bottom: 1px solid #EBEBEB;
+}
+
+#number2-1 #table tr .td3 {
+	width: 10%;
+	border-bottom: 1px solid #EBEBEB;
+}
+#number2-1 #table tr .td4 {
+	width: 15%;
+	border-bottom: 1px solid #EBEBEB;
+}
+.td1 ,.td2{
+font-family: PingFangSC-Regular;
+font-size: 14px;
+color: #222222;
+letter-spacing: 0;
+line-height: 14px;
+}
+#number2-1 #table tr .td3 a {
+font-family: PingFangSC-Regular;
+font-size: 12px;
+color: rgba(34,34,34,0.6) !important;
+letter-spacing: 0;
+width: 70px;
+height: 27px;
+padding: 4px 10px;
+background: #FFFFFF;
+border: 1px solid #C5C5C5;
+border-radius: 3px;
+position: relative;
+left: 25px;
+}
+
+#one{
+width: 1200px;
+height: 45px;
+line-height: 45px;
+border-bottom: solid 1px #dcdcdc;
+border-top: solid 1px #dcdcdc;
+/*background-color: #F8F8F8;*/	
+}
+#one span{
+float: left;	
+}
+.td44{
+font-family: PingFangSC-Regular;
+font-size: 14px;
+color: #222222;
+letter-spacing: 0;
+}
+#one .td11 {
+    margin-left: 40px;
+}
+#one .td22 {
+    margin-left: 535px;
+}
+#one .td33 {
+    margin-left: 259px;
+}
+#one .td44 {
+    margin-left: 213px;
+}
+
+
+.divPage{
+	margin-top: 10px;
+	width: 1200px;
+	height: 70px;
+	text-align: center;
+	line-height: 70px;
+	clear: both;
+}
+.divPage a{
+	padding: 6px 12px;
+	border: solid 1px #DCDCDC;
+	border-radius: 6px;
+	font-size: 14px;
+	color: #999;
+}
+.divPage a:hover{
+	background: #BFBFC7;
+	color: white;
+}
+.divPage .curr{
+	border: solid 1px #BFBFC7;
+	background: #BFBFC7;
+	color: white;
+}
+.divPage .disabled
+{
+	display: none;
+}
+/*改后列表样式*/
+.section {
+	background: rgba(0, 0, 0, 0) url("../../../../img/kaoshi.png") no-repeat scroll 14px center;
+	border: 1px solid #dcdcdc;
+	margin: 10px auto 0;
+	min-height: 109px;
+	width: 1180px;
+}
+.section:hover{
+	border: 1px solid #19b478;
+}
+.div5 {
+	height: 30px;
+	padding-top: 20px;
+}
+.div5 .three1 {
+	color: #30bf89;
+	float: left;
+	font-size: 16px;
+	margin-left: 100px;
+}
+.div5 .three2 {
+	color: #888;
+	float: right;
+	font-size: 12px;
+	margin-right: 15px;
+}
+.div6 {
+	clear: both;
+	height: 30px;
+	padding-top: 20px;
+}
+.div6 .one6 {
+	color: #888;
+	float: left;
+	font-size: 14px;
+	margin-left: 100px;
+}
+.div6 .two6 {
+	float: right;
+	font-size: 12px;
+	margin-right: 15px;
+	margin-top: 5px;
+	height:30px;
+	width:30px;
+	background-image:url('../../../../img/btn_icon.png') ;
+	background-repeat: no-repeat;
+}
+.div6 .one6 i{
+	font-style: normal;
+}
+	/*开始考试*/
+.exam{
+	background-position: -240px -160px;
+}
+.div6 .exam:hover{
+	background-position: -240px -200px;
+}
+.exam_over{
+	background-position: -240px -160px;
+}
+.div6 .ml15{
+	margin-left:20px;
+}
+.div6 .colorred{
+	color: red;
+}
+.div6 .coloryellow{
+	color: #FE8922;
+}
+.no_info{
+	background:url('../../../../img/no-info.png') no-repeat center center;
+}
+#section_title{
+	margin: 10px;
+	height: 70px;
+	line-height: 70px;
+	text-align: center;
+	border: 1px solid #DCDCDC;
+	font-family: "宋体";
+	font-size: 18px;
+	color: #1D272C;
+	letter-spacing: 0;
+	background: #EEEEEE;
+	position: relative;
+
+}
+#section_title span{
+	display: inline-block;
+	cursor: pointer;
+	margin:0 10px;
+}
+#section_title .colorblur{
+	color: #30bf89;
+}
+#bottom{
+	border:1px solid #30bf89;
+	height:1px;
+	width:81px;
+	position: absolute;
+	top:48px;
+	left:497.5px;
+}
+.hide{
+	display: none;
+}

@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hsun.ywork.modules.exam.dao.PaperDao">
+    
+	<sql id="paperColumns">
+		a.id AS "id",
+		a.name AS "name",
+		a.cid AS "cid",
+		a.category as "category",
+		a.status AS "status",
+		a.starttime AS "starttime",
+		a.endtime AS "endtime",
+		a.duration AS "duration",
+		a.showtime AS "showtime",
+		a.totalscore AS "totalscore",
+		a.passscore AS "passscore",
+		a.ordertype AS "ordertype",
+		a.papertype AS "papertype",
+		a.remark AS "remark",
+		a.data AS "data",
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		u1.name as "createBy.name",
+		a.showkey AS "showkey",
+		a.showmode AS "showmode",
+		a.iscomplete as "iscomplete",
+		a.isoffline as "isoffline"
+	</sql>
+	
+	<sql id="paperJoins">
+		left outer join sys_user u1 on(u1.id = a.create_by)
+	</sql>
+    
+	<select id="get" resultType="Paper">
+		SELECT 
+			<include refid="paperColumns"/>
+		FROM yw_exam_paper a
+		<include refid="paperJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="Paper">
+		SELECT 
+			<include refid="paperColumns"/>
+		FROM yw_exam_paper a
+		<include refid="paperJoins"/>
+		<where>
+			<if test="createBy != null and createBy.id != null">
+				AND a.create_by = #{createBy.id}
+			</if>
+			<if test="status != null">
+				AND a.status = #{status}
+			</if>
+			<if test="category != null and category != ''">
+				AND a.category = #{category}
+			</if>
+			<if test="isoffline != null">
+				AND a.isoffline = #{isoffline}
+			</if>
+			<if test="name != null and name != ''">
+				AND a.name LIKE 
+					<if test="dbName == 'oracle'">'%'||#{name}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{name}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{name},'%')</if>
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="Paper">
+		SELECT 
+			<include refid="paperColumns"/>
+		FROM yw_exam_paper a
+		<include refid="paperJoins"/>
+		<where>
+			<if test="category != null and category != ''">
+				AND a.category = #{category}
+			</if>
+			<if test="status != null and status != ''">
+				AND a.status = #{status}
+			</if>
+			<if test="isoffline != null and isoffline != ''">
+				AND a.isoffline = #{isoffline}
+			</if>
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO yw_exam_paper(
+			id,
+			name,
+			cid,
+			category,
+			status,
+			starttime,
+			endtime,
+			duration,
+			showtime,
+			totalscore,
+			passscore,
+			ordertype,
+			papertype,
+			remark,
+			data,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			showkey,
+			showmode,
+			iscomplete,
+			isoffline
+		) VALUES (
+			#{id},
+			#{name},
+			#{cid},
+			#{category},
+			#{status},
+			#{starttime},
+			#{endtime},
+			#{duration},
+			#{showtime},
+			#{totalscore},
+			#{passscore},
+			#{ordertype},
+			#{papertype},
+			#{remark},
+			#{data},
+			#{createBy.id},
+			#{createDate},
+			#{updateBy.id},
+			#{updateDate},
+			#{showkey},
+			#{showmode},
+			#{iscomplete},
+			#{isoffline}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE yw_exam_paper SET 	
+			name = #{name},
+			cid = #{cid},
+			category = #{category},
+			status = #{status},
+			starttime = #{starttime},
+			endtime = #{endtime},
+			duration = #{duration},
+			showtime = #{showtime},
+			totalscore = #{totalscore},
+			passscore = #{passscore},
+			ordertype = #{ordertype},
+			papertype = #{papertype},
+			remark = #{remark},
+			data = #{data},
+			update_by = #{updateBy.id},
+			update_date = #{updateDate},
+			showkey = #{showkey},
+			showmode = #{showmode},
+			iscomplete = #{iscomplete},
+			isoffline = #{isoffline}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		DELETE FROM yw_exam_paper
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

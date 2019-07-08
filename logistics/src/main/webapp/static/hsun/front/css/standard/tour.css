@@ -1,0 +1,59 @@
+body {
+	font-family: "Helvetica Neue", Helvetica, Arial, "Microsoft Yahei UI", "Microsoft YaHei", SimHei, "\5B8B\4F53", simsun, sans-serif;
+}
+#divcontent{
+	width: 1100px;
+	background-color: #FAF0E6;
+	height: 940px;
+	margin: 0px auto;
+	margin-top: 20px;
+	/*margin-bottom: 30px;*/
+}
+#divcontent .divtitle{
+	width: 1100px;
+	height: 80px;
+	border-bottom: 2px solid #DCDCDC;
+	background-color:#FAF0E6 ;
+}
+#divcontent .divsno{
+	/*width: 430px;*/
+	width: 33%;
+	height: 80px;
+	float: left;
+	line-height: 80px;
+	/*margin-left: 40px;*/
+	padding-left: 30px;
+	color: #30bf89;
+	font-size: 16px;
+}
+#divcontent .divdetail{
+	float: right;
+	margin-right: 30px;
+	padding: 5px 15px;
+	margin-top: 27px;
+	color: #95928c;
+}
+#divcontent .divdetail span a{
+	color: #95928c;margin-left: 15px;
+	text-decoration: none;
+}
+#divcontent .divstandard{
+	/*width: 200px;*/
+	width: 33%;
+	height: 50px;
+	font-size: 18px;
+	color: #333;
+	line-height: 50px;
+	text-align: center;
+	float: left;
+	margin-top: 15px;
+}
+#full_screen{
+	font-size: 14px;
+	margin-left:15px;
+}
+#pdfDiv{
+	height: 800px;
+	margin: 20px auto;
+	width: 900px;
+}

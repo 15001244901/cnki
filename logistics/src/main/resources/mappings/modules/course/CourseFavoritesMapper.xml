@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="CourseFavoritesMapper">
+
+	<resultMap id="FavouriteCourseDTOResult" type="com.hsun.ywork.modules.course.entity.FavouriteCourseDTO">
+	<result property="favouriteId" column="ID" />
+	<result property="courseId" column="COURSE_ID" />
+	<result property="courseName" column="COURSE_NAME"/>
+	<result property="logo" column="LOGO"/>
+	<result property="addTime" column="ADD_TIME"/>
+	<collection property="teacherList" column="COURSE_ID" javaType="java.util.List" select="TeacherMapper.queryCourseTeacerList"/>
+	</resultMap>
+
+	<sql id="yw_course_favorites_columns">
+	YW_COURSE_FAVORITES.ID,
+	YW_COURSE_FAVORITES.COURSE_ID,
+	YW_COURSE_FAVORITES.USER_ID,
+	YW_COURSE_FAVORITES.ADD_TIME
+	</sql>
+
+	<sql id="yw_course_favorites_properties">
+	#{id},
+	#{courseId},
+	#{userId},
+	#{addTime}
+	</sql>
+
+	<!-- 添加收藏 -->
+	<insert id="createCourseFavorites" parameterType="com.hsun.ywork.modules.course.entity.CourseFavorites" keyColumn="ID" keyProperty="id" useGeneratedKeys="true">
+	INSERT INTO YW_COURSE_FAVORITES(<include refid="yw_course_favorites_columns"/>)
+	VALUES (<include refid="yw_course_favorites_properties" />)
+	</insert>
+
+	<!-- 删除收藏 -->
+	<delete id="deleteCourseFavoritesById" parameterType="String">
+	DELETE FROM YW_COURSE_FAVORITES WHERE ID  IN  (${value})
+	</delete>
+	
+	<!-- 检测用户是否收藏过 -->
+	<select id="checkFavorites" parameterType="java.util.Map" resultType="int">
+	SELECT COUNT(1) FROM YW_COURSE_FAVORITES WHERE USER_ID=#{userId} AND COURSE_ID=#{courseId}
+	</select>
+	
+	<!-- 分页查询用户收藏列表，开始 -->
+	<select id="queryFavoritesPage" parameterType="java.util.Map" resultMap="FavouriteCourseDTOResult">
+	SELECT 
+	YW_COURSE_FAVORITES.ID,
+	YW_COURSE.COURSE_ID,
+	YW_COURSE.COURSE_NAME,
+	YW_COURSE.LOGO,
+	YW_COURSE_FAVORITES.ADD_TIME
+	FROM YW_COURSE_FAVORITES
+	LEFT JOIN YW_COURSE ON YW_COURSE.COURSE_ID=YW_COURSE_FAVORITES.COURSE_ID
+	WHERE YW_COURSE_FAVORITES.USER_ID=#{e}
+	<include refid="publicMapper.pageEnd"/>
+	</select>
+	<select id="queryFavoritesPageCount" parameterType="java.util.Map" resultType="int">
+	SELECT COUNT(1) FROM YW_COURSE_FAVORITES
+	LEFT JOIN YW_COURSE ON YW_COURSE.COURSE_ID=YW_COURSE_FAVORITES.COURSE_ID
+	WHERE YW_COURSE_FAVORITES.USER_ID=#{e}
+	</select>
+	<!-- 分页查询用户收藏列表，结束-->
+
+
+</mapper>

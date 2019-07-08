@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hsun.ywork.modules.standard.dao.YWStandardDao">
+    
+	<sql id="yWStandardColumns">
+		a.id AS "id",
+		a.category AS "category",
+		a.typesys AS "typesys",
+		a.subtype AS "subtype",
+		a.sno AS "sno",
+		a.name AS "name",
+		a.enname AS "enname",
+		a.yearno AS "yearno",
+		a.status AS "status",
+		a.ics AS "ics",
+		a.typeorg AS "typeorg",
+		a.typezh AS "typezh",
+		a.typeno AS "typeno",
+		a.pagenum AS "pagenum",
+		a.issuedate AS "issuedate",
+		a.executedate AS "executedate",
+		a.canceldate AS "canceldate",
+		a.replacedby AS "replacedby",
+		a.replacestd AS "replacestd",
+		a.citestd AS "citestd",
+		a.usestd AS "usestd",
+		a.draftcompany AS "draftcompany",
+		a.gkcompany AS "gkcompany",
+		a.title AS "title",
+		a.recheckresult AS "recheckresult",
+		a.according AS "according",
+		a.supplement AS "supplement",
+		a.stdrange AS "stdrange",
+		a.hasfile AS "hasfile",
+		a.files AS "files",
+		a.thumbnail as "thumbnail",
+		a.remark AS "remark"
+	</sql>
+	
+	<sql id="yWStandardJoins">
+	</sql>
+    
+	<select id="get" resultType="YWStandard">
+		SELECT 
+			<include refid="yWStandardColumns"/>
+		FROM yw_standard a
+		<include refid="yWStandardJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="YWStandard">
+		SELECT 
+			<include refid="yWStandardColumns"/>
+		FROM yw_standard a
+		<include refid="yWStandardJoins"/>
+		<where>
+
+            <if test="category != null and category != ''">
+                AND a.category = #{category}
+            </if>
+			<if test="typesys != null and typesys != ''">
+				AND a.typesys = #{typesys}
+			</if>
+			<if test="status != null and status != ''">
+				AND a.status = #{status}
+			</if>
+			<if test="sno != null and sno != ''">
+				AND (a.sno LIKE
+				<if test="dbName == 'oracle'">'%'||#{sno}||'%'</if>
+				<if test="dbName == 'mssql'">'%'+#{sno}+'%'</if>
+				<if test="dbName == 'mysql'">concat('%',#{sno},'%')</if>
+				OR a.name LIKE
+				<if test="dbName == 'oracle'">'%'||#{sno}||'%'</if>
+				<if test="dbName == 'mssql'">'%'+#{sno}+'%'</if>
+				<if test="dbName == 'mysql'">concat('%',#{sno},'%')</if>
+				)
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="YWStandard">
+		SELECT 
+			<include refid="yWStandardColumns"/>
+		FROM yw_standard a
+		<include refid="yWStandardJoins"/>
+		<where>
+			
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO yw_standard(
+			id,
+			category,
+			typesys,
+			subtype,
+			sno,
+			name,
+			enname,
+			yearno,
+			status,
+			ics,
+			typeorg,
+			typezh,
+			typeno,
+			pagenum,
+			issuedate,
+			executedate,
+			canceldate,
+			replacedby,
+			replacestd,
+			citestd,
+			usestd,
+			draftcompany,
+			gkcompany,
+			title,
+			recheckresult,
+			according,
+			supplement,
+			stdrange,
+			hasfile,
+			files,
+			thumbnail,
+			remark
+		) VALUES (
+			#{id},
+			#{category},
+			#{typesys},
+			#{subtype},
+			#{sno},
+			#{name},
+			#{enname},
+			#{yearno},
+			#{status},
+			#{ics},
+			#{typeorg},
+			#{typezh},
+			#{typeno},
+			#{pagenum},
+			#{issuedate},
+			#{executedate},
+			#{canceldate},
+			#{replacedby},
+			#{replacestd},
+			#{citestd},
+			#{usestd},
+			#{draftcompany},
+			#{gkcompany},
+			#{title},
+			#{recheckresult},
+			#{according},
+			#{supplement},
+			#{stdrange},
+			#{hasfile},
+			#{files},
+			#{thumbnail},
+			#{remark}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE yw_standard SET
+		    category = #{category},
+			typesys = #{typesys},
+			subtype = #{subtype},
+			sno = #{sno},
+			name = #{name},
+			enname = #{enname},
+			yearno = #{yearno},
+			status = #{status},
+			ics = #{ics},
+			typeorg = #{typeorg},
+			typezh = #{typezh},
+			typeno = #{typeno},
+			pagenum = #{pagenum},
+			issuedate = #{issuedate},
+			executedate = #{executedate},
+			canceldate = #{canceldate},
+			replacedby = #{replacedby},
+			replacestd = #{replacestd},
+			citestd = #{citestd},
+			usestd = #{usestd},
+			draftcompany = #{draftcompany},
+			gkcompany = #{gkcompany},
+			title = #{title},
+			recheckresult = #{recheckresult},
+			according = #{according},
+			supplement = #{supplement},
+			stdrange = #{stdrange},
+			hasfile = #{hasfile},
+			files = #{files},
+			thumbnail = #{thumbnail},
+			remark = #{remark}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		DELETE FROM yw_standard
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

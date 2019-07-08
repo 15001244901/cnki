@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hsun.ywork.modules.exam.dao.PaperRandomDao">
+    
+	<sql id="paperRandomColumns">
+		a.id AS "id",
+		a.uid as "uid",
+		a.pid as "pid",
+		a.detail as "detail",
+		a.createdate as "createdate"
+	</sql>
+	
+	<sql id="paperRandomJoins">
+	</sql>
+    
+	<select id="get" resultType="PaperRandom">
+		SELECT 
+			<include refid="paperRandomColumns"/>
+		FROM yw_exam_paperrandom a
+		<include refid="paperRandomJoins"/>
+		WHERE a.id = #{id}
+	</select>
+
+	<select id="getUserRandomPaper" resultType="PaperRandom">
+		SELECT
+		<include refid="paperRandomColumns"/>
+		FROM yw_exam_paperrandom a
+		<include refid="paperRandomJoins"/>
+		WHERE a.uid = #{0} and a.pid = #{1}
+	</select>
+	
+	<select id="findList" resultType="PaperRandom">
+		SELECT 
+			<include refid="paperRandomColumns"/>
+		FROM yw_exam_paperrandom a
+		<include refid="paperRandomJoins"/>
+		<where>
+			
+			<if test="uid != null and uid != ''">
+				AND a.uid = #{name}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.createdate DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="PaperRandom">
+		SELECT 
+			<include refid="paperRandomColumns"/>
+		FROM yw_exam_paperrandom a
+		<include refid="paperRandomJoins"/>
+		<where>
+			
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.createdate DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO yw_exam_paperrandom(
+			uid,
+			pid,
+			detail,
+			createdate
+		) VALUES (
+			#{uid},
+			#{pid},
+			#{detail},
+			now()
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE yw_exam_paperrandom SET
+			detail = #{detail}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		DELETE FROM yw_exam_paperrandom
+		WHERE id = #{id}
+	</update>
+
+	<update id="deleteByUidAndPid">
+		DELETE FROM yw_exam_paperrandom
+		WHERE uid = #{0} and pid = #{1}
+	</update>
+	
+</mapper>

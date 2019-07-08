@@ -1,0 +1,140 @@
+body {
+	font-family: "Helvetica Neue", Helvetica, Arial, "Microsoft Yahei UI", "Microsoft YaHei", SimHei, "\5B8B\4F53", simsun, sans-serif;
+}
+
+a {
+	text-decoration: none;
+	color: #999;
+}
+
+#divcontent {
+	width: 1200px;
+	min-height: 600px;
+	background-color: #FFFFFF;
+	margin: 20px auto;
+	clear: both;
+	border: 1px solid #17b55b;
+	padding-bottom: 10px;
+	margin-bottom: 50px;
+}
+
+#divcontent .divtitle {
+	width: 1200px;
+	height: 60px;
+	line-height: 60px;
+	border-bottom: 2px solid #17b55b;
+}
+
+#divcontent .divtitle .divsno {
+	width: 600px;
+	float: left;
+}
+
+#divcontent .divtitle .divsno span {
+	font-size: 18px;
+	font-weight: 600;
+	color: #30bf89;
+	margin-left: 40px;
+}
+
+#divcontent .divtitle .divcancel {
+	text-align: right;
+	margin-right: 40px;
+	font-size: 14px;
+	color: #222222;
+}
+
+#divcontent .divtitle .divcancel a {
+	color: #FFFFFF;
+	text-decoration: none;
+}
+
+#divcontent .divtitle .divcancel span {
+	padding: 10px 15px;
+	background-color: #30bf89;
+	border-radius: 3px;
+	cursor: pointer;
+	color: #FFFFFF;
+}
+
+#divcontent .divname {
+	width: 1200px;
+	clear: both;
+	padding-top: 20px;
+	padding-bottom: 10px;
+	border-bottom: 1px dashed #DCDCDC;
+}
+
+#divcontent .divname div {
+	width: 1200px;
+	height: 50px;
+	padding-top: 30px;
+	padding-bottom: 20px;
+	margin-left: 40px;
+}
+
+#divcontent .divtype {
+	width: 1200px;
+	height: 110px;
+	clear: both;
+	padding-top: 10px;
+	border-bottom: 1px dashed #DCDCDC;
+}
+
+#divcontent .divtype div .left {
+	width: 560px;
+	float: left;
+	line-height: 40px;
+	margin-left: 40px;
+}
+
+#divcontent .divtype div .right {
+	width: 600px;
+	float: right;
+	line-height: 40px;
+}
+
+.spankey {
+	width: 100px;
+	font-size: 14px;
+	color: #222222;
+}
+
+.spanvalue {
+	width: 400px;
+	font-size: 14px;
+	color: #30bf89;
+}
+
+#divcontent .divtime {
+	width: 1200px;
+	padding-top: 10px;
+}
+
+#divcontent .divtime div {
+	width: 350px;
+	float: left;
+	margin-left: 40px;
+}
+
+#divcontent .divstandard {
+	width: 1200px;
+	clear: both;
+	padding-top: 20px;
+}
+
+#divcontent .divstandard div {
+	width: 540px;
+	float: left;
+	margin-left: 40px;
+}
+
+#divcontent .divremark {
+	width: 1200px;
+	clear: both;
+	padding-top: 20px;
+}
+
+#divcontent .divremark div {
+	margin-left: 40px;
+}

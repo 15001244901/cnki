@@ -1,0 +1,102 @@
+body {
+	font-family: "Helvetica Neue", Helvetica, Arial, "Microsoft Yahei UI", "Microsoft YaHei", SimHei, "\5B8B\4F53", simsun, sans-serif;
+}
+#title_search{
+	/*overflow: hidden;*/
+	height: 64px;
+	line-height: 64px;
+}
+#banner{
+	position: relative;
+	/*bottom: 5px;*/
+	margin: 0 auto;
+	clear: both;
+	background-color: #fff;
+}
+#banner .img{
+	width: 1200px;
+	margin: 0 auto;	
+	/*margin-bottom: 20px;*/
+}
+#banner .img img{
+	display: block;
+}
+#divcontent{
+	margin: 0 auto;	
+	background-color: #FFFFFF;
+	padding-top: 30px;
+	overflow: hidden;
+
+}
+#divcontent .border2{
+	width: 1200px;
+	/*height: 400px;*/
+	margin: 0 auto;	
+}
+#title_search_name{
+	font-size: 18px;
+	color: #222222;
+	float: left;
+}
+#divcontent .border2 ul{
+	height: 300px;
+	border-top: 1px solid #DCDCDC;
+	padding: 40px 0;
+	font-size: 16px;
+	color: #222222;
+	clear: both;
+}
+#divcontent .nav li{
+	height: 160px;
+	float: left;
+    width: 20%;
+	text-align: center;
+	line-height: 30px;
+	
+}
+#divcontent .nav li img{
+	cursor: pointer;
+}
+#divcontent .nav a{
+	font-size: 16px;
+	color: #222;
+}
+
+#form_hand_test,#form_auto_test{
+	padding-top:20px;
+	width: 100%;
+	height:200px;
+}
+#form_hand_test li,#form_auto_test li{
+	line-height: 40px;
+	text-align: left;
+	padding: 5px 30px;
+}
+#form_hand_test li input,#form_auto_test li input{
+	width:100%;
+	padding:8px 5px;
+	line-height: 18px;
+	height:36px;
+	border-radius: 3px;
+	outline: none;
+
+}
+#btn_hand_test,#btn_auto_test{
+	margin-top:60px;
+}
+#btn_hand_test a,#btn_auto_test a{
+	padding:7px 20px;
+	background: #3db06e;
+	color: #fff;
+	border-radius: 3px;
+	font-size: 14px;
+}
+.txtinput{
+	color: #888;
+	border:1px solid #C5C5C5;
+}
+.txtinput:focus{
+	border:1px solid #3db06e;
+}
+
+

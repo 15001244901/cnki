@@ -1,0 +1,179 @@
+
+.q-res>.line-field {
+	margin-top: 17px;
+	position: relative
+}
+
+.q-res>.line-field>span {
+	float: left;
+	line-height: 34px;
+	height: 36px;
+	position: absolute;
+	left: 0
+}
+
+.edit-wrap {
+	margin-left: 70px;
+	width: 50%
+}
+
+.q-res>.line-field .edit-line {
+	min-height: 18px;
+	overflow-x: hidden;
+	border: 1px solid #dcdcdc;
+	background: #f5f5f5;
+	padding: 6px 4px;
+	font-size: 14px;
+	line-height: 1.5em;
+	color: #999
+}
+
+.q-res>.line-field .edit-line:focus {
+	background: #fff;
+	color: #17B55B;
+	border: 1px solid #64C7AB;
+	outline: 0
+}
+
+.edit-wrap2 {
+	overflow-x: hidden;
+	min-height:120px;
+	width: 100%;
+
+}
+
+.q-res .txt-field {
+	padding: 5px;
+	min-height: 108px;
+	border: 1px solid #dcdcdc;
+	background: #f5f5f5;
+	color: #999;
+	line-height: 1.5em
+}
+
+.q-res .txt-field.done-textarea,
+.q-res>.line-field .done-textarea {
+	color: #17b55b;
+	font-size: 14px;
+	background: #fff
+}
+
+.q-res .txt-field:focus {
+	background: #fff;
+	color: #17B55B;
+	border: 1px solid #6495ed;
+	outline: 0
+}
+
+.four1 .q-res {
+	position: relative;
+	width:610px;
+    padding:2px;
+	min-height: 120px;
+    overflow: hidden;;
+}
+
+.q-res img {
+	vertical-align: middle
+}
+
+.q-txt table td {
+	padding: 0 0 0 3px
+}
+
+.q-txt table {
+	margin-left: auto;
+	margin-right: auto
+}
+
+.op-item .checkbox .op-item-meat,
+.op-item .radiobox .op-item-meat {
+	padding-left: 40px;
+	margin-left: 0
+}
+
+.test-save-tip {
+	text-align: center;
+	line-height: 24px;
+	padding-top: 30px
+}
+
+.test-save-tip strong {
+	margin: 0 3px;
+	color: red;
+}
+/*#div .div2 .four1 .edit-show{*/
+	/*display: none;*/
+	/*font-size: 13px;*/
+	/*color: #047D65;*/
+	/*padding: 5px 10px;*/
+	/*border: 1px dashed #D1D1D1;*/
+	/*position: absolute;*/
+	/*top: 0px; right:0;*/
+    /*bottom:auto;*/
+    /*left:auto;*/
+	/*bottom: 1px;left: 500px;*/
+	/*background: #fff;*/
+    /*border-radius: 0;*/
+	/*cursor: pointer;*/
+    /*margin-left: 0px;*/
+    /*line-height: 16px;*/
+/*}*/
+
+/*#div .div2 .four1 .edit-show:hover{*/
+	/*color: #6495ed;*/
+	/**/
+/*}*/
+/*#div .div2 .four1 .edit-wrap2:hover .edit-show{*/
+	/*display: block;*/
+/*}*/
+#formula-wrap {
+	position: fixed;
+	top: 10px;
+	right: -800px;
+	border: 4px solid #6495ed;
+	background: #efefef;
+	z-index: 999999;
+	text-align: center;
+	box-shadow: 0 0 8px #666
+}
+
+.formula-tit {
+	line-height: 36px;
+	height: 36px;
+	background: #6495ed;
+	color: #fff;
+	font-size: 14px;
+	cursor: move
+}
+
+#formula-wrap button {
+	width: 100px;
+	height: 36px;
+	border: 0;
+	margin: 10px 10px 0;
+	color: #333;
+	background: #dcdcdc;
+	border-radius: 3px;
+	font-size: 14px
+}
+
+#formula-wrap button:hover {
+	background: #d3d3d3
+}
+
+#formula-wrap button.submit {
+	background: #7EAAF7;
+	color: #fff
+}
+
+#formula-wrap button.submit:hover {
+	background: #6495ed
+}
+/*编辑器*/
+.q-res .txt-field:focus{
+	color:#333;
+}
+.q-res .txt-field.done-textarea, .q-res>.line-field .done-textarea{
+	color:#333;
+}

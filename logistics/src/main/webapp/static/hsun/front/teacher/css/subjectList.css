@@ -1,0 +1,117 @@
+#cont{
+    margin-top:20px;
+    margin-right:40px;
+    margin-bottom:40px;
+    margin-left:21px;
+    overflow: hidden;
+}
+ul,ol{
+    list-style: none;
+    padding:0;
+}
+#cont>div{
+    float: left;
+}
+.cont_fl{
+    width:300px;
+    padding:10px;
+    border:1px solid #eee;
+    -webkit-border-radius:3px;
+    -moz-border-radius:3px;
+    border-radius:3px;
+}
+.cont_fr{
+    width:60%;
+    margin-left:300px;
+    min-height:400px;
+    padding:20px;
+    border:1px solid #eee;
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+    border-left: none;
+    position: fixed;
+}
+.bg{
+    background: url("../../../front/img/edit_item_random_two/spriter-a.png") no-repeat;
+}
+.dash_line {
+    background: url(../../../front/img/edit_item_random_two/dash-line.png) repeat-y;
+}
+
+.title_radio1{
+    background-position: -402px -118px;
+}
+.title_radio2{
+    background-position: -402px -95px;
+}
+.title_dash{
+    margin-left:5px;
+    background: url('../../../front/img/edit_item_random_two/dash.png') repeat-x center;
+}
+.dash_pos{
+    background-position: 6px 0;
+}
+.one_title{
+    line-height: 30px;
+    height:30px;
+
+}
+.one_title em{
+    display: inline-block;
+    width:13px;
+    height:13px;
+    position: relative;
+    top:1px;
+    margin-right:5px;
+    cursor: pointer;
+}
+.one_title span{
+    cursor: pointer;
+}
+.one_title span:hover{
+    color: #23527c;
+}
+.bg_color1{
+    background: #f5e3d1;
+}
+.one_title i{
+    font-style: normal;
+    font-size: 12px;
+    padding-left:5px;
+    cursor: pointer;
+}
+.one_title .issort{
+    color: #888;
+    cursor: default;
+    /*font-size: 14px;*/
+}
+.one_title i:hover{
+    color: #a94442;
+}
+.ml19{
+    margin-left:19px;
+}
+/*添加*/
+.addbtn{
+    margin-top:20px;
+}
+.addbtn a{
+    /*display: inline-block;*/
+    margin-left:19px;
+    /*color: #fff;*/
+    /*background-color: #337ab7;*/
+    /*border-color: #2e6da4;*/
+    padding:3px 10px;
+    font-size: 12px;
+}
+/*右侧*/
+.form-group{
+    position: relative;
+}
+.errhas{
+    position: absolute;
+    right:0;
+    top:5px;
+    color: red;
+    font-size: 20px;
+}

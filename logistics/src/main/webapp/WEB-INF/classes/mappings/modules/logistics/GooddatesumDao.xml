@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+	namespace="com.hsun.ywork.modules.logistics.dao.GooddatesumDao">
+
+	<select id="findList" resultType="Gooddatesum">
+		SELECT
+		DATE_FORMAT(gfhrq,'%Y%m') months,
+		SUM(gffxf) gffxf,SUM(gwbjs) gwbjs,SUM(gysje) gysje,SUM(gdfje) gdfje,
+		SUM(gdkje) gdkje,SUM(gdianfu) gdianfu,SUM(gbjed) gbjed,SUM(gsxf) gsxf,SUM(gbjf) gbjf,
+		SUM(gthje) gthje,SUM(gssje) gssje
+		FROM
+		wl_goodinfo a
+		<where>
+			<!-- a.del_flag = #{DEL_FLAG_NORMAL} -->
+			<if test="months != null and months != ''">
+				and DATE_FORMAT(gfhrq,'%Y%m')=#{months}
+			</if>
+		</where>
+		GROUP BY months
+	</select>
+</mapper>

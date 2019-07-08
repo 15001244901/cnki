@@ -1,0 +1,241 @@
+
+.alter{
+    width: 30px;
+    height:30px;
+    display: block;
+    float: left;
+    margin-top:8px;
+    margin-left:15px;
+    /*margin: 8px auto 0;*/
+    background-image:url('../../../../img/btn_icon.png') ;
+    background-repeat: no-repeat;
+    background-position: -40px 0;
+}
+
+.alter:hover{
+    background-position: -40px -40px;
+}
+/*弹出的分数*/
+#alert_score{
+    margin-top:45px;
+    line-height: 32px;
+    height:36px;
+    padding: 0;
+    text-align: center;
+}
+/*添加用户*/
+#add_user{
+    float: right;
+    margin-top:5px;
+    margin-left:30px;
+    margin-right:10px;
+    cursor: pointer;
+    font-family: '微软雅黑';
+}
+#users{
+    position: fixed;
+    z-index: 99;
+    top: 0;
+    left:0;
+    right:0;
+    bottom: 0;
+    background: rgba(0,0,0,0.3);
+    display: none;
+}
+.users{
+    width:540px;
+    /*margin:20px auto 0;*/
+
+    height:300px;
+    overflow: hidden;
+    position: absolute;
+    top:50%;
+    left:50%;
+    margin-left:-20%;
+    margin-top: -150px;
+    background: #fff;
+    transform: scale(0.001,0.001);
+    opacity: 0;
+    transition: all 0.2s;
+    box-shadow: 1px 1px 50px rgba(0, 0, 0, 0.3);
+    /*border-radius:3px;*/
+    font-family: '微软雅黑';
+}
+.users.check{
+    opacity: 1;
+    transform: scale(1,1);
+}
+.users_title_name{
+    line-height: 40px;
+    font-size: 16px;
+    background: #009f95 ;
+    color: #fff;
+    text-align: center;
+}
+.users_title_name  span{
+    position: absolute;
+    right:12px;
+    top:12px;
+    height:14px;
+    width:14px;
+    cursor: pointer;
+    display: inline-block;
+    background: url("../../../../img/close.png") no-repeat center center;
+}
+.users_cont{
+    margin:10px;
+    height:240px;
+    overflow: hidden;
+}
+.users_cont>div{
+    line-height: 30px;
+    font-weight: bold;
+}
+.users_cont>ul{
+    margin-left:10px;
+    overflow: hidden;
+    margin-bottom:10px;
+}
+.users_cont>ul>li{
+    padding-left:10px;
+    line-height: 26px;
+    -webkit-border-radius:3px;
+    -moz-border-radius:3px;
+    border-radius:3px;
+}
+.users_cont>ul>li:hover{
+    background: #E0DEDE;
+}
+.users_cont hr{
+    /*margin:0;*/
+    margin-top:0;
+    margin-bottom:5px;
+    border:none;
+    border-top:1px solid #E5E5E5;
+}
+.users_cont .fa{
+    font-size: 22px;
+    display: block;
+    width:30px;
+    height:30px;
+    line-height: 30px;
+    text-align: center;
+}
+
+.up_class{
+    float: right;
+    cursor: pointer;
+    transition: all 0.2s;
+    /*transform-origin: 50% 50% ;*/
+}
+.up_class.check{
+    transform: rotate(180deg);
+}
+.add_people{
+    cursor: pointer;
+    font-size: 12px;
+}
+.add_people.color_red{
+    color: red;
+}
+.add_people:hover{
+    text-decoration: underline;
+}
+.users_cont input{
+    line-height: 18px;
+    height:22px;
+    width:50px;
+    padding:0;
+    border:2px solid #fff;
+    /*position: relative;*/
+    /*top:0px;*/
+}
+.input_score{
+    padding-left: 20px;
+    font-size: 12px;
+    vertical-align: middle;
+}
+.input_name{
+    display: inline-block;
+    width:100px;
+}
+.fl{
+    float: left;
+}
+.fr{
+    float: right;
+}
+.pr10{
+    padding-right:10px;
+}
+.pr20{
+    padding-right:20px;
+}
+/*.for_checks,.for_pid,.for_uid{*/
+    /*display: none;*/
+/*}*/
+/*确定删除*/
+.confirm_container{
+    background: rgba(0,0,0,0.8);
+    position: fixed;
+    top:0;
+    left:0;
+    right:0;
+    bottom: 0;
+    display: none;
+    z-index: 99;
+}
+.confirm{
+    width:300px;
+    height:150px;
+    transform: scale(0.001,0.001);
+    opacity: 0;
+    transition: all 0.2s;
+    box-shadow: 1px 1px 50px rgba(0, 0, 0, 0.3);
+    position: absolute;
+    top:50%;
+    left:50%;
+    margin-left:-150px;
+    margin-top:-75px;
+}
+.confirm.check{
+    opacity: 1;
+    transform: scale(1,1);
+}
+.confirm .confirm_title{
+    background: #009f95;
+    color: #fff;
+    font-size: 16px;
+    text-align: center;
+    line-height:42px;
+}
+.confirm_cont{
+    background:#fff;
+    overflow: hidden;
+    padding-bottom:20px;
+    text-align: center;
+}
+.confirm_cont p{
+    line-height: 60px;
+    height:60px;
+}
+.confirm a{
+    clear: both;
+    display: inline-block;
+    padding:4px 15px;
+    border-radius: 3px;
+    color: #fff;
+    margin-top: 5px;
+    margin-right:15px;
+    margin-left:15px;
+    font-size: 14px;
+}
+.confirm_del{
+    background: #0DBCB2;
+}
+.confirm_qx{
+    background: #0DBCB2;
+}
+.confirm a:hover{
+    background: #009f95;
+}

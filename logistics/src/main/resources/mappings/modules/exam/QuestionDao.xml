@@ -1,0 +1,334 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hsun.ywork.modules.exam.dao.QuestionDao">
+    
+	<sql id="questionColumns">
+		a.id AS "id",
+		a.qno as "qno",
+		a.subject as "subject",
+		a.topic as "topic",
+		a.post as "post",
+		a.q_dbid AS "qDbid",
+		a.q_type AS "qType",
+		a.q_level AS "qLevel",
+		a.q_from AS "qFrom",
+		a.q_status AS "qStatus",
+		a.q_content AS "qContent",
+		a.q_key AS "qKey",
+		a.q_resolve AS "qResolve",
+		a.q_data AS "qData",
+		a.q_keyword AS "qKeyword",
+		a.q_stdid AS "qStdid",
+		a.create_by AS "createBy.id",
+		u1.name as "createBy.name",
+		u2.name as "updateBy.name",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.del_flag AS "delFlag",
+		a.q_remark AS "qRemark"
+	</sql>
+	
+	<sql id="questionJoins">
+		left outer join sys_user u1 on(u1.id = a.create_by)
+		left outer join sys_user u2 on(u2.id = a.update_by)
+	</sql>
+    
+	<select id="get" resultType="Question">
+		SELECT 
+			<include refid="questionColumns"/>
+		FROM yw_exam_question a
+		<include refid="questionJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="Question">
+		SELECT 
+			<include refid="questionColumns"/>
+			<if test="userQuestion != null and userQuestion.uid != null and userQuestion.uid != ''">
+				, case when uq1.id is null then '0' else uq1.id end as isbasket ,
+				uq2.id as iscollected
+			</if>
+		FROM yw_exam_question a
+		<include refid="questionJoins"/>
+		<if test="userQuestion != null and userQuestion.uid != null and userQuestion.uid != ''">
+			left outer join yw_user_question uq1 on(uq1.qid = a.id and uq1.dtype = 5 and uq1.uid = #{userQuestion.uid})
+			left outer join yw_user_question uq2 on(uq2.qid = a.id and uq2.dtype = 1 and uq2.uid = #{userQuestion.uid})
+		</if>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="qContent != null and qContent != ''">
+				AND a.q_content LIKE
+				<if test="dbName == 'oracle'">'%'||#{qContent}||'%'</if>
+				<if test="dbName == 'mssql'">'%'+#{qContent}+'%'</if>
+				<if test="dbName == 'mysql'">concat('%',#{qContent},'%')</if>
+			</if>
+			<if test="qKeyword != null and qKeyword != ''">
+				AND (a.q_content LIKE
+				<if test="dbName == 'oracle'">'%'||#{qKeyword}||'%'</if>
+				<if test="dbName == 'mssql'">'%'+#{qKeyword}+'%'</if>
+				<if test="dbName == 'mysql'">concat('%',#{qKeyword},'%')</if>
+				OR a.q_keyword LIKE
+				<if test="dbName == 'oracle'">'%'||#{qKeyword}||'%'</if>
+				<if test="dbName == 'mssql'">'%'+#{qKeyword}+'%'</if>
+				<if test="dbName == 'mysql'">concat('%',#{qKeyword},'%')</if>
+				)
+			</if>
+			<if test="subject != null and subject != ''">
+				AND a.subject in (${subject})
+			</if>
+			<if test="topic != null and topic != ''">
+				AND a.topic in
+				<foreach item="item" index="index" collection="topicList" open="(" separator="," close=")">
+					#{item}
+				</foreach>
+			</if>
+			<if test="qType != null and qType != ''">
+				AND a.q_type = #{qType}
+			</if>
+			<if test="qLevel != null and qLevel != ''">
+				AND a.q_level = #{qLevel}
+			</if>
+			<if test="qStatus != null and qStatus != ''">
+				AND a.q_status = #{qStatus}
+			</if>
+			<if test="qDbid != null and qDbid != ''">
+				AND a.q_dbid = #{qDbid}
+			</if>
+			<if test="post != null and post != ''">
+				AND a.post in (${post})
+			</if>
+			<if test="qno != null and qno != ''">
+				AND a.qno >= #{qno}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.create_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="Question">
+		SELECT 
+			<include refid="questionColumns"/>
+		FROM yw_exam_question a
+		<include refid="questionJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.create_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO yw_exam_question(
+			id,
+			qno,
+			subject,
+			topic,
+			post,
+			q_type,
+			q_level,
+			q_from,
+			q_status,
+			q_content,
+			q_key,
+			q_resolve,
+			q_data,
+			q_keyword,
+			q_stdid,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			del_flag,
+			q_remark
+		) VALUES (
+			#{id},
+			#{qno},
+			#{subject},
+			#{topic},
+			#{post},
+			#{qType},
+			#{qLevel},
+			#{qFrom},
+			#{qStatus},
+			#{qContent},
+			#{qKey},
+			#{qResolve},
+			#{qData},
+			#{qKeyword},
+			#{qStdid},
+			#{createBy.id},
+			#{createDate},
+			#{updateBy.id},
+			#{updateDate},
+			#{delFlag},
+			#{qRemark}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE yw_exam_question SET
+			subject = #{subject},
+			topic = #{topic},
+			post = #{post},
+			q_type = #{qType},
+			q_level = #{qLevel},
+			q_from = #{qFrom},
+			q_status = #{qStatus},
+			q_content = #{qContent},
+			q_key = #{qKey},
+			q_resolve = #{qResolve},
+			q_data = #{qData},
+			q_keyword = #{qKeyword},
+			q_stdid = #{qStdid},
+			update_by = #{updateBy.id},
+			update_date = #{updateDate},
+			q_remark = #{qRemark}
+		WHERE id = #{id}
+	</update>
+
+	<update id="check">
+		UPDATE yw_exam_question SET
+		q_status = #{qStatus},
+		update_by = #{updateBy.id},
+		update_date = #{updateDate}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		UPDATE yw_exam_question SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+
+	<select id="findUserQuestionList" resultType="Question">
+		SELECT
+		<include refid="questionColumns"/>
+		,uq.id as "userQuestion.id",
+		uq.uid as "userQuestion.uid",
+		uq.qid as "userQuestion.qid",
+		uq.dtype as "userQuestion.dtype",
+		uq.wtype as "userQuestion.wtype",
+		uq.ukey as "userQuestion.ukey"
+		FROM yw_exam_question a
+		<include refid="questionJoins"/>
+		RIGHT OUTER JOIN yw_user_question uq ON(a.id = uq.qid)
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			AND uq.uid = #{userQuestion.uid}
+			<if test="userQuestion.dtype != null and userQuestion.dtype != ''">
+				and uq.dtype = #{userQuestion.dtype}
+			</if>
+			<if test="userQuestion.wtype != null and userQuestion.wtype != ''">
+				and uq.wtype = #{userQuestion.wtype}
+			</if>
+			<if test="qContent != null and qContent != ''">
+				AND a.q_content LIKE
+				<if test="dbName == 'oracle'">'%'||#{qContent}||'%'</if>
+				<if test="dbName == 'mssql'">'%'+#{qContent}+'%'</if>
+				<if test="dbName == 'mysql'">concat('%',#{qContent},'%')</if>
+			</if>
+			<if test="subject != null and subject != ''">
+				AND a.subject in (${subject})
+			</if>
+			<if test="topic != null and topic != ''">
+				AND a.topic in
+				<foreach item="item" index="index" collection="topicList" open="(" separator="," close=")">
+					#{item}
+				</foreach>
+			</if>
+			<if test="qType != null and qType != ''">
+				AND a.q_type = #{qType}
+			</if>
+			<if test="qLevel != null and qLevel != ''">
+				AND a.q_level = #{qLevel}
+			</if>
+			<if test="qStatus != null and qStatus != ''">
+				AND a.q_status = #{qStatus}
+			</if>
+			<if test="qDbid != null and qDbid != ''">
+				AND a.q_dbid = #{qDbid}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.create_date DESC
+			</otherwise>
+		</choose>
+	</select>
+
+	<!-- 获取用户每日一练的试题：
+	1.只查询未删除、已审核的一条试题；
+	2.用户已经练过的排除掉；
+	3.关联查询排除练习记录表中（dtype=4代表每日一练）的数据
+	4.待选试题按日期倒序；
+	-->
+	<select id="getUserDayQuestion" resultType="Question">
+		SELECT
+		<include refid="questionColumns"/>
+		FROM yw_exam_question a
+		<include refid="questionJoins"/>
+		<where>
+			a.del_flag = 0 AND a.q_status = 1
+			AND a.q_type in(1,2,3)
+			AND a.id NOT IN(
+				SELECT qid FROM yw_user_question uq
+				WHERE uq.qid = a.id
+					AND uq.uid = #{1}
+					AND uq.dtype = 4
+			)
+		</where>
+		ORDER BY RAND()
+		limit 1
+	</select>
+
+	<!-- 前端智能组卷按条件统计试题数量 -->
+	<select id="countQuestionNums" resultType="java.util.Map">
+		select
+		q_type as qtype ,
+		count(id) as qnum
+		from yw_exam_question a
+		<where>
+			a.del_flag = 0 and a.q_status = 1
+			<if test="qType != null and qType != ''">
+				AND a.q_type = #{qType}
+			</if>
+			<if test="subject != null and subject != ''">
+				AND a.subject in (${subject})
+			</if>
+			<if test="topic != null and topic != ''">
+				AND a.topic in
+				<foreach item="item" index="index" collection="topicList" open="(" separator="," close=")">
+					#{item}
+				</foreach>
+			</if>
+			<if test="qLevel != null and qLevel != ''">
+				AND a.q_level = #{qLevel}
+			</if>
+			<if test="post != null and post != ''">
+				AND a.post in (${post})
+			</if>
+		</where>
+		group by a.q_type
+	</select>
+
+	<select id="findMaxNo" resultType="int">
+		select max(qno) as maxno from yw_exam_question
+	</select>
+	
+</mapper>

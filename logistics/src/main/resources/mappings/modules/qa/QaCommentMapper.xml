@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="QaCommentMapper">
+
+	<resultMap id="QaCommentResult" type="com.hsun.ywork.modules.qa.entity.QaComment">
+		<result property="id" column="ID" />
+		<result property="cusId" column="CUS_ID" />
+		<result property="questionId" column="QUESTION_ID" />
+		<result property="content" column="CONTENT" />
+		<result property="isBest" column="IS_BEST" />
+		<result property="replyCount" column="REPLY_COUNT" />
+		<result property="praiseCount" column="PRAISE_COUNT" />
+		<result property="addTime" column="ADD_TIME" />
+		<result property="commentId" column="COMMENT_ID" />
+		
+		<result property="showName" column="showName" />
+		<result property="email" column="email" />
+		<result property="picImg" column="picImg" />
+		<result property="questionsTitle" column="questionsTitle" />
+		<result property="questionsStatus" column="questionsStatus" />
+	</resultMap>
+
+	<sql id="yw_qa_comment_columns">
+		yw_qa_comment.ID,
+		yw_qa_comment.CUS_ID,
+		yw_qa_comment.QUESTION_ID,
+		yw_qa_comment.CONTENT,
+		yw_qa_comment.IS_BEST,
+		yw_qa_comment.REPLY_COUNT,
+		yw_qa_comment.PRAISE_COUNT,
+		yw_qa_comment.ADD_TIME,
+		yw_qa_comment.COMMENT_ID
+	</sql>
+
+	<sql id="yw_qa_comment_properties">
+		#{id},
+		#{cusId},
+		#{questionId},
+		#{content},
+		#{isBest},
+		#{replyCount},
+		#{praiseCount},
+		#{addTime},
+		#{commentId}
+	</sql>
+
+	<insert id="createQuestionsComment" parameterType="com.hsun.ywork.modules.qa.entity.QaComment" keyColumn="ID" keyProperty="id">
+		insert INTO yw_qa_comment (
+		<include refid="yw_qa_comment_columns" />
+		) VALUES (
+		<include refid="yw_qa_comment_properties" />
+		)
+	</insert>
+
+	<delete id="deleteQuestionsCommentById" parameterType="long">
+		delete from
+		yw_qa_comment
+		where
+		id = #{value}
+	</delete>
+
+	<update id="updateQuestionsComment" parameterType="com.hsun.ywork.modules.qa.entity.QaComment">
+		update
+		yw_qa_comment SET
+		ID = #{id},
+		CUS_ID = #{cusId},
+		QUESTION_ID = #{questionId},
+		CONTENT = #{content},
+		IS_BEST = #{isBest},
+		REPLY_COUNT = #{replyCount},
+		PRAISE_COUNT = #{praiseCount},
+		ADD_TIME = #{addTime}
+		where ID = #{id}
+	</update>
+
+	<select id="getQuestionsCommentById" resultMap="QaCommentResult"
+		parameterType="long">
+		select
+		<include refid="yw_qa_comment_columns" />
+		,sys_user.NAME as showName,sys_user.EMAIL as email ,sys_user.PHOTO as picImg
+		from yw_qa_comment
+		left join sys_user on sys_user.ID=yw_qa_comment.CUS_ID
+		where
+		yw_qa_comment.id = #{value}
+	</select>
+
+	<select id="getQuestionsCommentList" resultMap="QaCommentResult"
+		parameterType="com.hsun.ywork.modules.qa.entity.QaComment">
+		select
+		<include refid="yw_qa_comment_columns" />
+		,sys_user.NAME as showName,sys_user.EMAIL as email ,sys_user.PHOTO as picImg
+		from yw_qa_comment
+		left join sys_user on sys_user.ID=yw_qa_comment.CUS_ID
+		<where>
+			<if test="isBest!= -1">
+				and yw_qa_comment.IS_BEST = #{isBest}
+			</if>
+			<if test="questionId != null and questionId != 0" >  
+				and yw_qa_comment.QUESTION_ID = #{questionId}
+			</if>
+			<if test="commentId != null and commentId != 0" >  
+				and yw_qa_comment.COMMENT_ID = #{commentId}
+			</if>
+		</where>
+		<if test="orderFlag=='new'">
+			order by yw_qa_comment.ADD_TIME desc
+		</if>
+		<if test="limitSize!=0">
+			limit #{limitSize}
+		</if>
+	</select>
+
+
+	<select id="queryQuestionsCommentListByQuestionsId" resultMap="QaCommentResult"
+		parameterType="java.util.HashMap">
+		select
+		<include refid="yw_qa_comment_columns" />
+		,sys_user.NAME as showName,sys_user.EMAIL as email ,sys_user.PHOTO as picImg
+		from yw_qa_comment
+		left join sys_user on sys_user.ID=yw_qa_comment.CUS_ID
+		where yw_qa_comment.QUESTION_ID = #{e.questionId}
+		<if test="e.isBest != -1" >  
+			and yw_qa_comment.IS_BEST = #{e.isBest}
+		</if>
+		order by yw_qa_comment.ADD_TIME desc
+		<include refid="publicMapper.pageEnd" />
+	</select>
+
+	<select id="queryQuestionsCommentListByQuestionsIdCount"
+		resultType="int" parameterType="java.util.HashMap">
+		select
+		count(1)
+		from yw_qa_comment
+		where yw_qa_comment.QUESTION_ID = #{e.questionId}
+		<if test="e.isBest != -1" >  
+			and yw_qa_comment.IS_BEST = #{e.isBest}
+		</if>
+	</select>
+	
+	<!-- 根据问答id删除QaComment -->
+	<delete id="delQuestionsCommentByQuestionId" parameterType="long">
+		delete from
+		yw_qa_comment
+		where
+		QUESTION_ID = #{value}
+	</delete>
+	
+	
+	<select id="queryQuestionsCommentList" resultMap="QaCommentResult"
+		parameterType="java.util.HashMap">
+		select
+		<include refid="yw_qa_comment_columns" />
+		,sys_user.NAME as showName,sys_user.EMAIL as email ,sys_user.PHOTO as picImg
+        ,yw_qa.TITLE as questionsTitle,yw_qa.STATUS as questionsStatus
+		from yw_qa_comment
+		left join sys_user on sys_user.ID=yw_qa_comment.CUS_ID
+        left join yw_qa on yw_qa.ID = yw_qa_comment.QUESTION_ID
+        where yw_qa_comment.QUESTION_ID!=0
+		<if test="e.questionId != null and e.questionId !='' " >  
+			and yw_qa_comment.QUESTION_ID = #{e.questionId}
+		</if>
+		<if test="e.questionsTitle !=null and e.questionsTitle !=''">
+			and <![CDATA[ yw_qa.TITLE like CONCAT('%',#{e.questionsTitle},'%') ]]>
+		</if>
+		<if test="e.beginCreateTime!=null and e.beginCreateTime!='' ">
+             AND <![CDATA[yw_qa_comment.ADD_TIME>#{e.beginCreateTime} ]]>
+         </if>
+         <if test="e.endCreateTime!=null and e.endCreateTime!='' ">
+             AND <![CDATA[yw_qa_comment.ADD_TIME<#{e.endCreateTime} ]]>
+         </if>
+         <if test="e.isBest != -1" >  
+			and yw_qa_comment.IS_BEST = #{e.isBest}
+		</if>
+		order by yw_qa_comment.ADD_TIME desc
+	</select>
+	
+	<!-- 根据问答回复id删除QaComment -->
+	<delete id="delQuestionsCommentByCommentId" parameterType="long">
+		delete from
+		yw_qa_comment
+		where
+		yw_qa_comment.COMMENT_ID = #{value}
+	</delete>
+	
+</mapper>

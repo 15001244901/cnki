@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hsun.ywork.modules.exam.dao.PaperUODao">
+    
+	<sql id="paperuoColumns">
+		a.id AS "id",
+		a.pid as "pid",
+		a.ouid as "ouid",
+		a.ltype as "ltype"
+	</sql>
+	
+	<sql id="paperuoJoins">
+	</sql>
+    
+	<select id="get" resultType="PaperUO">
+		SELECT 
+			<include refid="paperuoColumns"/>
+		FROM yw_exam_paper_uo a
+		<include refid="paperuoJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="PaperUO">
+		SELECT 
+			<include refid="paperuoColumns"/>
+		FROM yw_exam_paper_uo a
+		<include refid="paperuoJoins"/>
+		<where>
+			
+			<if test="pid != null and pid != ''">
+				AND a.pid = #{pid}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.id DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="PaperUO">
+		SELECT 
+			<include refid="paperuoColumns"/>
+		FROM yw_exam_paper_uo a
+		<include refid="paperuoJoins"/>
+		<where>
+			
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.id DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO yw_exam_paper_uo(
+			id,pid,ouid,ltype
+		) VALUES (
+			#{id},
+			#{pid},
+			#{ouid},
+			#{ltype}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE yw_exam_paper_uo SET
+			pid = #{pid},
+			uid = #{uid},
+			ltype = #{ltype}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		DELETE FROM yw_exam_paper_uo
+		WHERE id = #{id}
+	</update>
+
+	<update id="deleteByPid">
+		DELETE FROM yw_exam_paper_uo
+		WHERE pid = #{pid}
+	</update>
+	
+</mapper>

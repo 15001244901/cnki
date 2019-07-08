@@ -1,0 +1,204 @@
+@charset "utf-8";
+
+body,
+h1,
+h2,
+h3,
+p,
+ul,
+ol,
+form,
+fieldset,
+figure {
+	margin: 0;
+	padding: 0;
+}
+
+div,
+figure,
+img,
+input,
+button {
+	box-sizing: border-box;
+}
+
+body {
+	min-width: 1200px;
+	/*height: 900px;*/
+	/*background-color: #F0F0F2;*/
+	font-family: "Helvetica Neue", Helvetica, Arial, "Microsoft Yahei UI", "Microsoft YaHei", SimHei, "\5B8B\4F53", simsun, sans-serif;
+}
+
+img {
+	display: block;
+	max-width: 100%;
+}
+
+ul,
+ol {
+	list-style: outside none none;
+}
+
+
+a {
+	text-decoration: none;
+}
+
+.none {
+	display: none;
+}
+
+.sm-visible {
+	display: none;
+}
+
+.clearfix:after {
+	content: ".";
+	height: 0;
+	visibility: hidden;
+	display: block;
+	clear: both;
+}
+
+
+#header {
+	width:100% !important;
+	height: 70px;
+	top: 0;
+	z-index: 9999;
+	box-shadow: 0 0 8px 0 rgba(0,0,0,0.08);
+	margin-bottom: 20px;
+	background-color: #FFFFFF;
+}
+#header .center{
+max-width:1200px;
+width: 1200px;
+height: 70px;
+margin: 0 auto;
+	
+}
+
+#header .logo {
+	width: 285px;
+	height: 70px;
+	text-indent: -9999px;
+	float: left;
+	margin-top: -5px;
+}
+
+#header .link {
+	
+	height: 70px;
+	line-height: 70px;
+	color: #333333;
+	float: left;
+	
+}
+#header .link li {
+	
+	float: left;
+	margin: 0;
+	
+}
+#header .link a {
+	
+	color: #333;
+	
+	padding: 10px 43px;
+	border-right: 1px solid #D4D4D4;
+}
+#header .link span{
+	color: #DCDCDC ;
+	margin: 0 0 0 -4.5px;
+	
+}
+#header .link a:hover
+ {
+	
+	background-color: #6495ED;
+	color: white;
+}
+/*a{
+	color: #999;
+}*/
+.username{
+	color:#333;
+	float: left; 
+	margin-left: 10px;
+	margin-top: 50px; 
+	line-height: 18px; 
+	text-align: left;
+	font-size: 11px;
+}
+.userhead{
+	float: left; 
+	margin-left: 40px;
+	position: relative;
+	bottom: 40px;
+}
+.username li{
+	margin: -9px 0;
+}
+.parentDiv{
+	width: 1200px;
+	height:654px;
+	background-color: white;
+	margin:0 auto;
+	box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.08)
+}
+#welcome{
+position: relative;
+right: 2px;
+
+}
+/*下拉图片*/
+.head_portrait img{
+width: 14px;
+position: relative;
+right: 20px;
+top:15px;	
+}
+.pull-down2{
+z-index: 9;
+position: relative;
+left:0px;
+width: 148px;
+height: 191px;
+border: 2px solid  #DCDCDC;
+margin-top: -60px;
+background-color: white;
+border-radius: 5px;	
+}
+.pull-down2 li{
+position: relative;
+top: 65px;
+width: 148px;
+height: 34px;
+padding-top: 8px;
+padding-bottom: 9px;
+}
+
+
+ .pull-down2 li:hover {
+background-color: #EEEEEE;
+text-align: center;
+	}
+.pull-down2	.head_portrait{
+	position: relative;
+	left: 50px;
+    bottom: 2px;
+	}
+.pull-down2  .family{
+	position:absolute;
+	left: 60px;
+	bottom:13px;
+	
+}
+
+/*头像*/
+.userhead img{
+	position: relative;
+	right: 20px;
+}
+
+

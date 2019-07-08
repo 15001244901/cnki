@@ -1,0 +1,87 @@
+/*试题导航*/
+.que_select{
+	position: fixed;
+	width: 100%;
+	height: 0.8rem;
+	top: 1.32rem;
+}
+.que_select ul{
+	display: flex;
+	display: -webkit-flex;
+	background: #F6F6F6;
+	padding:0.133333rem 0;
+	color: #909090;
+}
+.que_select ul>li{
+	flex-grow:1;
+	text-align: center;
+	font-size: 0.4rem;
+}
+.que_select ul>li span{
+	margin-right: 0.133333rem;
+}
+
+.que_select ul>li .icon{
+	font-size: 0.333333rem;
+}
+.que_select ul .active{
+	color: #3db06e;
+}
+
+
+.que_select_cont{
+	background: #fff;
+	// transition: all 0.4s;
+	padding-top: 0.013333rem;
+}
+.que_select_cont.show{
+	padding:0.266667rem 0.133333rem;
+	display: flex;
+	display: -webkit-flex;
+	flex-wrap:wrap;
+	align-content:flex-start;
+}
+
+.que_select_cont span{
+	border:0.013333rem solid #333;
+	border-radius: 0.04rem;
+	padding:0.08rem 0.266667rem;
+	margin: 0 0.266667rem 0.133333rem;
+	font-size: 0.293333rem;
+	// height: 0.346667rem;
+	line-height: 0.32rem;
+}
+.que_select_cont span.active{
+	border:0.013333rem solid #3db06e;
+	background: #17b55b;
+	color: #fff;
+}
+.knowledge_option{
+	height: 8rem;
+	width: 100%;
+	overflow-x: hidden;
+	overflow-y: scroll;
+	background: url('../images/dash-line.png') repeat-y 0.29rem 0;
+	-webkit-overflow-scrolling: touch;
+}
+.knowledge_option ol{
+	background: url('../images/dash-line.png') repeat-y 0.84rem 0;
+}
+.knowledge_name{
+	/*border-bottom:1px solid #ddd;*/
+	padding:0.2rem 0;
+}
+
+.knowledge_option .icon{
+	font-size: 0.32rem;
+	color: #777;
+	display: inline-block;
+	width: 0.586667rem;
+	text-align: center;
+}
+.knowledge_option .icon-xuxian{
+	position: relative;
+	left: 0.106667rem
+}
+
+

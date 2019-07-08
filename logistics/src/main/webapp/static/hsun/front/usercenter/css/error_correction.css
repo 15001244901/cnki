@@ -1,0 +1,87 @@
+body{
+	background:#fff;
+	margin:0;
+}
+a{
+	text-decoration: none;
+}
+.user-con {
+    padding: 0 10px 10px 10px;
+}
+
+.user-con h1 {
+    color: #333;
+    font-size: 16px;
+    font-weight: 200;
+    margin: 20px 0 20px 20px;
+}
+
+.table-record {
+    border: 1px solid #dcdcdc;
+    font-size: 14px;
+    width: 100%;
+}
+
+.table-record thead tr td {
+    background-color: #f6f6f6;
+    height: 38px;
+    line-height: 38px;
+    text-align: center;
+}
+.table-record tbody tr td, .table-record thead tr td, .userzj-list ul {
+    border-bottom: 1px solid #dcdcdc;
+    overflow: hidden;
+    padding-bottom: 1px;
+}
+.fixed-width1, .fixed-width2, .fixed-width3, .no-width1, .fixed-width4 {
+    border-right: 1px solid #dcdcdc;
+}
+.fixed-width {
+    width: 108px;
+}
+
+.table-record tbody tr td {
+    height: 48px;
+    text-align: center;
+}
+.fixed-width a {
+    color: #555;
+}
+.fixed-width a:hover {
+    color: #27ae61;
+}
+#jiucuo tr:last-child td{
+	border-bottom: none;
+}
+
+.no-width1{
+	width: 50%;
+}
+
+/*===============分页*/
+.divPage {
+    clear: both;
+    height: 70px;
+    line-height: 70px;
+    margin-top: 10px;
+    text-align: center;
+}
+.divPage a {
+    border: 1px solid #dcdcdc;
+    border-radius: 6px;
+    color: #999;
+    font-size: 14px;
+    padding: 6px 12px;
+}
+.divPage a:hover{
+	background: #bfbfc7 none repeat scroll 0 0;
+    color: white;
+}
+.divPage .curr {
+    background: #bfbfc7 none repeat scroll 0 0;
+    border: 1px solid #bfbfc7;
+    color: white;
+}
+.divPage .disabled {
+    display: none;
+}

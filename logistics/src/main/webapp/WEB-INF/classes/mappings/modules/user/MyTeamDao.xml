@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hsun.ywork.modules.user.dao.MyTeamDao">
+
+    <!-- 统计团队答题情况 -->
+    <select id="countDTB" resultType="java.util.Map">
+        select * from (
+        select
+            u.id as uid ,
+            u.name as uname ,
+            u.photo as photo ,
+            u.company_id as cid ,
+            o.id as oid ,
+            o.name as oname ,
+            case when LENGTH(o.parent_ids)-LENGTH(replace(o.parent_ids,',','')) >= 3 then
+            SPLIT_STR(o.parent_ids,',',3)
+            else o.id end as hid ,
+            case when LENGTH(o.parent_ids)-LENGTH(replace(o.parent_ids,',','')) >= 3 then
+            (select name from sys_office o2 where o2.id = SPLIT_STR(o.parent_ids,',',3))
+            else o.name end as hname ,
+
+            count(uq.qid) as do_num ,
+            count(uq.qid) - count(uqw.qid) as do_oknum
+        from sys_user u left outer join sys_office o
+        on(u.office_id = o.id) left outer join yw_user_question uq
+        on(u.id = uq.uid and uq.dtype in(2,3,4)) left outer join yw_user_question uqw
+        on(u.id = uqw.uid and uq.id = uqw.id and uqw.wtype = 1)
+        where u.company_id = #{company.id}
+        <if test="param.uid != null and param.uid != ''">
+            and u.id = #{param.uid}
+        </if>
+        <if test="param.year != null and param.year != ''">
+            and DATE_FORMAT(uq.create_date,'%Y') = #{param.year}
+        </if>
+        <if test="param.month != null and param.month != ''">
+            and DATE_FORMAT(uq.create_date,'%Y-%m') = #{param.month}
+        </if>
+        <if test="param.yearweek != null and param.yearweek != ''">
+            and YEARWEEK(date_format(uq.create_date,'%Y-%m-%d')) = #{param.yearweek}
+        </if>
+        <!-- 数据范围过滤 -->
+        ${sqlMap.dsf}
+        group by u.id
+        ) t
+        <where>
+            <if test="param.hid != null and param.hid != ''">
+                and hid = #{param.hid}
+            </if>
+        </where>
+
+        order by do_num desc , do_oknum desc
+    </select>
+
+    <!-- 统计团队活跃情况 -->
+    <select id="countHYB" resultType="java.util.Map">
+        select * from (
+        select
+        u.id as uid ,
+        u.name as uname ,
+        u.photo as photo ,
+        u.company_id as cid ,
+        o.id as oid ,
+        o.name as oname ,
+        case when LENGTH(o.parent_ids)-LENGTH(replace(o.parent_ids,',','')) >= 3 then
+        SPLIT_STR(o.parent_ids,',',3)
+        else o.id end as hid ,
+        case when LENGTH(o.parent_ids)-LENGTH(replace(o.parent_ids,',','')) >= 3 then
+        (select name from sys_office o2 where o2.id = SPLIT_STR(o.parent_ids,',',3))
+        else o.name end as hname ,
+
+        count(uq.id) as qa_num
+        from sys_user u left outer join sys_office o
+        on(u.office_id = o.id) left outer join yw_qa uq
+        on(u.id = uq.cus_id)
+        where u.company_id = #{company.id}
+        <if test="param.uid != null and param.uid != ''">
+            and u.id = #{param.uid}
+        </if>
+        <if test="param.year != null and param.year != ''">
+            and DATE_FORMAT(uq.ADD_TIME,'%Y') = #{param.year}
+        </if>
+        <if test="param.month != null and param.month != ''">
+            and DATE_FORMAT(uq.ADD_TIME,'%Y-%m') = #{param.month}
+        </if>
+        <if test="param.yearweek != null and param.yearweek != ''">
+            and YEARWEEK(date_format(uq.ADD_TIME,'%Y-%m-%d')) = #{param.yearweek}
+        </if>
+        <!-- 数据范围过滤 -->
+        ${sqlMap.dsf}
+        group by u.id
+        ) t
+        <where>
+            <if test="param.hid != null and param.hid != ''">
+                and hid = #{param.hid}
+            </if>
+        </where>
+        order by qa_num desc limit 10
+    </select>
+
+    <!-- 统计团队勤奋榜（学习时间：考试耗时+练习耗时+视频播放次数） -->
+    <select id="countQFB" resultType="java.util.Map">
+        select * from (
+        select
+        u.id as uid ,
+        u.name as uname ,
+        u.photo as photo ,
+        u.company_id as cid ,
+        o.id as oid ,
+        o.name as oname ,
+        case when LENGTH(o.parent_ids)-LENGTH(replace(o.parent_ids,',','')) >= 3 then
+        SPLIT_STR(o.parent_ids,',',3)
+        else o.id end as hid ,
+        case when LENGTH(o.parent_ids)-LENGTH(replace(o.parent_ids,',','')) >= 3 then
+        (select name from sys_office o2 where o2.id = SPLIT_STR(o.parent_ids,',',3))
+        else o.name end as hname ,
+
+        sum(round((UNIX_TIMESTAMP(uh.endtime)-UNIX_TIMESTAMP(uh.starttime))/60)) as kshs ,
+				sum(up.timecost) as lxhs ,
+				sum(sh.PLAYERCOUNT) as play_nums
+        from sys_user u left outer join sys_office o
+        on(u.office_id = o.id) left outer join yw_exam_history uh
+        on(u.id = uh.uid and uh.status = 2
+        <if test="param.year != null and param.year != ''">
+            and DATE_FORMAT(uh.starttime,'%Y') = #{param.year}
+        </if>
+        <if test="param.month != null and param.month != ''">
+            and DATE_FORMAT(uh.starttime,'%Y-%m') = #{param.month}
+        </if>
+        <if test="param.yearweek != null and param.yearweek != ''">
+            and YEARWEEK(date_format(uh.starttime,'%Y-%m-%d')) = #{param.yearweek}
+        </if>
+        ) left outer join yw_exam_userpractice up
+		on(u.id = up.uid
+        <if test="param.year != null and param.year != ''">
+            and DATE_FORMAT(up.testdate,'%Y') = #{param.year}
+        </if>
+        <if test="param.month != null and param.month != ''">
+            and DATE_FORMAT(up.testdate,'%Y-%m') = #{param.month}
+        </if>
+        <if test="param.yearweek != null and param.yearweek != ''">
+            and YEARWEEK(date_format(up.testdate,'%Y-%m-%d')) = #{param.yearweek}
+        </if>
+        ) left outer join yw_course_studyhistory sh
+		on(u.id = sh.user_id
+        <if test="param.year != null and param.year != ''">
+            and DATE_FORMAT(sh.update_time,'%Y') = #{param.year}
+        </if>
+        <if test="param.month != null and param.month != ''">
+            and DATE_FORMAT(sh.update_time,'%Y-%m') = #{param.month}
+        </if>
+        <if test="param.yearweek != null and param.yearweek != ''">
+            and YEARWEEK(date_format(sh.update_time,'%Y-%m-%d')) = #{param.yearweek}
+        </if>
+        )
+        where u.company_id = #{company.id}
+        <if test="param.uid != null and param.uid != ''">
+            and u.id = #{param.uid}
+        </if>
+        <!-- 数据范围过滤 -->
+        ${sqlMap.dsf}
+        group by u.id
+        ) t
+        <where>
+            IFNULL(t.kshs,0) + IFNULL(t.lxhs,0) + IFNULL(t.play_nums,0) != 0
+            <if test="param.hid != null and param.hid != ''">
+                and hid = #{param.hid}
+            </if>
+        </where>
+        order by IFNULL(t.kshs, 0) + IFNULL(t.lxhs, 0) + IFNULL(t.play_nums, 0) desc limit 10
+    </select>
+</mapper>

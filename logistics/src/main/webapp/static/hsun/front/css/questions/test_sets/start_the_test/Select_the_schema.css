@@ -1,0 +1,133 @@
+@charset "utf-8";
+body,
+h1,
+h2,
+h3,
+p,
+ul,
+ol,
+form,
+fieldset,
+figure {
+	margin: 0;
+	padding: 0;
+}
+
+div,
+figure,
+img,
+input,
+button {
+	box-sizing: border-box;
+}
+
+body {
+	font-family: "Helvetica Neue", Helvetica, Arial, "Microsoft Yahei UI", "Microsoft YaHei", SimHei, "\5B8B\4F53", simsun, sans-serif;
+}
+
+img {
+	display: block;
+	max-width: 100%;
+}
+
+ul,
+ol {
+	list-style: outside none none;
+}
+
+a {
+	text-decoration: none;
+}
+
+.none {
+	display: none;
+}
+
+.sm-visible {
+	display: none;
+}
+
+.clearfix:after {
+	content: ".";
+	height: 0;
+	visibility: hidden;
+	display: block;
+	clear: both;
+}
+
+
+a{
+	color: #999;
+}
+.username{
+	color:#333;
+	float: left; 
+	margin-left: 10px;
+	margin-top: 14px; 
+	line-height: 23px; 
+	text-align: left;
+	font-size: 11px;
+}
+.userhead{
+	float: left; 
+	margin-left: 40px;
+}
+.username li{
+	margin: -9px 0;
+}
+#div{
+	width: 1200px;
+	height: 300px;
+	margin: 0 auto;	
+	margin-top: 20px;
+	border: 2px solid #DCDCDC;
+	background-color: white;
+	clear: both;
+}
+#div .div1{
+	width: 1200px;
+	height: 70px;
+	text-align: center;
+}
+#div .div1 span{
+	line-height: 70px;
+	font-size: 30px;
+	font-weight: 600;
+}
+#div .div2{
+	width: 1200px;
+	height: 100px;
+}
+#div .div2 div{
+	margin: 50px 20px;
+	float: left;
+	width: 200px;
+	border: 1px solid #35B056;
+	text-align: center;
+	padding: 12px 30px;
+	margin-left: 140px;
+	border-radius: 10px;
+}
+#style{
+	font-size: 20px;
+}
+#style .model{
+color:#008000;
+font-size: 17px;	
+}
+#style .model1{
+font-size: 17px;	
+}
+#style1{
+	font-size: 15px;
+}
+#div .div2 a{
+	background-color: #F8F8F8;
+	color: #222222;
+	display: block;
+}
+#div .div2 a .active{
+	background-color: #35B056;
+	color: white;
+}
+

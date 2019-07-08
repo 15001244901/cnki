@@ -1,0 +1,76 @@
+.sec_body{
+    background: #eee;
+}
+.banner img{
+    width: 100%;
+    display: block;
+}
+
+.model_name{
+    margin-top: 0.2rem;
+    padding:0.533333rem 0 0.266667rem;
+    overflow: hidden;
+    background: #fff;
+}
+.model_name .model_name_list{
+    float: left;
+    width: 25%;
+    font-size: 0.346667rem;
+    text-align: center;
+    margin-bottom: 0.266667rem;
+}
+
+.model_name .model_name_list .icon{
+    font-size: 0.666667rem;
+    padding: 0.333333rem;
+    background: #eee;
+    border-radius: 0.2rem;
+    display: inline-block;
+    margin-bottom: 0.133333rem;
+
+}
+.model_name .model_name_list p{
+}
+
+.model_title{
+    background: #fff;
+    font-size: 0.4rem;
+    padding:0 0.533333rem 0.4rem;
+
+}
+.model_title span{
+    border-bottom-style: solid;
+    border-color: #3db06e;
+}
+
+.last_exam{
+    padding: 0 0.533333rem;
+    min-height: 4rem;
+}
+.last_exam li {
+    padding-bottom: 0.2rem;
+    margin-bottom: 0.266667rem;
+    border-bottom-style:dotted;
+    border-color: #ddd;
+}
+.last_exam li h3{
+    font-size: 0.346667rem;
+    margin-bottom: 0.133333rem;
+    color: #555;
+}
+.last_exam li .icon{
+    color: #777;
+    font-size: 0.88rem;
+}
+.last_exam li .last_exam_time{
+    font-size: 0.32rem;
+    color: #777;
+}
+.last_exam .no_exam{
+    border:none;
+    text-align: center;
+    padding:0.4rem;
+}
+.last_exam .no_exam .icon{
+    font-size: 1.066667rem;
+}

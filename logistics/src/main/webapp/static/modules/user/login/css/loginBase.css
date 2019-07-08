@@ -1,0 +1,83 @@
+/*.window ul,.window ol,.window li,.window i,.window p,.window div,.window a,.window span,.window i,.window input,.window form,.window button,.window h1{margin: 0;padding: 0;}*/
+/**{margin:0;padding:0;}*/
+#window ol,#window ul{list-style: none;}
+#window a{text-decoration: none;transition: color 0.1s ease 0s;}
+#window img{border:none;}
+#window a:focus{outline: none;}
+#window input[type="reset"]::-moz-focus-inner, 
+#window input[type="button"]::-moz-focus-inner, 
+#window input[type="submit"]::-moz-focus-inner, 
+#window input[type="file"] > input[type="button"]::-moz-focus-inner{ 
+border:none;padding:0; 
+} 
+
+.auto{margin:0 auto;}
+.fl{float: left;}
+.fr{float: right;}
+.clear{clear: both}
+.over{overflow: hidden;}
+.text1{text-align: left;}
+.text2{text-align: center;}
+.text3{text-align: right;}
+.text4{vertical-align: text-bottom;}
+.text5{vertical-align: middle;}
+.hide{display: none;}
+.shoe{display: block;}
+.dis_block{
+	display: block;
+}
+
+.pr{position: relative;}
+.pa{position: absolute;}
+
+.color1{color: #00a2ff;}
+.color2{color:#ccc;}
+.color3{color: #666;}
+.color4{color:#ef3838;}
+.color5{color: #333;}
+
+.wid1200{width: 1200px;}
+.wid100{width: 100%;}
+.wid12{width: 12.2%}
+.wid10{width: 10%}
+.wid17{width: 17.3%}
+.wid14{width: 14.3%}
+.wid25{width: 25.4%}
+.wid13{width: 13.1%}
+
+.text_indent{
+	text-indent:23px
+}
+.line22{
+	line-height: 22px;
+}
+
+.fw1{font-weight: bold;}
+
+.pt10{padding-top: 10px;}
+.pt20{padding-top: 20px;}
+.pl24{padding-left: 24px;}
+.pl25{padding-left: 25px;}
+.pr10{padding-right: 10px;}
+.pr25{padding-right: 25px;}
+.pb20{padding-bottom: 20px;}
+
+.fz16{font-size: 16px;}
+.fz14{font-size: 14px;}
+.fz13{font-size: 13px;}
+.fz12{font-size: 12px;}
+
+.mt10{margin-top: 10px;}
+.mt20{margin-top: 20px;}
+.mt40{margin-top: 40px;}
+.mr10{margin-right: 10px;}
+.mr12{margin-right: 12px;}
+.mr20{margin-right: 20px;}
+.mr24{margin-right:24px; }
+.mr48{margin-right: 48px;}
+.ml24{margin-left: 24px;}
+.ml48{margin-left: 48px;}
+.mb15{margin-bottom: 15px;}
+.mb20{margin-bottom: 20px;}
+.mb30{margin-bottom: 30px;}
+

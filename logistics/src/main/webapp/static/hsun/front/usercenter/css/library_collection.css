@@ -1,0 +1,265 @@
+body {
+	font-family: "Helvetica Neue", Helvetica, Arial, "Microsoft Yahei UI", "Microsoft YaHei", SimHei, "\5B8B\4F53", simsun, sans-serif;
+}
+
+.divcontent {
+	width: 935px;
+	margin: 0 auto;
+	background: #FFFFFF;
+}
+
+#section {
+	width: 100%;
+	height: 62px;
+	text-align: center;
+	line-height: 64px;
+	border-bottom: 1px solid #e5e5e5;
+	font-size: 16px;
+	color: #1D272C;
+	letter-spacing: 0;
+	clear: both;
+}
+
+#section span {
+	height: 160px;
+}
+
+#section span a {
+	color: #A9A9A9;
+	padding-left: 20px;
+	padding-right: 20px;
+}
+
+#section span a:hover,
+#section span.active a {
+	color: #17b55b;
+	padding-bottom: 19px;
+	padding-left: 20px;
+	padding-right: 20px;
+	border-bottom: 2px solid #17b55b;
+}
+
+#divsearch {
+	width: 935px;
+	/*background-color: #F3F9FC;*/
+	float: left;
+	/*margin-bottom: 20px;*/
+}
+
+#divsearch ul {
+	width: 830px;
+	float: left;
+	margin-left: 10px;
+}
+
+#divsearch ul li {
+	float: left;
+	padding: 10px;
+	box-sizing: border-box;
+}
+
+#divsearch .subject {
+	font-family: PingFangSC-Medium;
+	font-size: 16px;
+	color: #222222;
+	letter-spacing: 0;
+}
+
+#divsearch ul li a:hover,
+#divsearch ul li.active a {
+	background-color: #17b55b;
+	color: white;
+	opacity: 1;
+}
+
+#divsearch ul li a {
+	padding: 4px 10px;
+	border-radius: 3px;
+	font-size: 13px;
+	color: #222222;
+	opacity: 0.6;
+}
+
+#table .txtsearch {
+	width: 237px;
+	height: 35px;
+	border: 1px solid #EAEAEA;
+	border-radius: 3px;
+	font-size: 12px;
+	color: #444;
+	background-color: #FFFFFF;
+	padding-left: 15px;
+	margin-top: 11px;
+}
+
+#table .spansearch {
+	height: 30px;
+	color: #666;
+	margin-top: 18px;
+	position: absolute;right: 7px;top:0;
+}
+
+#table .spansearch a {
+	color: #666;
+	opacity: 0.6;
+}
+
+#table {
+	width: 935px;
+	height: 42px;
+	background: #EFEFEF;
+	clear: both;
+	margin: 80px auto;
+}
+
+#table .spantitle {
+	font-size: 16px;
+	float: left;
+	line-height: 42px;
+	margin-left: 10px;
+	color: #222222;
+}
+
+#table .spantitle i {
+	/*color: #FE8922;*/
+	color: #17b55b;
+	font-size: 20px;
+}
+
+#table .spancount {
+	font-size: 12px;
+	line-height: 40px;
+	margin-right: 2%;
+	color: #222222;
+	float: right;
+	opacity: 0.69;
+}
+
+.content {
+	width: 935px;
+	min-height: 400px;
+	clear: both;
+}
+
+.content .menu-one {
+	width: 935px;
+	margin: 0 auto;
+	min-height: 250px;
+	text-align: left;
+}
+
+.content .headers {
+	width: 935px;
+	padding-left: 10px;
+	padding-right:10px;
+	height: 50px;
+	line-height: 50px;
+
+}
+
+.content .headers .txt {
+	font-size: 15px;
+	color: #222222;
+	padding-left:14px;
+}
+
+.content .headers>i {
+	cursor: pointer;
+}
+
+.content .center {
+	width: 300px;
+	height: 50px;
+	float: right;
+	font-weight: normal;
+	font-size: 10px;
+}
+
+.content .center span {
+	border: 1px solid darkgray;
+	border-radius: 4px;
+	padding: 4px 7px;
+	margin: 1px -15px;
+	margin-left: 20px;
+}
+
+.content .center .right {
+	color: #222222;
+	border: none;
+	float: right;
+	opacity: 0.4;
+	clear: both;
+	padding: 0 15px;
+}
+
+.content .center .active {
+	background-color: #FFAA33;
+}
+
+.content .menu-two {
+	margin-top: 10px;
+	display: none;
+}
+
+.content .menu-two span {
+	padding: 5px;
+	border-radius: 3px;       
+	float: right;
+	margin-top: -5px;
+	margin-right: 10px;
+}
+
+.content .menu-two span a {
+	color: #222222;
+}
+
+.content .menu-two .active {
+	background-color: #FE8922;
+	color: #FFFFFF;
+	opacity: 1;
+	border: none;
+}
+
+.content hr {
+	/*width: 970px;*/
+	margin-left: 38px;
+	height: 8px;
+	border: none;
+	border-top: 1px solid #eee;
+}
+
+.content .menu-two li {
+	margin: 5px 0 10px 38px;
+	clear: both;
+	font-size: 14px;
+}
+.content .menu-two li a{
+	color: #444;
+}
+.firstChild{
+	clear: both;
+}
+/*技术指南*/
+.center_js{
+	float: right;
+	width:200px;
+	height:50px;
+	line-height: 50px;
+}
+.center_js span {
+	margin-top:12px;
+	padding: 6px;
+	border-radius: 3px;
+	float: right;
+	margin-right: 10px;
+	width: 10px;
+	height: 10px;
+	opacity: 0.5;
+}
+.center_js span:hover{
+	opacity: 1;
+}
+/*没有信息*/
+.no_info{
+	background:url('../../img/no-info.png') no-repeat center center;
+}

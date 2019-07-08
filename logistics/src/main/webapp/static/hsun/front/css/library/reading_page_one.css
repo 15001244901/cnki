@@ -1,0 +1,64 @@
+body {
+	font-family: "Helvetica Neue", Helvetica, Arial, "Microsoft Yahei UI", "Microsoft YaHei", SimHei, "\5B8B\4F53", simsun, sans-serif;
+}
+
+#divcontent {
+	width: 1100px;
+	height: 940px;
+	box-shadow: 0 8px 8px 0 rgba(0, 0, 0, 0.08);
+	margin: 20px auto;
+	background-color: #FFF5EE;
+	/*margin-top: 28px;*/
+	/*border-top-right-radius: 10px;*/
+	/*border-bottom-right-radius: 10px;*/
+	-webkit-border-radius:10px;
+	-moz-border-radius:10px;
+	border-radius:10px;
+
+}
+
+#divcontent .nav {
+	width: 1100px;
+	height: 84px;
+	border-bottom: 1px solid #E4E0DB;
+}
+
+#divcontent .nav .spantitle {
+	/*width: 118px;*/
+	/*font-family: PingFangSC-Regular;*/
+	font-size: 16px;
+	color: #3D3D3B;
+	letter-spacing: 0;
+	font-weight: normal;
+	float: left;
+	margin-left: 96px;
+	margin-top: 32px;
+}
+
+#divcontent .nav .spanmodel {
+	float: right;
+	margin-top: 32px;
+	margin-right: 76px;
+}
+
+#divcontent .nav .spanmodel span {
+	margin-right: 20px;
+	font-size: 14px;
+	color: #95928C;
+	cursor: pointer;
+	padding:6px 0;
+}
+
+#divcontent .diviframe {
+	width: 900px;
+	/*height: 700px;*/
+	height: 800px;
+	margin: 20px auto;
+}
+
+.divPaper {
+	float: left;
+	width: 100px;
+	text-align: center;
+	margin-top: 400px;
+}

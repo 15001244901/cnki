@@ -1,0 +1,144 @@
+
+body {
+	font-family: "Helvetica Neue", Helvetica, Arial, "Microsoft Yahei UI", "Microsoft YaHei", SimHei, "\5B8B\4F53", simsun, sans-serif;
+	background:#fff;
+}
+
+#divcontent {
+	width: 935px;
+	margin: 0 auto;
+	clear: both;
+	background:#fff;
+}
+.divtitle{
+	overflow: hidden;
+}
+.divtitle>span{
+	float: left;
+	line-height: 62px;
+	margin-left:20px;
+	display: block;
+	color: #333;
+	font-size: 16px;
+}
+#divcontent .section {
+	width: 935px;
+	background-color: white;
+	clear: both;
+}
+
+#divcontent .search {
+	width: 935px;
+	height: 62px;
+	border-bottom: 1px solid #e5e5e5;
+	/*background-color: #efefef;*/
+}
+
+#divcontent .search span {
+	line-height: 60px;
+	opacity: 0.8;
+	font-family: PingFangSC-Regular;
+	font-size: 14px;
+	color: #222222;
+	letter-spacing: 0;
+	margin: 10px;
+}
+
+#divcontent .search .spanpapername {
+	margin-left: 40px;
+	border-radius: 3px;
+}
+
+#divcontent .search .four {
+	background: #17b55b;
+	border: 1px solid #17b55b;
+	border-radius: 3px;
+	padding: 5px 10px;
+	font-family: PingFangSC-Medium;
+	font-size: 14px;
+	color: #FFFFFF;
+	cursor: pointer;
+}
+
+#divcontent .divsubcontent {
+	width: 935px;
+	min-height: 400px;
+}
+a {
+	text-decoration: none;
+	color: #999;
+}
+
+#divcontent .section table .td4 a {
+	border: solid 1px #dcdcdc;
+	padding: 5px 8px;
+	border-radius: 4px;
+	color: #000000;
+}
+
+#divcontent .section table .td4 a:hover {
+	background: #17b55b;
+	border: solid 1px #17b55b;
+	color: white;
+}
+
+.divPage {
+	margin-top: 10px;
+	width: 935px;
+	height: 70px;
+	text-align: center;
+	line-height: 70px;
+	clear: both;
+}
+
+.divPage a {
+	padding: 6px 12px;
+	border: solid 1px #DCDCDC;
+	border-radius: 6px;
+	font-size: 14px;
+	color: #999;
+}
+
+.divPage a:hover {
+	background: #BFBFC7;
+	color: white;
+}
+
+.divPage .curr {
+	border: solid 1px #BFBFC7;
+	background: #BFBFC7;
+	color: white;
+}
+
+.divPage .disabled {
+	display: none;
+}
+/*没有信息*/
+.userzj-list .no_info {
+	min-height: 250px;
+	border-bottom: none;
+	background: url('../../img/no-info.png') no-repeat center center;
+}
+
+/*不及格*/
+.no_pass_score {
+	background: url('../../img/bujg2.png') no-repeat 559px 31px;
+}
+.icona-del {
+	background-image: url("../../img/edit_item_random_two/spriter-a.png");
+	background-position: -426px -198px;
+	height: 14px;
+	width: 14px;
+}
+.a_del:hover{
+	color: #FF3232;
+}
+.icona-jiexi {
+	background-image: url("../../img/edit_item_random_two/spriter-a.png");
+	background-position: -322px -226px;
+	height: 14px;
+	width: 16px;
+}
+.a_jiexi:hover{
+	color:#17B55B;
+}

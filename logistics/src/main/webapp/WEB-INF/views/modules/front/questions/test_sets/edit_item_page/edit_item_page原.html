@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>地理云课堂</title>
+		<link rel="stylesheet" type="text/css" href="../../../../css/nav.css" />
+		<link rel="stylesheet" type="text/css" href="../../../../css/index.css" />
+		<link rel="stylesheet" type="text/css" href="../../../../iconfont/weidu/iconfont.css" />
+		<link rel="stylesheet" type="text/css" href="../../../../iconfont/jiantouxiangxia/iconfont.css">
+		<script type="text/javascript" src="../../../../js/header.js"></script>
+
+		<link rel="stylesheet" type="text/css" href="../../../../css/questions/test_sets/create_test_paper/edit_item_page/edit_item_page.css" />
+		<script src="../../../../js/jquery/jquery.js" type="text/javascript" charset="utf-8"></script>
+		<link rel="stylesheet" type="text/css" href="../../../../font-awesome-4.4.0/css/font-awesome.min.css" />
+		<script src="../../../../js/jquery-ui/jquery-ui.min.js" type="text/javascript" charset="utf-8"></script>
+		<link rel="stylesheet" type="text/css" href="../../../../js/jquery-ui/jquery-ui.min.css" />
+		<script type="text/javascript" src="../../../../js/userinfo.js"></script>
+		<script type="text/javascript" src="../../../../js/urlpath.js"></script>
+		<style type="text/css">
+			* {
+				moz-user-select: -moz-none;
+				-moz-user-select: none;
+				-o-user-select: none;
+				-khtml-user-select: none;
+				-webkit-user-select: none;
+				-ms-user-select: none;
+				user-select: none;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div id="divheader"></div>
+		<div id="divcontent">
+			<div class="divpapername" id="divName"></div>
+			<div class="divpaperinfo">
+				<span>考试时长： <input id="txtDuration" name="duration" type="text" style="border: 0px; border-bottom: solid 1px #dcdcdc;width: 60px;" maxlength="3"/></span>
+				<span>卷面总分： <input id="txtTotalScore" name="totalscore" type="text" style="border: 0px; border-bottom: solid 1px #dcdcdc;width: 60px" maxlength="3"/></span>
+				<span>及格分数： <input id="txtPassScore" name="passscore" type="text" style="border: 0px; border-bottom: solid 1px #dcdcdc;width: 60px" maxlength="3"/></span>
+			</div>
+			<form>
+				<div class="section">
+					<div class="divyxlist">已选择试题列表</div>
+					<div class="divmenu">
+						<span onclick="tmPaper.addSection()">添加段落</span>
+						<span onclick="tmPaper.expandSection()">全部展开</span>
+						<span onclick="tmPaper.shrinkSection()">全部收缩</span>
+						<span onclick="tmPaper.countScore()">计算总分</span>
+					</div>
+					<div class="tm_adm_paper_body">
+						<ul class="tm_adm_paper_body_section" id="paper_sections">
+							<li>
+								<dl class="tm_adm_paper_body_section_dl" style="padding: 0px; margin: 0px;">
+									<dt>
+									<span class="section_title">
+										段落名称 :
+										<input type="text" name="p_section_names" class="validate[required] tm_txt" size="50" />
+									</span>
+									<span class="section_tools">
+										<a onclick="javascript:tmPaper.toggleSection(this);">
+											<i class="fa fa-arrow-circle-down" style="color: #2F96E9;font-size: 18px;"></i>
+										</a>
+										<a onclick="javascript:tmPaper.removeSection(this);">
+											<i class="fa  fa-close" id="style" style="color: #FE8922;font-size: 18px;padding-left: 15px;"></i>
+										</a>
+									</span>
+									<input type="hidden" name="p_section_ids" value="1" />
+								</dt>
+									<dt>
+									<span class="section_title">
+										段落描述 :
+										<input type="text" class="validate[required] tm_txt" size="50" name="p_section_remarks" />
+									</span>
+								</dt>
+									<dd>
+										<ul class="tm_adm_questionlist" data-sectionid="1">
+											<!--<li style="list-style: none;border-bottom:solid 1px #DCDCDC;cursor: default;" id="li1">
+											<div style="margin: 10px auto 10px 26px;">
+												<span class="span1">分值：</span>
+												<span class="span2">
+													<input type="text" class="txtScore" name="p_question_scores_" />
+													<input type="hidden" name="p_question_types_"/>
+													<input type="hidden" name="p_question_ids_"/>
+													<input type="hidden" name="p_question_cnts_"/>
+												</span>
+												<span>在一个密闭容器中，有甲乙丙丁四种123</span>
+												<span class="span3" onclick="javascript:tmPaper.removeItem(this);"><i class="fa fa-close" style="float: right;margin-right: 15px;margin-top: 5px;color: #FE8922;font-size: 18px;"></i></span>
+											</div>
+										</li>-->
+										</ul>
+									</dd>
+								</dl>
+							</li>
+						</ul>
+					</div>
+				</div>
+				<input type="hidden" id="hidID" name="id" />
+				<input type="hidden" id="hidName" name="name" />
+				<input type="hidden" name="starttime" />
+				<input type="hidden" name="endtime" />
+				<input type="hidden" name="showtime" />
+				<input type="hidden" id="hidOrderType" name="ordertype" />
+				<input type="hidden" id="hidPaperType" name="papertype" />
+				<input type="hidden" name="remark" />
+			</form>
+			<div class="section1">
+				<div class="divlist">
+					<span style="font-size: 16px;">请选择试题</span>
+				</div>
+				<div class="divquestionmenu">
+					<span name="spanType" onclick="editItemPage.clickType(this,'知识点')" class="active">知识点</span>
+					<span name="spanType" onclick="editItemPage.clickType(this,'我的收藏')">我的收藏</span>
+					<span name="spanType" onclick="editItemPage.clickType(this,'企业专属')">企业专属</span>
+				</div>
+				<div class="divquestionmenu1">
+					<select name="" class="sel" id="sltSubject">
+					</select>
+					<select name="" class="sel" id="sltQuestion">
+					</select>
+					<select name="" class="sel" id="sltLevel">
+					</select>
+					<input type="text" class="style6" id="keyword" placeholder="&nbsp;请输入搜索内容" />
+					<i onclick="editItemPage.searchLibrary()" class="fa fa-search"></i>
+				</div>
+
+				<div id="divquestionslist" class="divList">
+					<ul id="questionListAll" class="tm_adm_questionlist" style="margin: 0; padding: 0px;">
+
+					</ul>
+
+				</div>
+				<div id="questionListPage" class="divPage">
+
+				</div>
+			</div>
+			<div class="button" style="clear: both;">
+				<!--当前页-->
+				<input type="hidden" id="pageNo" value="1" />
+				<!--收藏分页当前页-->
+				<input type="hidden" id="pageNoCollection" value="1" />
+				<!--企业专属当前页-->
+				<input type="hidden" id="pageNoCompany" value="1" />
+				<!--类型  1知识点2我的收藏3企业专属-->
+				<input type="hidden" id="hidtype" value="1" />
+
+				<span onclick="editItemPage.savaSchedule()">保存进度</span>
+				<span class="active" onclick="editItemPage.savaChoose()">完成选择</span>
+			</div>
+		</div>
+
+	</body>
+
+</html>
+<script type="text/javascript" src="../../../../js/pagejs/questions/test_sets/edit_item_page/edit_item_page.js"></script>

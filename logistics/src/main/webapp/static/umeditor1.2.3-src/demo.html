@@ -1,0 +1,28 @@
+<!DOCTYPE HTML>
+<html lang="en-US">
+
+<head>
+    <meta charset="UTF-8">
+    <title>ueditor demo</title>
+    <link href="themes/default/_css/umeditor.css" type="text/css" rel="stylesheet">
+    <script type="text/javascript" src="third-party/jquery.min.js"></script>
+    <script type="text/javascript" src="third-party/template.min.js"></script>
+    <script type="text/javascript" charset="utf-8" src="umeditor.config.js"></script>
+    <script type="text/javascript" charset="utf-8" src="editor_api.js"></script>
+    <script type="text/javascript" src="lang/zh-cn/zh-cn.js"></script>
+</head>
+
+<body>
+    <!-- 加载编辑器的容器 -->
+    <script id="container" name="content" type="text/plain" style="width:613px;height:100px;">
+        这里写你的初始化内容
+    </script>
+    
+    <!-- 实例化编辑器 -->
+    <script type="text/javascript">
+        var um = UM.getEditor('container');
+        
+    </script>
+</body>
+
+</html>

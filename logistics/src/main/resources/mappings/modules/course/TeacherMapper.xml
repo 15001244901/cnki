@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="TeacherMapper">
+	<resultMap id="TeacherResult" type="com.hsun.ywork.modules.course.entity.Teacher">
+		<result property="id" column="ID" />
+		<result property="name" column="NAME" />
+		<result property="education" column="EDUCATION" />
+		<result property="career" column="CAREER" />
+		<result property="isStar" column="IS_STAR" />
+		<result property="picPath" column="PIC_PATH" />
+		<result property="status" column="STATUS" />
+		<result property="createTime" column="CREATE_TIME" />
+		<result property="updateTime" column="UPDATE_TIME" />
+		<result property="subjectId" column="SUBJECT_ID" />
+		<result property="sort" column="SORT" />
+	</resultMap>
+	<sql id="yw_teacher_columns">
+		YW_TEACHER.ID,
+		YW_TEACHER.NAME,
+		YW_TEACHER.EDUCATION,
+		YW_TEACHER.CAREER,
+		YW_TEACHER.IS_STAR,
+		YW_TEACHER.PIC_PATH,
+		YW_TEACHER.STATUS,
+		YW_TEACHER.CREATE_TIME,
+		YW_TEACHER.UPDATE_TIME,
+		YW_TEACHER.SUBJECT_ID,
+		YW_TEACHER.SORT
+	</sql>
+
+	<sql id="yw_teacher_properties">
+		#{id},
+		#{name},
+		#{education},
+		#{career},
+		#{isStar},
+		#{picPath},
+		#{status},
+		#{createTime},
+		#{updateTime},
+		#{subjectId},
+		#{sort}
+	</sql>
+
+	<!-- 添加老师 -->
+	<insert id="createTeacher" parameterType="com.hsun.ywork.modules.course.entity.Teacher" keyColumn="id" keyProperty="id" useGeneratedKeys="true">
+		INSERT INTO YW_TEACHER (
+		<include refid="yw_teacher_columns" />
+		)
+		VALUES(
+		<include refid="yw_teacher_properties" />
+		)
+	</insert>
+
+	<!-- 删除老师 -->
+	<delete id="deleteTeacherById" parameterType="int">
+		UPDATE YW_TEACHER SET YW_TEACHER.STATUS=1 WHERE YW_TEACHER.ID = #{value}
+	</delete>
+
+	<!-- 修改老师 -->
+	<update id="updateTeacher" parameterType="com.hsun.ywork.modules.course.entity.Teacher">
+		UPDATE YW_TEACHER SET
+		YW_TEACHER.ID = #{id},
+		YW_TEACHER.NAME = #{name},
+		YW_TEACHER.EDUCATION = #{education},
+		YW_TEACHER.CAREER = #{career},
+		YW_TEACHER.IS_STAR = #{isStar},
+		YW_TEACHER.PIC_PATH = #{picPath},
+		YW_TEACHER.UPDATE_TIME = #{updateTime},
+		YW_TEACHER.SUBJECT_ID =#{subjectId},
+		YW_TEACHER.SORT=#{sort}
+		WHERE YW_TEACHER.ID = #{id}
+	</update>
+
+	<!-- 根据id获取单个Teacher对象 -->
+	<select id="getTeacherById" resultMap="TeacherResult" parameterType="int">
+		SELECT
+		<include refid="yw_teacher_columns" />
+		FROM YW_TEACHER WHERE ID = #{value}
+	</select>
+
+	<!-- 根据条件获取Teacher列表 -->
+	<select id="queryTeacherListPage" resultMap="TeacherResult" parameterType="java.util.Map">
+		SELECT
+		<include refid="yw_teacher_columns" />
+		FROM YW_TEACHER
+		left join yw_subject on YW_TEACHER.SUBJECT_ID = yw_subject.subject_id
+		<where>
+			YW_TEACHER.STATUS=0
+			<if test="e.isStar>0">
+				AND YW_TEACHER.IS_STAR=#{e.isStar}
+			</if>
+			<if test="e.name!=null and e.name!=''">
+				AND	<![CDATA[  YW_TEACHER.NAME LIKE CONCAT('%',#{e.name},'%')  ]]>
+			</if>
+			<if test="e.subjectId>0">
+				AND (YW_TEACHER.SUBJECT_ID=#{e.subjectId} or yw_subject.parent_id = #{e.subjectId})
+			</if>
+			<if test="e.beginCreateTime!=null and e.beginCreateTime!=''">
+				AND YW_TEACHER.CREATE_TIME >= #{e.beginCreateTime}
+			</if>
+			<if test="e.endCreateTime!=null and e.endCreateTime!=''">
+				AND <![CDATA[YW_TEACHER.CREATE_TIME <= #{e.endCreateTime}]]>
+			</if>
+		</where>
+		ORDER BY YW_TEACHER.SORT DESC
+	</select>
+
+	<!-- 查询课程讲师 -->
+	<select id="queryCourseTeacerList" parameterType="int" resultType="java.util.Map">
+		SELECT 
+			YW_TEACHER.ID as id, 
+			YW_TEACHER.NAME as name,
+			YW_TEACHER.EDUCATION as education,
+			YW_TEACHER.PIC_PATH as picPath,
+			YW_TEACHER.CAREER as career
+		FROM YW_TEACHER
+		LEFT JOIN YW_COURSE_TEACHER ON YW_COURSE_TEACHER.TEACHER_ID = YW_TEACHER.ID
+		WHERE YW_COURSE_TEACHER.COURSE_ID=#{value}
+	</select>
+
+	<!-- 条件查询老师，公共使用 -->
+	<select id="queryTeacherList" parameterType="com.hsun.ywork.modules.course.entity.QueryTeacher" resultMap="TeacherResult">
+		SELECT
+		<include refid="yw_teacher_columns" />
+		FROM YW_TEACHER
+		WHERE YW_TEACHER.STATUS=0
+		<if test="subjectId>0">
+			AND YW_TEACHER.SUBJECT_ID=#{subjectId}
+		</if>
+		<if test="teacherId>0">
+			AND YW_TEACHER.ID !=#{teacherId}
+		</if>
+		ORDER BY YW_TEACHER.SORT DESC
+		<if test="count>0">
+			LIMIT #{count}
+		</if>
+	</select>
+</mapper>

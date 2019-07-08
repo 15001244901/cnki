@@ -1,0 +1,135 @@
+a:hover{
+    text-decoration: none;
+}
+#exam_cont {
+    width: 1200px;
+    min-height: 800px;
+    background-color: white;
+    margin: 0 auto;
+    margin-top: 20px;
+    box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.08);
+}
+#exam_name{
+    padding-top: 30px;
+    text-align: center;
+    font-family: PingFangSC-Medium;
+    font-size: 20px;
+    color: #30bf89;
+    letter-spacing: 0;
+}
+#exam_infor {
+    color: #333;
+    margin-top: 15px;
+    margin-bottom: 20px;
+    font-size: 14px;
+    overflow: hidden;
+}
+#exam_infor div{
+    float: left;
+    width: 25%;
+    text-align:center;		}
+#exam_infor b{
+    font-weight: normal;
+}
+#exam_list>.panel{
+    width: 96%;
+    margin:0 auto;
+}
+.panel-heading .row{
+    /*width: 50%;*/
+}
+#exam_list{
+    min-height: 600px;
+}
+#exam_list .panel thead tr th{
+    border-bottom: none;
+}
+
+.btn:focus{
+    outline: none;
+}
+/*#progress{*/
+    /*margin-top: 8px;*/
+    /*float: right;*/
+/*}*/
+.progress{
+    width:200px;
+    margin-top: 6px;
+    background: #ddd;
+    float: right;
+    margin-bottom: 0;
+}
+.progress-bar-blue{
+    background-color: #30bf89;
+}
+.progress_title{
+    float: right;
+    font-size: 13px;
+    margin-top: 7px;
+    margin-right:5px;
+}
+#usersTable{
+    /*border-top:1px dashed #3db06e;*/
+}
+
+#usersTable td,#usersTable th{
+    text-align: center;
+    padding:5px 0;
+    line-height:36px;
+}
+
+#usersTable tbody tr td:last-child{
+    padding-top:0;
+    padding-bottom:0;
+    width:100px;
+}
+#usersTable tbody{
+    font-size: 13px;
+}
+.exam,.exam_over,.exam_del{
+    width: 30px;
+    height:30px;
+    display: block;
+    float: left;
+    margin-top:8px;
+    margin-left:15px;
+    /*margin: 8px auto 0;*/
+    background-image:url('../../../../img/btn_icon.png') ;
+    background-repeat: no-repeat;
+    background-position: -160px -240px;
+}
+.exam_del{
+    margin-left:10px;
+    background-position: -80px 0px;
+}
+.exam:hover{
+    background-position: -160px -280px;
+}
+.exam_del:hover{
+    background-position:  -80px -40px;
+}
+.goback a{
+    color: #333;
+    display: block;
+    width:130px;
+    padding:5px 0;
+    border:1px solid #3db06e;
+    color: #3db06e;
+    -webkit-border-radius:3px;
+    -moz-border-radius:3px;
+    border-radius:3px;
+    margin: 20px auto 20px;
+    text-align: center;
+}
+/*没有信息*/
+.no_info{
+    background:url('../../../../img/no-info.png') no-repeat center center;
+}
+#divheader #header{
+    font-size: 16px;
+    font-family: "Helvetica Neue", Helvetica, Arial, "Microsoft Yahei UI", "Microsoft YaHei", SimHei, "\5B8B\4F53", simsun, sans-serif;
+}
+.panel-default{
+    border-top-color: #3db06e;
+    border-top-width: 2px;
+}
