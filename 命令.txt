@@ -1,0 +1,43 @@
+Redis
+1.	Redis启动
+redis-server
+redis-server redis.conf
+2.	关闭redis
+Kill -9 PID
+redis-cli shutdown   该命令 只能关闭端口号为6379
+redis-cli -p 6379 shutdown
+3.redis客户端进入
+	redis-cli -p 6379
+/////////////////////////////////////////////////////////////////////////////
+Git
+GitHub:
+username:15001244901
+email:2386856867@qq.com
+pwd:GOOD123good
+1.clone  克隆(第一次)   从远程仓库同步代码到本地
+2.pull   拉取(每天上班) 把远程的内容,同步到工作空间
+3.add    新增           把工作区的文件放入暂存区
+4.commit 提交           把暂存区中多个文件,一次提交到本地仓库
+5.push   推送(每天下班)  把本地仓库的多个文件,推送到远程仓库
+
+
+$ git config --global user.name "15001244901"
+$ git config --global user.email "2386856867@qq.com"
+在本地git库创建同名库(cnki),并在本地库克隆
+$ git clone https://github.com/15001244901/cnki.git
+创建本地库:
+$ cd cnki
+$ git init
+添加到本地库
+$ git add .
+$ git commit -m "test"
+关联本地目录到远程仓库
+$ git remote add cnki git://github.com/15001244901/cnki
+推送到远程仓库master
+$ git push -u origin master
+
+
+
+
+
+
