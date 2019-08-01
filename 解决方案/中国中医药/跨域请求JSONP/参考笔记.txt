@@ -1,0 +1,6 @@
+https://note.youdao.com/ynoteshare1/index.html?id=8e973f291502ecd457bb2e02b683cdca&type=note
+
+
+
+注意;web.config  中加入ip  端口号   
+页面绑定url  @ViewBag....

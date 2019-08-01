@@ -1,0 +1,39 @@
+$(function () {
+    var keywords = $(".input-group #textKeyWords").val();
+    BookList(keywords);
+    
+
+})
+
+var template_booklist = "{{#Models}}<li>\
+                    <div class='row'>\
+                        <div class='col-xs-4'><a href='/Book/Detail?id={{id}}'><img src='{{img}}' class='news-img' alt='' /></a></div>\
+                        <div class='col-xs-8'>\
+                            <div class='keys-text'>\
+                                <div class='title'><a href='/Book/Detail?id={{id}}'>{{&name}}</a></div>\
+                                <p><span>作者：</span>{{&author}}</p>\
+                                <p><span>出版时间：</span>{{date}}</p>\
+                                <p><span>价格：</span><b>￥{{price}}</b></p>\
+                                <p><a href='/Book/Detail?id={{id}}'>查看</a></p>\
+                            </div>\
+                        </div>\
+                    </div>\
+                </li>{{/Models}}";
+function BookList(keywords) {
+    $.ajax({
+        url: "/Book/GetBooksList",
+        dataType: "json",
+        type: "post",
+        data:{Keyword:keywords},
+        success: function (data) {
+            if (data != null && data.Models.length > 0) {
+                var html = Mustache.render(template_booklist, data);
+                $("#booklist").empty().append(html);
+                $("#booklist .col-xs-4").attr("style", "width:" + Math.round($("#main").width() / 3) + "px;");
+                $("#booklist .news-img").attr("style", "height:" + Math.round(($("#main").width() / 3 + 11.66)) + "px");
+            } else {
+                $("#booklist").empty().html("<p style='text-align:center'>没有相关信息</p>");
+            }
+        }
+    })
+}

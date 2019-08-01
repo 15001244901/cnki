@@ -1,0 +1,52 @@
+$(function () {
+    //导航
+    AboutUs();
+    AboutUsGetContent("2.1.");   
+    //详情
+    $("#smenu").on("click", "a", function () {     
+        $(this).addClass("selected").siblings().removeClass("selected");
+        var id = $(this).data("cls");
+        AboutUsGetContent(id);
+    })
+
+})
+
+var template_cls = "{{#list}} <a href='#' data-cls='{{id}}' class=''>{{name}}</a>{{/list}}";
+
+function AboutUs() {
+    $.ajax({   
+        url: "/AboutUs/GetPressintro",
+        type: "post",
+        dataType: "json",
+        success: function (data) {
+            if (data != null && data.length > 0) {
+                var html = Mustache.render(template_cls, { list: data });
+                $("#smenu").append(html);
+                $("#smenu").find("a").eq(0).addClass("selected");
+            } else {
+                $("#smenu");
+            }
+        }
+
+    })
+}
+
+function AboutUsGetContent(id) {
+
+    $.ajax({
+        url: "/AboutUs/GetContent",
+        dataType: "json",
+        type: "post",
+        data: { cls: id },
+        success: function (data) {
+            if (data != null) {
+                //var html = Mustache.render(template_cls, { list: data });
+
+                $("#content").empty().html(data.Content)
+
+            } else {
+                $("#content").empty().html(0);
+            }
+        }
+    })
+}

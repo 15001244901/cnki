@@ -1,0 +1,105 @@
+@{
+    ViewBag.Title = "首页";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link href="~/Css/index.css" rel="stylesheet" />
+
+<!--banner-->
+<div class="banner">
+    <ul id="slide">
+        @*<li class="cur"><a href="#"><img src="~/Resource/Temp/banner-1.png" alt="" /></a></li>*@
+    </ul>
+    <p class="slide-alist"></p>
+</div>
+<!--库列表-->
+<div class="library clearfix">
+    @*<div class="lib-item lib-item-fa">
+        <a href="#">
+            <img src="~/Resource/Temp/ku-1.png" alt="" />
+            <div class="lib-item-con">
+                <h3>国侨办出台国内为侨公共服务体系建设指导意见</h3>
+                <span></span>
+                <p>据国务院侨务办公室网站消息，为贯彻落实2015年国内侨政工作会议精神，指导推动国内为侨公共服务体系建设，提升全国侨办... ...</p>
+            </div>
+        </a>
+    </div>*@
+</div>
+<!--新闻资讯-->
+<div class="news-info">
+    <div class="news-info-box">
+        <!-- h2标题-->
+        <div class="h2-title">
+            <div class="simplified"><h2 class="cur">新闻资讯</h2><span>What’s New</span></div>
+            <div class="traditional"><h2 class="cur">新聞資訊</h2><span>What’s New</span></div>
+            <div class="english"><h2 class="cur">What’s New</h2></div>
+            <a href="/News/List" class="more simplified" target="_blank">更多>></a>
+            <a href="/News/List" class="more traditional" target="_blank">更多>></a>
+            <a href="/News/List" class="more english" target="_blank">more>></a>
+            <div class="news-nav">
+                <ul class="h2-title-tabs">
+                    @*<li>本社公告</li>
+            <li>本社动态</li>
+            <li>行业动态</li>*@
+                </ul>
+            </div>
+        </div>
+        <!-- 列表-->
+        <ul class="news-info-list clearfix">
+            @*<li>
+         <div class="news-info-con">
+             <h3><a href="#">李克强会见第二届世界华侨华人工商大会全体代表</a></h3>
+             <p>6月12日上午，中国国务院总理李克强在北京人民大会堂会见出席第二届世界华侨华人工商大会的全体代表，并发表重要讲话。</p>
+         </div>
+         <div class="high-mask">
+             <strong>12</strong><span>2017.06</span>
+         </div>
+     </li>*@
+        </ul>
+    </div>
+</div>
+<!--推荐阅读-->
+<div class="rec-reading">
+    <!-- h2标题-->
+    <div class="h2-title">
+        <div class="simplified"><h2 class="cur">推荐阅读</h2><span>Recommended  Titles</span></div>
+        <div class="traditional"><h2 class="cur">推薦閱讀</h2><span>Recommended  Titles</span></div>
+        <div class="english"><h2 class="cur">Recommended Titles</h2></div>
+        <a href="/PBook/List" class="more simplified" target="_blank">更多>></a>
+        <a href="/PBook/List" class="more traditional" target="_blank">更多>></a>
+        <a href="/PBook/List" class="more english" target="_blank">more>></a>
+    </div>
+    <!-- 淘碟记 列表内容-->
+    <div class="rec-reading-list slider">
+        <div class="rec-content">
+            <ul class="slider-list">
+                @*<li>
+                    <div class="rec-reading-con">
+                        <span></span>
+                        <h3>淘碟记</h3>
+                        <h4>洪彬  著</h4>
+                        <p>作者近二十年来收藏电影音乐碟（CD）或唱片的淘碟历程。它是以实地旅游淘碟形式介绍电影音乐的书，其汇集了世界主要城市旅游经历、人文社会变迁、唱片发行、电影音乐介绍、淘碟地图等诸多内容。虽说是本小书，但内容丰富，图文并茂，附录的相关资料完整，信息量极大。最具特色的淘碟之处均是作者亲身所涉所踏，原汁原味。本书对电影音乐爱好者、CD收藏者以及电影音乐的研究者具有参考价值和阅读价值。</p>
+                        <div class="pub-about">出版社： 暨南大学出版社 -- ISBN：978-7-5668-2111-9 -- 出版时间：2017年5月第1版</div>
+                    </div>
+                    <a href="#"><img src="~/Resource/Temp/books-list-1.png" alt="" /></a>
+                </li>*@
+            </ul>
+        </div>
+        <a href="javascript:;" class="arr-left special-left"></a>
+        <a href="javascript:;" class="arr-right special-right"></a>
+        @*<div class="indicator"></div>*@
+    </div>
+</div>
+
+
+@section Script{
+    @*<script src="~/scripts/webindex.js"></script>*@
+    <script src="~/scripts/mustache.min.js"></script>
+    <script src="~/scripts/jquery-sochange.js"></script>
+    <script src="~/scripts/Home_Index.js"></script>
+    <script>
+        $(function () {
+            SelectNav("home");
+        });
+    </script>
+}

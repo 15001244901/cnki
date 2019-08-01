@@ -1,0 +1,183 @@
+$(function () {
+   var url= $("#webUrl").val();
+
+    //轮播
+    add();
+    //新闻资讯
+    BindNews();
+    //新书快讯
+    BindBook("SYS_FLD_CHECK_DATE");
+    //精品推荐
+    BindNewBook(url,"2","SYS_FLD_ADDDATE");
+    //点击排行
+    HitCount("SYS_FLD_HITCOUNT");
+    //编辑风采
+    Editor();
+});
+
+//新闻资讯
+var template_news = "{{#list}}<li>\
+                    <div class='row'><div class='col-xs-12'>\
+                            <div class='keys-text'>\
+                                <h4><a class='a1' href='/News/Detail?id={{id}}'>{{title}}</a></h4>\
+                                <h4><a class='a2' href='/News/Detail?id={{id}}'>{{digest}}</a></h4>\
+                                <p>{{date}}</p>\
+                            </div>\
+                        </div> \
+                    </div>\
+                    </li>{{/list}}";
+
+//新书快讯   排行
+var template_newbook = "{{#list}}<div class='col-xs-4'><a href='/Book/Detail?id={{id}}'> <img src='{{img}}&ptype=0' class='news-img' alt='' /><div class='txt'><h5>{{name}}</h5></div></a></div>{{/list}}";
+
+//编辑风采
+var template_editor = " {{#list}} <div class='col-xs-4'><a href='/Editor/Detail?id={{id}}'> <img src='{{img}}' alt='' /><h4>{{name}}</h4><p></p></a></div>{{/list}}"
+
+//轮播图
+var template_pic = " {{#list}}<a href='#'> <img src='{{imageUrl}}' alt='' /></a>{{/list}}"
+
+
+
+function add() {
+    $.ajax({
+        url: "/Home/GetAd",
+        type: "post",
+        dataType: "json",
+        data: { Type: '首页' },
+        success: function (data) {
+            if (data != null && data.length > 0) {
+                var str = "";
+                $.each(data, function (i, item) {
+                    //str += "<div class='soChange'>";                    
+                    str += "<a href='"+item.imgUrl+"'> <img src='" + item.imageUrl + "' class='news-img' alt='' /></a>";
+                    //str += "</div>";
+
+
+                })
+                $("#lunbotu").append(str);
+                $("#lunbotu a").attr("style", "width:" + Math.round($("#main").width()) + "px;");
+                $("#lunbotu .news-img").attr("style", "width:" + Math.round($("#main").width()) + "px;height:" + Math.round(($("#main").width() / 2 - 27.50)) + "px");
+                $("#lunbotu a").soChange({
+                    thumbObj: '#lunbotu span',
+                    thumbNowClass: 'ind-pre',
+                    thumbOverEvent: true,
+                    slideTime: 0, //对象平滑过渡持续时间，默认为1000ms,
+                    autoChange: true,
+                    botPrev: ".ind-pre",//按钮上一个，默认为空
+                    botNext: ".ind-pre"//按钮下一个。默认为空
+                })
+
+
+            } else {
+                $("#lunbotu").empty();
+                $(".ind-pre").hide();
+                $(".ind-pre").hide();
+            }
+        }
+    })
+}
+function BindNews() {
+    $.ajax({
+        url: "/Home/GetNews",
+        type: "post",
+        dataType: "json",
+        success: function (data) {
+            if (data != null && data.length > 0) {
+                var html = Mustache.render(template_news, { list: data });
+                $(".news-ul").empty().append(html);
+                $(".news-ul li>.row").attr("style", "width:" + $("#main").width() + "px;");
+                // $(".news-ul .news-img").attr("style", "width:" + Math.round($("#main").width() / 3 - 30) + "px;height:" + Math.round(($(".news-ul li>.row").width() / 3 - 30) * 0.615) + "px");
+                //$(".news-ul h4").attr("style", "width:" + $("#main").width() + "px;");
+            } else {
+                $(".news-ul").empty();
+            }
+        }
+    })
+}
+
+//新书快讯
+function BindBook(type) {
+    $.ajax({
+        url: "/Home/GetRankBook",
+        type: "post",
+        dataType: "json",
+        data: { order: type },
+        success: function (data) {
+            if (data != null && data.length > 0) {
+                var html = Mustache.render(template_newbook, { list: data });
+                $("#newbook").empty().append(html);
+                $("#newbook .col-xs-4").attr("style", "width:" + Math.round($("#main").width() / 3) + "px;");
+                $("#newbook .news-img").attr("style", "height:" + Math.round(($("#main").width() / 3) + 11.66) + "px");
+            } else {
+                $("#newbook").empty();
+            }
+        }
+    })
+}
+
+var template_Recommendation = "{{#list}}<div class='col-xs-4'><a href='/Book/Detail?id={{id}}'> <img src='{{&img}}&ptype=0' class='news-img' alt='' /><div class='txt'><h5>{{name}}</h5></div></a></div>{{/list}}";
+
+//精品推荐
+function BindNewBook(url,cata,type) {
+    $.ajax({
+        url: url + "/Ajax/BookRecommendation.ashx",
+        type: "post",
+        dataType: "jsonp",
+        jsonpCallback: "callback",
+        data: { order: type,cata:cata },
+        success: function (data) {
+            data=eval("[" + data + "]")
+            // data = JSON.parse(data);
+            // data = $.parseJSON(data);
+            
+            if (data != null) {
+                for (var i = 0; i < data.length; i++) {
+
+                var html = Mustache.render(template_Recommendation, {list: data[i]});
+                $("#bindnewbook").empty().append(html);
+                $("#bindnewbook .col-xs-4").attr("style", "width:" + Math.round($("#main").width() / 3) + "px;");
+                $("#bindnewbook .news-img").attr("style", "height:" + Math.round(($("#main").width() / 3) + 11.66) + "px");
+                }
+            } else {
+                $("#bindnewbook").empty();
+            }
+        }
+    })
+}
+
+//点击排行
+function HitCount(type) {
+    $.ajax({
+        url: "/Home/GetRankBook",
+        type: "post",
+        dataType: "json",
+        data: { order: type },
+        success: function (data) {
+            if (data != null && data.length > 0) {
+                var html = Mustache.render(template_newbook, { list: data });
+                $("#hitcount").empty().append(html);
+                $("#hitcount .col-xs-4").attr("style", "width:" + Math.round($("#main").width() / 3) + "px;");
+                $("#hitcount .news-img").attr("style", "height:" + Math.round(($("#main").width() / 3 + 11.66)) + "px");
+            } else {
+                $("#hitcount").empty();
+            }
+        }
+    })
+}
+
+function Editor() {
+    $.ajax({
+        url: "/Home/GetEditor",
+        dataType: "json",
+        type: "post",
+        success: function (data) {
+            if (data != null && data.length > 0) {
+                var html = Mustache.render(template_editor, { list: data });
+                $("#editor").empty().append(html);
+            } else {
+                $("#editor").empty();
+            }
+        }
+    })
+
+}

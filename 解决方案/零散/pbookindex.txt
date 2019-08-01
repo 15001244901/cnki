@@ -1,0 +1,273 @@
+
+@{
+    ViewBag.Title = "图书出版";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var yearList = ViewBag.BookYear;
+}
+
+<link href="~/Css/book-publish.css" rel="stylesheet" />
+
+<!--书讯-->
+<div class="book-info clearfix">
+    <!-- left-->
+    <div class="book-news">
+        <!-- h2标题-->
+        <div class="h2-title">
+            <div class="simplified" style="display:none;"><h2 class="cur">书讯</h2><span>Book  News</span> 
+                <a href="/News/List" class="more">更多>></a>
+            </div>
+            <div class="traditional" style="display:none;"><h2 class="cur">書訊</h2><span>Book  News</span>
+                <a href="/News/List" class="more">更多>></a>
+            </div>
+            <div class="english" style="display:none;"><h2 class="cur">Book  News</h2>
+                <a href="/News/List" class="more">more>></a>
+            </div>
+        </div>
+        <ul class="book-news-list">
+            @*<li>
+                    <a href="#">《中国药学文物图集》首发式举行</a>
+                </li>*@
+        </ul>
+    </div>
+    <!-- right-->
+    <div class="book-slider">
+        <ul id="slide">
+            @*<li><a href="#"><img src="~/Resource/Temp/pub-banner-1.jpg" alt="" /></a></li>*@
+        </ul>
+        <p class="slide-alist"></p>
+    </div>
+</div>
+<!--畅销排行 新书推荐-->
+<div class="book-info clearfix">
+    <!-- left 畅销排行-->
+    <div class="book-ranking">
+        <!-- h2标题-->
+        <div class="h2-title sale-book simplified">
+            <h2 class="cur" data-type="10"><a href="javascript:;">畅销排行</a></h2>
+            <h2 data-type="11"><a href="javascript:;">月度榜单</a></h2>
+        </div>
+        <div class="h2-title sale-book traditional">
+            <h2 class="cur" data-type="10"><a href="javascript:;">暢銷排行</a></h2>
+            <h2 data-type="11"><a href="javascript:;">月度榜單</a></h2>
+        </div>
+        <div class="h2-title sale-book english">
+            <h2 class="cur" data-type="10"><a href="javascript:;">Best Sellers</a></h2>
+            <h2 data-type="11"><a href="javascript:;">Monthly Top List</a></h2>
+        </div>
+        <h2 class="sale-type" style="display:none;"><span class="select" data-type="11">当当</span><span data-type="13">京东</span>@*<span data-type="14">亚马逊</span>*@</h2>
+        <ul class="book-ranking-list">
+        </ul>
+    </div>
+    <!-- right 新书推荐-->
+    <div class="book-rec">
+        <!-- h2标题-->
+        <div class="h2-title simplified">
+            <h2 class="cur">新书推荐</h2><span>New Releases</span>
+            <a href="/PBook/List" class="more" target="_blank">更多>></a>
+        </div>
+        <div class="h2-title traditional">
+            <h2 class="cur">新書推薦</h2><span>New Releases</span>
+            <a href="/PBook/List" class="more" target="_blank">更多>></a>
+        </div>
+        <div class="h2-title english">
+            <h2 class="cur">New Releases</h2>
+            <a href="/PBook/List" class="more" target="_blank">more>></a>
+        </div>
+        <div class="book-rec-con">
+            <div class="book-rec-list">
+            </div>
+            <a href="JavaScript:;" class="arr-left recommend-left"></a>
+            <a href="JavaScript:;" class="arr-right recommend-right"></a>
+        </div>
+    </div>
+</div>
+<!--项目列表-->
+<div class="item-list">
+    <div class="item-list-con">
+        <a href="/pbook/topical" class="item-list-1"><span>主题出版项目</span></a>
+        <a href="/pbook/fund" class="item-list-2"><span>国家出版基金项目</span></a>
+        <a href="/pbook/emphasis" class="item-list-3"><span>国家重点图书出版规划</span></a>
+        <a href="/pbook/materials" class="item-list-4"><span>国家级规划教材</span></a>
+    </div>
+</div>
+<!--特色精品-->
+<div class="feature">
+    <div class="feature-con">
+        <!-- h2标题-->
+        <div class="h2-title simplified">
+            <h2 class="cur">特色精品</h2><span>Featured Books</span>
+            <a href="/PBook/List" class="more">更多>></a>
+            <ul class="h2-title-tabs">
+                <li class="active" data-type="6">华侨华人</li>
+                <li data-type="7">华文教育</li>
+                <li data-type="8">地域文化</li>
+                <li data-type="9">精品教材</li>
+            </ul>
+        </div>
+        <div class="h2-title traditional">
+            <h2 class="cur">特色精品</h2><span>Featured Books</span>
+            <a href="/PBook/List" class="more">更多>></a>
+            <ul class="h2-title-tabs">
+                <li class="active" data-type="6">華僑華人</li>
+                <li data-type="7">華文教育</li>
+                <li data-type="8">地域文化</li>
+                <li data-type="9">精品教材</li>
+            </ul>
+        </div>
+        <div class="h2-title english">
+            <h2 class="cur">Featured Books</h2>
+            <a href="/PBook/List" class="more">more>></a>
+            <ul class="h2-title-tabs">
+                <li class="active" data-type="6">Chinese Overseas</li>
+                <li data-type="7">Chinese Language and Culture Education</li>
+                <li data-type="8">Lingnan Culture</li>
+                <li data-type="9">Textbooks</li>
+            </ul>
+        </div>
+        <div class="feature-book-con">
+            <div class="fea-book-list">
+            </div>
+            <a href="javascript:;" class="arr-left special-left"></a>
+            <a href="javascript:;" class="arr-right special-right"></a>
+        </div>
+    </div>
+</div>
+<!--专业导航 书目下载 华文教材-->
+<div class="three-group">
+    <!--专业导航-->
+    <div class="pro-nav">
+        <!-- h2标题-->
+        <div class="h2-title book-theme simplified">
+            <h2 class="cur" data-type="1."><a href="javascript:;">专业导航</a></h2>
+            <h2 data-type="1.11." data-index="series"><a href="javascript:;">丛书系列</a></h2>
+        </div>
+        <div class="h2-title book-theme traditional">
+            <h2 class="cur" data-type="1."><a href="javascript:;">專業導航</a></h2>
+            <h2 data-type="1.11." data-index="series"><a href="javascript:;">叢書系列</a></h2>
+        </div>
+        <div class="h2-title book-theme english">
+            <h2 class="cur" data-type="1."><a href="javascript:;">Subject List</a></h2>
+            <h2 data-type="1.11." data-index="series"><a href="javascript:;">Series</a></h2>
+        </div>
+        <ul class="pro-nav-list">
+        </ul>
+    </div>
+    <form id="form_bookcatalog" action="/Download/DownBookCatalog">
+        <input type="hidden" name="TYPE" value="-1" />
+        <input type="hidden" name="FILETYPE" value="" />
+        <input type="hidden" name="FILESTYLE" value="" />
+        <input type="hidden" name="FILEQUARTER" value="" />
+        <input type="hidden" name="YEAR" value="" />
+        <input type="hidden" name="ReturnType" value="3" />
+    </form>
+    <!-- 书目下载-->
+    <div class="book-down">
+        <!-- h2标题-->
+        <div class="h2-title">
+            <h2 class="cur simplified">书目下载</h2>
+            <h2 class="cur traditional">書目下載</h2>
+            <h2 class="cur english">Catalogues</h2>
+        </div>
+        <ul class="book-down-list">
+            <li>
+                <div class="li-item">
+                    <span class="simplified">年度书目</span>
+                    <span class="traditional">年度書目</span>
+                    <span class="english">Annual Catalogue</span>
+                    <div class="dropdown">
+                        <a href="javascript:;" data-toggle="dropdown"><em class="book-year" data-type="">请选择</em><span class="caret"></span></a>
+                        <ul class="dropdown-menu menu-book-year">
+                            <li data-year="请选择"><a href="javascript:;">请选择</a></li>
+                            @if (yearList != null && yearList.Count > 0)
+                            {
+                                foreach (var item in yearList)
+                                {
+                                    <li data-year="@item"><a href="javascript:;">@(item)年</a></li>
+                                }
+                            }
+                        </ul>
+                    </div>
+                </div>
+                <div class="down-btn">
+                    <a href="javascript:;" class="year-down">下载></a>
+                </div>
+            </li>
+            <li>
+                <dl>
+                    <dt>
+                        <span class="simplified">特色书目</span>
+                        <span class="traditional">特色書目</span>
+                        <span class="english">Featured Books</span>
+                    </dt>
+                    <dd class="special_book">
+                    </dd>
+                </dl>
+            </li>
+            <li>
+                <dl>
+                    <dt>
+                        <span class="simplified">获奖图书</span>
+                        <span class="traditional">獲獎圖書</span>
+                        <span class="english">Award Winners</span>
+                    </dt>
+                    <dd class="award_book">
+                    </dd>
+                </dl>
+            </li>
+            <li>
+                @*<div class="li-item">
+                    <span class="simplified">馆配书目</span>
+                    <span class="traditional">館配書目</span>
+                    <span class="english">Catalogue for Library</span>
+                    <div class="dropdown">
+                        <a href="javascript:;" data-toggle="dropdown"><em data-type="" class="library-year">请选择</em><span class="caret"></span></a>
+                        <ul class="dropdown-menu menu-library-year"></ul>
+                    </div>
+                </div>
+                <div class="down-btn">
+                    <a href="javascript:;" class="library-down">下载></a>
+                </div>*@
+                <dl>
+                    <dt>
+                        <span class="simplified">馆配书目</span>
+                        <span class="traditional">館配書目</span>
+                        <span class="english">Catalogue for Library</span>
+                    </dt>
+                    <dd class="library_book">
+                    </dd>
+                </dl>
+            </li>
+        </ul>
+    </div>
+    <!-- 华文教材-->
+    <div class="book-down chn-mat">
+        <!-- h2标题-->
+        <div class="h2-title simplified">
+            <h2 class="cur">资源下载</h2>
+            <a href="/download/index" class="more" target="_blank">更多>></a>
+        </div>
+        <div class="h2-title traditional">
+            <h2 class="cur traditional">資源下載</h2>
+            <a href="/download/index" class="more" target="_blank">更多>></a>
+        </div>
+        <div class="h2-title english">
+            <h2 class="cur ">Downloads</h2>
+            <a href="/download/index" class="more" target="_blank">more>></a>
+        </div>
+        <ul class="book-down-list resouce-list">
+        </ul>
+    </div>
+</div>
+
+@section Script{
+    <script src="~/scripts/jquery-sochange.js"></script>
+    <script src="~/scripts/mustache.min.js"></script>
+    <script src="~/scripts/layer/layer.js"></script>
+    <script src="~/scripts/webindex.js"></script>
+    <script src="~/scripts/Book_Index.js"></script>
+    <script>
+        $(function () {
+            SelectNav("book");
+        });
+    </script>
+}

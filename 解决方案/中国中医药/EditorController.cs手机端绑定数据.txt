@@ -1,0 +1,146 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.Mvc;
+
+using zyy.BLL;
+using zyy.Model;
+using DRMS.BLL;
+using DRMS.Model;
+using ZYYMWeb.Models;
+using CNKI.BaseFunction;
+
+namespace ZYYMWeb.Controllers
+{
+    public class EditorController : Controller
+    {
+        // GET: Editor
+        private readonly EditorBLL _editor;
+        private readonly CMSTheme _theme;
+        private readonly Book _book;
+        public EditorController()
+        {
+            _editor = new EditorBLL();
+            _theme = new CMSTheme();
+            _book = new Book();
+        }
+
+        #region 编辑风采 列表
+        public ActionResult Index()
+        {
+            return View();
+        }
+
+        /// <summary>
+        /// 获取编室
+        /// </summary>
+        /// <returns></returns>
+        public JsonResult GetEditorOrg()
+        {
+            int Count = 0;
+            string cls = System.Configuration.ConfigurationManager.AppSettings["editororg"];
+            string where = "PARENTID='" + cls + "'";
+            IList<CMSThemeInfo> list = _theme.GetList(where, 1, 15, out Count, true);
+
+            if (null == list)
+                list = new List<CMSThemeInfo>();
+            return Json(list.Select(o => new
+            {
+                id = o.ID,
+                name = o.ThemeName,
+            }), JsonRequestBehavior.AllowGet);
+        }
+
+        /// <summary>
+        /// 获取编辑
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        public JsonResult GetEditorList(SearchViewModel model)
+        {
+            int count = 0;
+            //string where = "NAME='"+ model.Keyword + "'";
+            string where = "ORGNAME='" + model.Keyword + "'";
+            IList<EditorInfo> list = _editor.GetList(where, model.Page, model.Size, out count, true);
+            if (null == list)
+                list = new List<EditorInfo>();
+            return Json(new
+            {
+                Count = count,
+                Models = list.Select(o => new
+                {
+                    id = o.SYS_FLD_DOI,
+                    name = NormalFunction.ReplaceRed(o.Name),
+                    img = "/showpic?vpath=" + o.SYS_FLD_FILEPATH,
+                    orgname = o.OrgName,
+                    desc = NormalFunction.GetSubStrOther(o.Digest, 80, "..."),
+                    position=o.POSITION,
+                    mainwork= GetEditorBook(o)
+                }),
+                PageCount = (count - 1) / model.Size + 1
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+        /// <summary>
+        /// 编辑代表作
+        /// </summary>
+        /// <param name="info"></param>
+        /// <returns></returns>
+        public string GetEditorBook(EditorInfo info)
+        {
+            string res = string.Empty;
+            int recordcount = 0;
+            string sql = "(author = '?" + info.Name + "' or EXECUTIVEEDITOR = '?" + info.Name + "' or ZTCode = '?" + info.Name + "' or BookCode = '?" + info.Name + "')"+" ORDER BY ISSUEDATE DESC";
+            //读取最新出版时间下该编辑参与的图书，2本即可
+            IList<BookInfo> bookInfo=_book.GetList(sql, 1, 2, out recordcount, true);
+            //获取到的图书拼接成一个字符串
+            List<string> list = new List<string>();
+            if (bookInfo != null)
+            {
+                foreach (var bookItem in bookInfo)
+                {
+                    list.Add("《"+bookItem.Name+ "》");
+                }
+                res = string.Join("、", list);
+            }
+            return res;
+        }
+
+        #endregion
+
+        public ActionResult Detail(string id)
+        {
+            var info=_editor.GetItem(id);
+            if (info == null)
+            {
+                info = new EditorInfo();
+            }
+            return View(info);
+        }
+
+        public JsonResult GetContent(string id)
+        {
+            var info=_editor.GetItem(id);
+            int recordcount = 0;
+            string sql = "(author = '?" + info.Name + "' or EXECUTIVEEDITOR = '?" + info.Name + "' or ZTCode = '?" + info.Name + "' or BookCode = '?" + info.Name + "')" + " ORDER BY ISSUEDATE DESC";
+            //读取最新出版时间下该编辑参与的图书，2本即可
+            IList<BookInfo> list = _book.GetList(sql, 1, 5, out recordcount, true);
+
+            if (list == null)
+                list = new List<BookInfo>();
+            
+            return Json(list.Select(o => new
+            {
+                name = NormalFunction.ReplaceRed(o.Name),
+                author = NormalFunction.GetSubStrOther(o.Author.Replace("##LEFT##", "").Replace("##RIGHT##", ""), 20, "..."),
+               
+                date = Utility.DealDate(o.IssueDate),
+                price = o.Price,
+                img=o.SYS_FLD_COVERPATH
+
+            }), JsonRequestBehavior.AllowGet);
+        }
+
+    }
+}

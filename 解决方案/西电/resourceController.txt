@@ -1,0 +1,776 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.Mvc;
+using Webdiyer.WebControls.Mvc;
+
+using KPIC.IBLL;
+using KPIC.Model;
+using Web.Areas.Admin.Models;
+using Infrastructure.Log;
+using Web.Models;
+using System.Text.RegularExpressions;
+using System.Configuration;
+using System.Xml.Linq;
+using CNKI.BaseFunction;
+
+namespace Web.Areas.Admin.Controllers
+{
+    [AdminAuthorize]
+    public class ResourceController : Controller
+    {
+        // GET: Admin/Resource
+        private readonly IResourceService _resource;
+        private readonly IQrResourceService _qrResource;
+        private string NewsUrlID { get; set; }//新建和编辑图文时，添加的图片需要用到
+        public ResourceController(IResourceService resource, IQrResourceService qrResource)
+        {
+            _resource = resource;
+            _qrResource = qrResource;
+        }
+
+        /// <summary>
+        /// 列表页
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        public ActionResult List(FileSearchModel model)
+        {
+            int recordcount = 0;
+            string where = GetSqlStr(model);
+            if (!string.IsNullOrWhiteSpace(where))
+            {
+                where += " and ";
+            }
+            where += " BELONGFILEID is null";
+            try
+            {
+                var picList = _resource.GetList(out recordcount, where + " order by ADDTIME desc", model.Page, model.Size);
+                if (picList != null && picList.Count() > 0)
+                {
+                    //构造分页字符串
+                    var pagedList = picList.AsQueryable().ToPagedList(model.Page, model.Size);
+                    pagedList.PageSize = model.Size;
+                    pagedList.CurrentPageIndex = model.Page;
+                    pagedList.TotalItemCount = recordcount;
+                    ViewBag.ALERT_INFO = new AlertMsgInfo(AlertMsgLevel.Success, string.Format("找到{0}条记录，当前第{1}页，共{2}页", recordcount, pagedList.CurrentPageIndex, pagedList.TotalPageCount));
+                    return View(pagedList);
+                }
+            }
+            catch (Exception ex)
+            {
+                LogFactory.CreateErrorLog("获取资源列表出错", ex);
+            }
+            ViewBag.ALERT_INFO = new AlertMsgInfo(AlertMsgLevel.Danger, "未找到任何记录");
+            return View();
+        }
+
+        /// <summary>
+        /// 列表检索字段
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        private string GetSqlStr(FileSearchModel model)
+        {
+            List<string> list = new List<string>();
+            if (!string.IsNullOrEmpty(model.Keyword))
+            {
+                list.Add("SOURCENAME='?" + model.Keyword + "'");
+            }
+            if (!string.IsNullOrEmpty(model.ResourceType))
+            {
+                list.Add("SOURCETYPE='" + model.ResourceType + "'");
+            }
+            return string.Join(" and ", list);
+        }
+
+        /// <summary>
+        /// 添加文件夹
+        /// </summary>
+        /// <param name="fileName"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [ValidateInput(false)]
+        public ActionResult AddFileResource(SourceViewModel model)
+        {
+            bool success = false;
+            var info = _resource.GetItem(model.Doi);
+            if (string.IsNullOrEmpty(model.Doi) || info == null)
+            {
+                info = new ResourceInfo();
+                info.ID = Guid.NewGuid().ToString();
+                info.SOURCENAME = model.FileName;//
+                info.SOURCETYPE = model.SourceType;
+                info.SOURCRURL = model.LinkUrl;
+                info.SOURCECONTENT = Server.UrlEncode(model.SourceContent);
+                info.SOURCEPATH = model.SourcePath;
+                info.SOURCESIZE = model.SourceSize;
+                info.DIGEST = model.Digest;
+                info.TIMESIZE = model.TimeSize;
+                if (model.SourceType == 2)
+                {
+                    info.SOURCRURL = model.VideoImg;
+                }
+                info.ADDTIME = DateTime.Now;
+                info.ADDUSER = User.Identity.Name;
+                success = _resource.Add(info);//添加
+            }
+            else
+            {
+                info.SOURCENAME = model.FileName;
+                info.SOURCRURL = model.LinkUrl;
+                info.SOURCECONTENT = Server.UrlEncode(model.SourceContent);
+                info.SOURCETYPE = model.SourceType;
+                info.SOURCEPATH = model.SourcePath;
+                info.SOURCESIZE = model.SourceSize;
+                info.TIMESIZE = model.TimeSize;
+                info.DIGEST = model.Digest;
+                if (model.SourceType == 2)
+                {
+                    info.SOURCRURL = model.VideoImg;
+                }
+                info.ADDTIME = DateTime.Now;
+                success = _resource.Update(model.Doi, info);
+                if (success)
+                {
+                    //更新二维码资源
+                    string sql = "SOURCEID='" + model.Doi + "'";
+                    var list = _qrResource.GetList(sql, int.MaxValue);
+                    if (list != null && list.Count() > 0)
+                    {
+                        foreach (var item in list)
+                        {
+                            item.SOURCENAME = model.FileName;
+                            item.SOURCRURL = model.LinkUrl;
+                            item.SOURCECONTENT = Server.UrlEncode(model.SourceContent);
+                            item.SOURCETYPE = model.SourceType;
+                            item.SOURCEPATH = model.SourcePath;
+                            item.SOURCEID = NormalFunction.ResetRedFlag(item.SOURCEID);
+                            _qrResource.Update(item.ID, item);
+                        }
+                    }
+                }
+            }
+            return Json(new { success = success }, JsonRequestBehavior.AllowGet);
+        }
+
+        /// <summary>
+        /// 获取内容
+        /// </summary>
+        /// <param name="doi"></param>
+        /// <returns></returns>
+        public ActionResult GetContent(string doi)
+        {
+            var info = _resource.GetItem(doi);
+            if (info != null)
+            {
+                info.SOURCECONTENT = Server.UrlDecode(info.SOURCECONTENT);
+                return Json(new { success = true, Model = info }, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                return Json(new { success = true, Model = new ResourceInfo() }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        /// <summary>
+        /// 删除资源
+        /// </summary>
+        /// <param name="doi"></param>
+        /// <returns></returns>
+        public ActionResult DeleteResource(string dois)
+        {
+            bool success = false;
+            if (!string.IsNullOrEmpty(dois))
+            {
+                var doiList = dois.Split(new string[] { ";" }, StringSplitOptions.RemoveEmptyEntries);
+                if (doiList != null)
+                {
+                    success = _resource.Delete(doiList);
+                }
+            }
+            return Json(new { success = success }, JsonRequestBehavior.AllowGet);
+        }
+
+        /// <summary>
+        /// 图文详情
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public ActionResult EditorDetail(string id)
+        {
+            var info = _resource.GetItem(id);
+            if (info != null)
+            {
+                return View(info);
+            }
+            else
+            {
+                return View(new ResourceInfo());
+            }
+        }
+
+        /// <summary>
+        /// 视频详情
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public ActionResult VideoDetail(string id)
+        {
+            var info = _resource.GetItem(id);
+            if (info != null)
+            {
+                return View(info);
+            }
+            else
+            {
+                return View(new ResourceInfo());
+            }
+        }
+
+        /// <summary>
+        /// 显示视频
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult ToShow(string vpath)
+        {
+            try
+            {
+                string virtulpath = ConfigurationManager.AppSettings["virtulpath"];
+                virtulpath = @"\" + virtulpath;
+                if (!string.IsNullOrEmpty(vpath))
+                {
+                    virtulpath = virtulpath + vpath;
+                    string filePath = HttpContext.Server.MapPath(virtulpath);
+                    if (System.IO.File.Exists(filePath))
+                    {
+                        return File(System.IO.File.ReadAllBytes(filePath), "video/mp4");
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                LogFactory.CreateErrorLog("路径不合法", e);
+            }
+            return File(System.IO.File.ReadAllBytes(vpath), "video/mp4");
+        }
+
+
+        /// <summary>
+        /// 视频播放
+        /// </summary>
+        /// <param name="doi"></param>
+        /// <returns></returns>
+        public FileResult GetVideoUrl(string doi)
+        {
+            var info = _resource.GetItem(doi);
+            if (info != null)
+            {
+                string virtulpath = ConfigurationManager.AppSettings["virtulpath"];
+                virtulpath = @"\" + virtulpath;
+                string path = Server.MapPath(virtulpath + info.SOURCEPATH);
+                if (System.IO.File.Exists(path))
+                    return File(path, "video/mp4");
+            }
+            return null;
+        }
+
+        /// <summary>
+        /// 上传文件
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public string UPDetail(string id)
+        {
+            var info = _resource.GetItem(id);
+            string path = info == null ? "" : info.SOURCEPATH;
+            int sourceType = 0;
+            string videoImgPath = "";
+            HttpPostedFileBase file = Request.Files["image"];
+            if (file != null && file.ContentLength > 0)
+            {
+                //保存
+                string strEx = System.IO.Path.GetExtension(file.FileName);
+                sourceType = Utility.Utility.GetSourceType(strEx);
+                //创建文件夹
+                string dirPath = HttpContext.Server.MapPath("/doc/resource/");
+                if (!System.IO.Directory.Exists(dirPath))
+                {
+                    System.IO.Directory.CreateDirectory(dirPath);
+                }
+                if (string.IsNullOrEmpty(id) || info == null)
+                {
+                    id = Guid.NewGuid().ToString();
+                    path = "/resource/" + id + strEx;
+                }
+                string filePath = HttpContext.Server.MapPath("/doc" + path);
+                try
+                {
+                    if (System.IO.File.Exists(filePath))
+                    {
+                        Utility.Utility.RemoveReadonly(filePath);
+                        System.IO.File.Delete(filePath);
+                    }
+                    path = "/resource/" + id + strEx;
+                    filePath = HttpContext.Server.MapPath("/doc" + path);
+                    file.SaveAs(filePath);
+                    if (sourceType == 2)
+                    {
+                        videoImgPath = "/resource/" + id;
+                        CatchImg(filePath, HttpContext.Server.MapPath("/doc" + videoImgPath), "1");
+                    }
+                }
+                catch (Exception)
+                {
+                    //ViewBag.error = "保存图片失败！";
+                }
+                return "{\"sourceType\":\"" + sourceType + "\",\"id\":\"" + id + "\",\"path\":\"" + path + "\",\"name\":\"" + file.FileName + "\",\"imgpath\":\"" + videoImgPath + ".jpg" + "\"}";
+            }
+            else
+            {
+                // ViewBag.error = "请选择图片！";
+            }
+            return "{\"success\":\"false\"}";
+        }
+
+        public JsonResult GetResourceType(int type = 0)
+        {
+            if (null == ResourceType)
+                SetResourceType(type);
+            return Json(ResourceType, JsonRequestBehavior.AllowGet);
+        }
+
+        private static Dictionary<string, string> ResourceType = null;
+
+        private void SetResourceType(int type)
+        {
+            try
+            {
+                ResourceType = new Dictionary<string, string>();
+                string path = Server.MapPath("~/Areas/Admin/Configuration/ResourceType.xml");
+                XDocument xdoc = XDocument.Load(path);
+                IEnumerable<XElement> branchs = xdoc.Element("ResourceTypeConfig").Elements("ResourceType");
+                if (type != 0)
+                    branchs.Where(o => o.Attribute("flag").Value != "0").ToList().ForEach(o => ResourceType.Add(o.Attribute("flag").Value, o.Attribute("name").Value));
+                else
+                    branchs.ToList().ForEach(o => ResourceType.Add(o.Attribute("flag").Value, o.Attribute("name").Value));
+            }
+            catch (Exception)
+            {
+                throw new Exception("图书所属分社的配置文档错误！");
+            }
+        }
+
+        #region 截图
+
+        public string ffmpegtool = "/Areas/Admin/UploadVideoImg/ffmpeg.exe";
+        public string sizeOfImg = "360x200";
+
+        /// <summary>
+        /// 生成封面
+        /// </summary>
+        /// <param name="fileName">文件名</param>
+        /// <param name="imgFile">图片路径</param>
+        /// <param name="ftime">抽取时间</param>
+        /// <returns></returns>
+        public bool CatchImg(string fileName, string imgFile, string ftime)
+        {
+            string ffmpeg = System.Web.HttpContext.Current.Server.MapPath(ffmpegtool);//ffmpeg.exe程序路径
+            string video_img = imgFile + ".jpg";
+            string FlvImgSize = sizeOfImg;//截图大小
+            System.Diagnostics.ProcessStartInfo ImgstartInfo = new System.Diagnostics.ProcessStartInfo(ffmpeg);
+            ImgstartInfo.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
+            ImgstartInfo.Arguments = "   -i   " + fileName + "  -y  -f  image2   -ss " + ftime + "  -s   " + FlvImgSize + "   " + video_img;
+            try
+            {
+                var proc = System.Diagnostics.Process.Start(ImgstartInfo);
+                proc.WaitForExit();
+                proc.Close();
+                proc.Dispose();
+            }
+            catch
+            {
+
+                return false;
+            }
+            // System.Threading.Thread.Sleep(4000);  
+            if (System.IO.File.Exists(video_img))
+            {
+                return true;
+            }
+            else
+            {
+                try
+                {
+                    System.Diagnostics.Process.Start(ImgstartInfo);
+                }
+                catch
+                {
+
+                    return false;
+                }
+                return true;
+            }
+
+        }
+        #endregion
+
+
+        public ActionResult ResourceFileResList(string doi, BaseSearchModel model, string parentdoi = "")
+        {
+            ViewBag.doi = doi;
+            ViewBag.parentdoi = parentdoi;
+            int recordcount = 0;
+            string where = GetFileSqlStr(model, parentdoi);
+            List<string> strs = new List<string>();
+            if (!string.IsNullOrWhiteSpace(where))
+            {
+                where += " and SOURCETYPE = '0'";
+            }
+            where += " NOT ID='" + doi + "'";
+            try
+            {
+                var picList = _resource.GetList(out recordcount, where + " order by ADDTIME desc", model.Page, model.Size);
+                if (picList != null && picList.Count() > 0)
+                {
+                    //构造分页字符串
+                    var pagedList = picList.AsQueryable().ToPagedList(model.Page, model.Size);
+                    pagedList.PageSize = model.Size;
+                    pagedList.CurrentPageIndex = model.Page;
+                    pagedList.TotalItemCount = recordcount;
+                    ViewBag.ALERT_INFO = new AlertMsgInfo(AlertMsgLevel.Success, string.Format("找到{0}条记录，当前第{1}页，共{2}页", recordcount, pagedList.CurrentPageIndex, pagedList.TotalPageCount));
+                    return View(pagedList);
+                }
+            }
+            catch (Exception ex)
+            {
+                LogFactory.CreateErrorLog("获取资源列表出错", ex);
+            }
+            ViewBag.ALERT_INFO = new AlertMsgInfo(AlertMsgLevel.Danger, "未找到任何记录");
+            return View();
+        }
+
+        private string GetFileSqlStr(BaseSearchModel model, string parentdoi)
+        {
+            List<string> list = new List<string>();
+            if (string.IsNullOrEmpty(parentdoi))
+            {
+                list.Add("BELONGFILEID is null ");
+            }
+            else
+            {
+                list.Add("BELONGFILEID='" + parentdoi + "'");
+            }
+            if (!string.IsNullOrEmpty(model.Keyword))
+            {
+                list.Add("SOURCENAME='?" + model.Keyword + "'");
+            }
+            else
+            {
+                list.Add("SOURCENAME='*'");
+            }
+            return string.Join(" and ", list);
+        }
+
+
+        /// <summary>
+        /// 将单个文件移动到目标位置
+        /// </summary>
+        /// <param name="parentdoi">目标文件夹id</param>
+        /// <param name="id">需移动文件的id</param>
+        /// <returns></returns>
+        public JsonResult MoveToFile(string parentdoi, string id)
+        {
+            bool result = false;
+            string tarPath = "/doc/resource/" + getTarPath(parentdoi);//目标文件夹相对路径
+            ResourceInfo resInfo = _resource.GetItem(id);
+            if (resInfo != null)
+            {
+                string movePath = "";
+                int index = 0;
+                string name = "";
+                string tarResPath = "";
+                string moveResPath = "";
+                //如果移动的是文件夹
+                if (resInfo.SOURCETYPE == 0)
+                {
+                    movePath = "/doc/resource/" + getTarPath(id);//移动的文件夹相对路径
+                    tarResPath = Server.MapPath(tarPath);//目标文件夹真实路径
+                    moveResPath = Server.MapPath(movePath);//移动的文件夹的真实路径
+                    if (!System.IO.Directory.Exists(moveResPath))//移动的文件夹不存在?创建
+                    {
+                        System.IO.Directory.CreateDirectory(moveResPath);
+                    }
+                    if (!System.IO.Directory.Exists(tarResPath))//目标文件夹不存在?创建
+                    {
+                        System.IO.Directory.CreateDirectory(tarResPath);
+                    }
+                    try
+                    {
+                        Utility.Utility.RemoveReadonly(moveResPath);
+                        System.IO.Directory.Move(moveResPath, tarResPath + id + "\\\\");
+                        resInfo.BELONGFILEID = parentdoi;
+                        resInfo.BELONGFILENAME = _resource.GetItem(parentdoi).SOURCENAME;
+                        _resource.Update(id, resInfo);
+                    }
+                    catch (Exception)
+                    {
+                        return Json(new { Success = result }, JsonRequestBehavior.AllowGet);
+                    }
+                    result = true;
+                    return Json(new { Success = result }, JsonRequestBehavior.AllowGet);
+                }
+                else//移动非文件夹(pdf/word/png)
+                {
+                    movePath = "/doc" + resInfo.SOURCEPATH;
+                    index = movePath.LastIndexOf('/');
+                    name = movePath.Substring(index + 1);
+                    tarResPath = Server.MapPath(tarPath);//目标文件夹真实路径
+                    moveResPath = Server.MapPath(movePath);//文件真实路径
+                    string resName = moveResPath.Replace(name, "");
+                    if (resName.Equals(tarResPath))//该文件就在此文件夹中
+                    {
+                        result = true;
+                        return Json(new { Success = result }, JsonRequestBehavior.AllowGet);
+                    }
+                    if (!System.IO.Directory.Exists(tarResPath))//文件夹不存在?创建
+                    {
+                        System.IO.Directory.CreateDirectory(tarResPath);
+                    }
+                    if (!System.IO.File.Exists(moveResPath))//文件不存在?移动失败
+                    {
+                        return Json(new { Success = result }, JsonRequestBehavior.AllowGet);
+                    }
+                    try
+                    {
+                        string tarNewResPath = tarResPath + name;
+                        if (System.IO.File.Exists(tarNewResPath))//目标文件夹已存在此文件?  删除文件
+                        {
+                            System.IO.File.Delete(tarNewResPath);
+                        }
+
+                        System.IO.File.Move(moveResPath, tarNewResPath);//移动
+                        string str = tarNewResPath;
+                        string[] sArray = str.Split(new string[] { "\\" }, StringSplitOptions.RemoveEmptyEntries);
+                        string strResource = "";
+                        for (int i = 6; i < sArray.Length; i++)
+                        {
+                            strResource = strResource + "/" + sArray[i];
+                        }
+                        resInfo.SOURCEPATH = strResource;
+                        //int index3 = strResource.Replace("/" + name, "").LastIndexOf("/");
+                        resInfo.BELONGFILEID = parentdoi;
+                        resInfo.BELONGFILENAME = _resource.GetItem(parentdoi).SOURCENAME;
+                        _resource.Update(id, resInfo);
+                        result = true;
+                    }
+                    catch (Exception)
+                    {
+                        return Json(new { Success = result }, JsonRequestBehavior.AllowGet);
+                    }
+                    return Json(new { Success = result }, JsonRequestBehavior.AllowGet);
+                }
+            }
+            else
+            {
+                return Json(new { Success = result }, JsonRequestBehavior.AllowGet);
+            }
+        }
+        /// <summary>
+        /// 查询文件夹相对路径
+        /// </summary>
+        /// <param name="parentdoi"></param>
+        /// <returns></returns>
+        private string getTarPath(string parentdoi)
+        {
+            string tarPath = parentdoi + "/";
+            string pdoi = parentdoi;
+            while (true)
+            {
+                ResourceInfo tarResInfo = _resource.GetItem(pdoi);
+                if (tarResInfo != null)
+                {
+                    if (string.IsNullOrEmpty(tarResInfo.BELONGFILEID))
+                    {
+                        return tarPath;
+                    }
+                    else
+                    {
+                        tarPath = tarResInfo.BELONGFILEID + "/" + tarPath;
+                        pdoi = tarResInfo.BELONGFILEID;
+                    }
+                }
+                else
+                {
+                    int index = tarPath.IndexOf('/');
+                    return tarPath.Substring(index + 1);
+                }
+            }
+        }
+
+
+        public ActionResult ResourceGroupFileResList(string doi, BaseSearchModel model, string parentdoi = "")
+        {
+            ViewBag.doi = doi;
+            ViewBag.parentdoi = parentdoi;
+            int recordcount = 0;
+            string[] doiArr = doi.Split(new string[] { ";" }, StringSplitOptions.RemoveEmptyEntries);
+            string where = GetFileSqlStr(model, parentdoi);
+            List<string> strs = new List<string>();
+            if (!string.IsNullOrWhiteSpace(where))
+            {
+                where += " and SOURCETYPE = '0'";
+            }
+            for (int i = 0; i < doiArr.Length; i++)
+            {
+                where += " NOT ID='" + doiArr[i] + "'";
+            }
+
+            try
+            {
+                var picList = _resource.GetList(out recordcount, where + " order by ADDTIME desc", model.Page, model.Size);
+                if (picList != null && picList.Count() > 0)
+                {
+                    //构造分页字符串
+                    var pagedList = picList.AsQueryable().ToPagedList(model.Page, model.Size);
+                    pagedList.PageSize = model.Size;
+                    pagedList.CurrentPageIndex = model.Page;
+                    pagedList.TotalItemCount = recordcount;
+                    ViewBag.ALERT_INFO = new AlertMsgInfo(AlertMsgLevel.Success, string.Format("找到{0}条记录，当前第{1}页，共{2}页", recordcount, pagedList.CurrentPageIndex, pagedList.TotalPageCount));
+                    return View(pagedList);
+                }
+            }
+            catch (Exception ex)
+            {
+                LogFactory.CreateErrorLog("获取资源列表出错", ex);
+            }
+            ViewBag.ALERT_INFO = new AlertMsgInfo(AlertMsgLevel.Danger, "未找到任何记录");
+            return View();
+        }
+
+        /// <summary>
+        /// 批量移动文件到目标文件夹
+        /// </summary>
+        /// <param name="parentdoi"></param>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public JsonResult GroupMoveToFile(string parentdoi, string id)
+        {
+            bool result = false;
+            string[] idArr = id.Split(new String[] { ";" }, StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < idArr.Length; i++)
+            {
+                id = idArr[i];
+                string tarPath = "/doc/resource/" + getTarPath(parentdoi);//目标文件夹相对路径
+                ResourceInfo resInfo = _resource.GetItem(id);
+                if (resInfo != null)
+                {
+                    string movePath = "";
+                    int index = 0;
+                    string name = "";
+                    string tarResPath = "";
+                    string moveResPath = "";
+                    //如果移动的是文件夹
+                    if (resInfo.SOURCETYPE == 0)
+                    {
+                        movePath = "/doc/resource/" + getTarPath(id);//移动的文件夹相对路径
+                        tarResPath = Server.MapPath(tarPath);//目标文件夹真实路径
+                        moveResPath = Server.MapPath(movePath);//移动的文件夹的真实路径
+                        if (!System.IO.Directory.Exists(moveResPath))//移动的文件夹不存在?创建
+                        {
+                            System.IO.Directory.CreateDirectory(moveResPath);
+                        }
+                        if (!System.IO.Directory.Exists(tarResPath))//目标文件夹不存在?创建
+                        {
+                            System.IO.Directory.CreateDirectory(tarResPath);
+                        }
+                        try
+                        {
+                            //去除只读
+                            Utility.Utility.RemoveReadonly(moveResPath);
+                            System.IO.Directory.Move(moveResPath, tarResPath + id + "\\\\");
+                            resInfo.BELONGFILEID = parentdoi;
+                            resInfo.BELONGFILENAME = _resource.GetItem(parentdoi).SOURCENAME;
+                            _resource.Update(id, resInfo);
+                        }
+                        catch (Exception)
+                        {
+                            result = false;
+                            return Json(new { Success = result }, JsonRequestBehavior.AllowGet);
+                           // continue;
+
+                        }
+                        result = true;
+                        continue;
+                        //return Json(new { Success = result }, JsonRequestBehavior.AllowGet);
+                    }
+                    else//移动非文件夹(pdf/word/png)
+                    {
+                        movePath = "/doc" + resInfo.SOURCEPATH;
+                        index = movePath.LastIndexOf('/');
+                        name = movePath.Substring(index + 1);
+                        tarResPath = Server.MapPath(tarPath);//目标文件夹真实路径
+                        moveResPath = Server.MapPath(movePath);//文件真实路径
+                        string resName = moveResPath.Replace(name, "");
+                        if (resName.Equals(tarResPath))//该文件就在此文件夹中,无需移动
+                        {
+                            //result = true;
+                            //return Json(new { Success = result }, JsonRequestBehavior.AllowGet);
+                            result = true;
+                            continue;
+                        }
+                        if (!System.IO.Directory.Exists(tarResPath))//目标文件夹不存在?创建
+                        {
+                            System.IO.Directory.CreateDirectory(tarResPath);
+                        }
+                        if (!System.IO.File.Exists(moveResPath))//需移动文件不存在?移动失败
+                        {
+                            result = false;
+                            return Json(new { Success = result }, JsonRequestBehavior.AllowGet);
+                           // continue;
+                        }
+                        try
+                        {
+                            string tarNewResPath = tarResPath + name;
+                            if (System.IO.File.Exists(tarNewResPath))//目标文件夹已存在此文件?  删除文件
+                            {
+                                System.IO.File.Delete(tarNewResPath);
+                            }
+
+                            System.IO.File.Move(moveResPath, tarNewResPath);//移动
+                            string str = tarNewResPath;
+                            string[] sArray = str.Split(new string[] { "\\" }, StringSplitOptions.RemoveEmptyEntries);
+                            string strResource = "";
+                            for (int j = 6; j< sArray.Length; j++)
+                            {
+                                strResource = strResource + "/" + sArray[j];
+                            }
+                            resInfo.SOURCEPATH = strResource;
+                            resInfo.BELONGFILEID = parentdoi;
+                            resInfo.BELONGFILENAME = _resource.GetItem(parentdoi).SOURCENAME;
+                            _resource.Update(id, resInfo);
+                            
+                        }
+                        catch (Exception)
+                        {
+                            result = false;
+                            return Json(new { Success = result }, JsonRequestBehavior.AllowGet);
+                            //continue;
+                        }
+                        //return Json(new { Success = result }, JsonRequestBehavior.AllowGet);
+                        result = true;
+                    }
+                }
+                else
+                {
+                    result = false;
+                    return Json(new { Success = result }, JsonRequestBehavior.AllowGet);
+                    //continue;
+                }
+            }
+            return Json(new { Success = result }, JsonRequestBehavior.AllowGet);
+        }
+    }
+}

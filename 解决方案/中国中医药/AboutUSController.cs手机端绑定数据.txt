@@ -1,0 +1,73 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.Mvc;
+
+using zyy.BLL;
+using zyy.Model;
+
+namespace ZYYMWeb.Controllers
+{
+    public class AboutUsController : Controller
+    {
+
+        // GET: AboutUs
+
+        private readonly CMSTheme _theme;
+        private readonly Note _note;
+
+        public AboutUsController()
+        {
+            _theme = new CMSTheme();
+            _note = new Note();
+        }
+
+        public ActionResult Index(string cls = "2.1.")
+        {
+            ViewBag.cls = cls;
+            int recordCount = 0;
+            string where = " CLASSIFICATION='" + cls + "'";
+            IList<NoteInfo> list = _note.GetList(where, 1, 1, out recordCount, true);
+            NoteInfo ni = new NoteInfo();
+            if (null != list)
+                ni = list.FirstOrDefault();
+            return View(ni);
+        }
+
+        /// <summary>
+        /// ªÒ»°œÍ«È
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public ActionResult GetContent(string cls)
+        {
+            int recordCount = 0;
+            string where = " CLASSIFICATION='" + cls + "'";
+            IList<NoteInfo> list = _note.GetList(where, 1, 1, out recordCount, true);
+            NoteInfo info = new NoteInfo();
+            if (null != list)
+            {
+               info = list.FirstOrDefault();
+            }
+            return Json(new{ Content=info.Content},JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult GetPressintro()
+        {
+            int Count = 0;
+            string cls = System.Configuration.ConfigurationManager.AppSettings["aboutus"];
+            string where = "PARENTID='" + cls + "'";
+            IList<CMSThemeInfo> list = _theme.GetList(where, 1, 10, out Count, true);
+
+            if (null == list)
+                list = new List<CMSThemeInfo>();
+            return Json(list.Select(o => new
+            {
+                id = o.ID,
+                name = o.ThemeName,
+            }), JsonRequestBehavior.AllowGet);
+        }
+
+    }
+}

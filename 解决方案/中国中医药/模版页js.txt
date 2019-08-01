@@ -1,0 +1,125 @@
+$(function () {
+    //新闻资讯
+    BindNews();
+    //新书快讯
+    BindBook("ISSUEDATE");
+    //新品推荐
+    BindNewBook("SYS_FLD_CHECK_DATE");
+    //点击排行
+    HitCount("SYS_FLD_HITCOUNT");
+    //编辑风采
+    Editor();
+});
+
+//新闻资讯
+var template_news = "{{#list}}<li>\
+                    <div class='row'>\
+                        <div class='col-xs-4'><a href='#'>\
+                          <img src='/ShowPic/Index?vpath={{img}}' class='news-img' alt='' /></a></div>\
+                        <div class='col-xs-8'>\
+                            <div class='keys-text'>\
+                                <h4><a href='#'>{{title}}</a></h4>\
+                                <p>{{date}}</p>\
+                            </div>\
+                        </div> </div></li>{{/list}}";
+
+//新书快讯  推荐 排行
+var template_newbook = "{{#list}}<div class='col-xs-4'><a href='#'> <img src='/ShowPic/Index?vpath={{img}}' class='news-img' alt='' /><div class='txt'><h5>{{name}}</h5></div></a></div>{{/list}}";
+
+//编辑风采
+var template_editor = " {{#list}} <div class='col-xs-4'><a href='#'> <img src='/ShowPic/Index?vpath={{img}}' alt='' /><h4>{{name}}</h4><p></p></a></div>{{/list}}"
+
+function BindNews() {
+    $.ajax({
+        url: "/Home/GetNews",
+        type: "post",
+        dataType: "json",
+        success: function (data) {
+            if (data != null && data.length > 0) {
+                var html = Mustache.render(template_news, { list: data });
+                $(".news-ul").empty().append(html);
+                $(".news-ul li>.row").attr("style", "width:" + $("#main").width() + "px;");
+                $(".news-ul .news-img").attr("style", "width:"+Math.round($("#main").width()/3-30)+"px;height:" + Math.round(($(".news-ul li>.row").width() / 3 - 30) * 0.615) + "px");
+            } else {
+               $ (".news-ul").empty();
+            }
+        }
+    })
+}
+
+function BindBook(type) {
+    $.ajax({
+        url: "/Home/GetRankBook",
+        type: "post",
+        dataType: "json",
+        data: { order: type },
+        success: function (data) {
+            if (data != null && data.length > 0) {
+                var html = Mustache.render(template_newbook, { list: data });
+                $("#newbook").empty().append(html);
+                $("#newbook .col-xs-4").attr("style", "width:" + Math.round($("#main").width() / 3) + "px;");
+                $("#newbook .news-img").attr("style", "height:" + Math.round(($("#main").width() / 3) + 11.66) + "px");
+            } else {
+               $("#newbook").empty();
+            }
+        }
+    })
+}
+
+function BindNewBook(type) {
+    $.ajax({
+        url: "/Home/GetRankBook",
+        type: "post",
+        dataType: "json",
+        data: { order: type },
+        success: function (data) {
+            if (data != null && data.length > 0) {
+                var html = Mustache.render(template_newbook, { list: data });
+                $("#bindnewbook").empty().append(html);
+                $("#bindnewbook .col-xs-4").attr("style", "width:" +Math.round( $("#main").width() / 3 )+ "px;");
+                $("#bindnewbook .news-img").attr("style", "height:" + Math.round(($("#main").width() / 3)+11.66) + "px");
+            } else {
+                $("#bindnewbook").empty();
+            }
+        }
+    })
+}
+
+function HitCount(type) {
+    $.ajax({
+        url: "/Home/GetRankBook",
+        type: "post",
+        dataType: "json",
+        data: { order: type },
+        success: function (data) {
+            if (data != null && data.length > 0) {
+                var html = Mustache.render(template_newbook, { list: data });
+                $("#hitcount").empty().append(html);
+                $("#hitcount .col-xs-4").attr("style", "width:" + Math.round($("#main").width() / 3) + "px;");
+                $("#hitcount .news-img").attr("style", "height:" + Math.round(($("#main").width() / 3+11.66) ) + "px");
+            } else {
+                $("#hitcount").empty();
+            }
+
+        }
+
+    })
+
+}
+
+function Editor() {
+    $.ajax({
+        url: "/Home/GetEditor",
+        dataType: "json",
+        type: "post",
+        success: function (data) {
+            if (data != null && data.length > 0) {
+                var html = Mustache.render(template_editor, { list: data });
+                $("#editor").empty().append(html);
+            } else {
+                $("#editor").empty();
+            }
+        }
+    })
+
+}

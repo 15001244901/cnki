@@ -1,0 +1,398 @@
+var resSort = "";
+function BookStoreSort() {
+    var arr = new Array();
+    arr.push("默认", "价格", "点击量", "上架时间");
+    var str = "";
+    $.each(arr, function (i) {
+        if (arr[i] == "上架时间") {
+            str += "<a href='#' data-sort='" + arr[i] + "'>" + arr[i] + "<i></i></a>";
+        } else if (arr[i] == "默认") {
+            str += "<a href='#'  class='rank-pre'  data-sort='" + arr[i] + "'>" + arr[i] + "</a>";
+        } else {
+            str += "<a href='#' data-sort='" + arr[i] + "'>" + arr[i] + "<i></i></a>";
+        }
+    })
+    $(".tab").append(str);
+}
+
+$(function () {
+    //导航
+    BookStoreSort();
+    //加载图书列表
+    
+    var itemIndex = 0;
+    var tab1LoadEnd = false;
+    var tab2LoadEnd = false;
+    var tab3LoadEnd = false;
+    var tab4LoadEnd = false;
+    var dropload = "";
+    var page = 1;
+
+
+    var sort = $(".tab .rank-pre").data("sort")
+    $(".tab a").each(function () {
+        var thisSort = $(this).data("sort");
+        if (sort == thisSort) {
+            $(this).addClass('rank-pre').siblings('a').removeClass('rank-pre');
+            itemIndex = $(this).index();
+            page = 1;
+            $('ul[id=booklist]').each(function () {
+                var type = $(this).data("type");
+                if (type == itemIndex) {
+                    $(this).show().siblings("#booklist").hide();
+                }
+            });
+        }
+        resSort = $('.tab .rank-pre').data("sort");
+    });
+
+    // tab
+    $('.tab a').click(function () {
+        var $this = $(this);
+        itemIndex = $this.index();
+        $this.addClass('rank-pre').siblings('a').removeClass('rank-pre');
+        page = 1;
+        $('ul[id=booklist]').each(function () {
+            var type = $(this).data("type");
+            if (type == itemIndex) {
+                $(this).show().siblings("#booklist").hide();
+                $(this).empty();
+            }
+        });
+        resSort = $this.data("sort");
+        // 如果选中菜单一:默认
+        if (itemIndex == '0') {
+            // 如果数据没有加载完
+            if (!tab1LoadEnd) {
+                // 解锁
+                dropload.unlock();
+                dropload.noData(false);
+            } else {
+                // 锁定
+                dropload.lock('down');
+                dropload.noData();
+            }
+            // 如果选中菜单二:价格
+        } else if (itemIndex == '1') {
+            if (!tab2LoadEnd) {
+                // 解锁
+                dropload.unlock();
+                dropload.noData(false);
+            } else {
+                // 锁定
+                dropload.lock('down');
+                dropload.noData();
+            }
+            // 如果选中菜单三:点击量
+        } else if (itemIndex == '2') {
+            if (!tab3LoadEnd) {
+                // 解锁
+                dropload.unlock();
+                dropload.noData(false);
+            } else {
+                // 锁定
+                dropload.lock('down');
+                dropload.noData();
+            }
+            // 如果选中菜单四:上架时间
+        } else if (itemIndex == '3') {
+            if (!tab4LoadEnd) {
+                // 解锁
+                dropload.unlock();
+                dropload.noData(false);
+            } else {
+                // 锁定
+                dropload.lock('down');
+                dropload.noData();
+            }
+        }
+        // 重置
+        dropload.resetload();
+    });
+    // 每页展示10个
+    var size = 10;
+    var pageStart = 0, pageEnd = 0;
+    var template = "{{#Models}}<li>\
+                    <div class='row'>\
+                        <div class='col-xs-4'><a href='/Book/Detail?id={{id}}'><img src='{{img}}' class='news-img' alt='' /></a></div>\
+                        <div class='col-xs-8'>\
+                            <div class='keys-text'>\
+                                <div class='title'><a href='/Book/Detail?id={{id}}'>{{name}}</a></div>\
+                                <p><span>作者：</span>{{author}}</p>\
+                                <p><span>出版时间：</span>{{date}}</p>\
+                                <p><span>价格：</span><b>￥{{price}}</b></p>\
+                                <p><a href='/Book/Detail?id={{id}}'>查看</a></p>\
+                            </div>\
+                        </div>\
+                    </div>\
+                </li>{{/Models}}"
+
+    // dropload
+    dropload = $('.content').dropload({
+        scrollArea: window,
+        loadDownFn: function (me) {
+            //switch (itemIndex) {
+            //    case "1": BookStoreList(Page, Size, Type,me); break;
+            //    case "2": BookStoreList(Page, Size, Type,me); break;
+            //    case "3": BookStoreList(Page, Size, Type,me); break;
+            //    case "4": BookStoreList(Page, Size, Type,me); break;
+            //}
+             //加载菜单一的数据  默认
+            if (itemIndex == '0') {
+                $.ajax({
+                    type: 'post',
+                    url: '/Book/GetBookList',
+                    dataType: 'json',
+                    data: { Page: page, Size: size, Type: resSort },
+                    success: function (data) {
+                        if (data.Models.length > 0) {
+                            page++;
+                            var html1 = Mustache.render(template, data);
+                            if (page > data.PageCount) {
+                                // 数据加载完
+                                //tab1LoadEnd = true;
+                                // 锁定
+                                me.lock()
+                                // 无数据
+                                me.noData();
+                            }
+                            $('ul[id=booklist]').each(function () {
+                                var type = $(this).data("type");
+                                if (type == itemIndex) {
+                                    $(this).append(html1).siblings().empty();
+                                }
+                            });
+                            $("#booklist .col-xs-4").attr("style", "width:" + Math.round($("#main").width() / 3) + "px;");
+                            $("#booklist .news-img").attr("style", "height:" + Math.round(($("#main").width() / 3 + 7.66)) + "px");
+                        } else {
+                            // 无数据
+                            me.noData(true);
+                        }
+                        // 每次数据加载完，必须重置
+                        me.resetload();
+                    },
+                    error: function (xhr, type) {
+                        // 锁定
+                        me.lock();
+                        // 无数据
+                        me.noData();
+                        // 即使加载出错，也得重置
+                        me.resetload();
+                    }
+                });
+               
+                // 加载菜单二的数据  价格
+            } else if (itemIndex == '1') {
+                $.ajax({
+                    type: 'post',
+                    url: '/Book/GetBookList',
+                    dataType: 'json',
+                    data: { Page: page, Size: size, Type: resSort },
+                    success: function (data) {
+                        if (data.Models.length > 0) {
+                            page++;
+                            var html1 = Mustache.render(template, data);
+                            if (page > data.PageCount) {
+                                // 数据加载完
+                                //tab1LoadEnd = true;
+                                // 锁定
+                                me.lock()
+                                // 无数据
+                                me.noData();
+                            }
+                            $('ul[id=booklist]').each(function () {
+                                var type = $(this).data("type");
+                                if (type == itemIndex) {
+                                    $(this).append(html1).siblings().empty();
+                                }
+                            });
+                            $("#booklist .col-xs-4").attr("style", "width:" + Math.round($("#main").width() / 3) + "px;");
+                            $("#booklist .news-img").attr("style", "height:" + Math.round(($("#main").width() / 3 + 7.66)) + "px");
+                        } else {
+                            // 无数据
+                            me.noData(true);
+                        }
+                        // 每次数据加载完，必须重置
+                        me.resetload();
+                    },
+                    error: function (xhr, type) {
+                        // 锁定
+                        me.lock();
+                        // 无数据
+                        me.noData();
+                        // 即使加载出错，也得重置
+                        me.resetload();
+                    }
+                });
+                     //  点击率
+            } else if (itemIndex == '2') {
+                $.ajax({
+                    type: 'post',
+                    url: '/Book/GetBookList',
+                    dataType: 'json',
+                    data: { Page: page, Size: size, Type: resSort },
+                    success: function (data) {
+                        if (data.Models.length > 0) {
+                            page++;
+                            var html1 = Mustache.render(template, data);
+                            if (page > data.PageCount) {
+                                // 数据加载完
+                                //tab1LoadEnd = true;
+                                // 锁定
+                                me.lock()
+                                // 无数据
+                                me.noData();
+                            }
+                            $('ul[id=booklist]').each(function () {
+                                var type = $(this).data("type");
+                                if (type == itemIndex) {
+                                    $(this).append(html1).siblings().empty();
+                                }
+                            });
+                            $("#booklist .col-xs-4").attr("style", "width:" + Math.round($("#main").width() / 3) + "px;");
+                            $("#booklist .news-img").attr("style", "height:" + Math.round(($("#main").width() / 3 + 7.66)) + "px");
+                        } else {
+                            // 无数据
+                            me.noData(true);
+                        }
+                        // 每次数据加载完，必须重置
+                        me.resetload();
+                    },
+                    error: function (xhr, type) {
+                        // 锁定
+                        me.lock();
+                        // 无数据
+                        me.noData();
+                        // 即使加载出错，也得重置
+                        me.resetload();
+                    }
+                });
+
+                //上架时间
+            } else if (itemIndex == '3') {
+                $.ajax({
+                    type: 'post',
+                    url: '/Book/GetBookList',
+                    dataType: 'json',
+                    data: { Page: page, Size: size, Type: resSort },
+                    success: function (data) {
+                        if (data.Models.length > 0) {
+                            page++;
+                            var html1 = Mustache.render(template, data);
+                            if (page > data.PageCount) {
+                                // 数据加载完
+                                //tab1LoadEnd = true;
+                                // 锁定
+                                me.lock()
+                                // 无数据
+                                me.noData();
+                            }
+                            $('ul[id=booklist]').each(function () {
+                                var type = $(this).data("type");
+                                if (type == itemIndex) {
+                                    $(this).append(html1).siblings().empty();
+                                }
+                            });
+                            $("#booklist .col-xs-4").attr("style", "width:" + Math.round($("#main").width() / 3) + "px;");
+                            $("#booklist .news-img").attr("style", "height:" + Math.round(($("#main").width() / 3 + 7.66)) + "px");
+                        } else {
+                            // 无数据
+                            me.noData(true);
+                        }
+                        // 每次数据加载完，必须重置
+                        me.resetload();
+                    },
+                    error: function (xhr, type) {
+                        // 锁定
+                        me.lock();
+                        // 无数据
+                        me.noData();
+                        // 即使加载出错，也得重置
+                        me.resetload();
+                    }
+                });
+            }
+        }
+    });
+   
+//function BookStoreList(Page, Size, Type,me) {
+//    $.ajax({
+//        type: 'post',
+//        url: '/Book/GetBookList',
+//        dataType: 'json',
+//        data: { Page: page, Size: size, Type: resSort },
+//        success: function (data) {
+//            if (data.Models.length > 0) {
+//                page++;
+//                var html1 = Mustache.render(template, data);
+//                if (page > data.PageCount) {
+//                    // 数据加载完
+//                    //tab1LoadEnd = true;
+//                    // 锁定
+//                    me.lock()
+//                    // 无数据
+//                    me.noData();
+//                }
+//                $('#booklist').each(function () {
+//                    var type = $(this).data("type");
+//                    if (type == itemIndex) {
+//                        $(this).append(html1).siblings().empty();
+//                    }
+//                });
+//                $("#booklist .col-xs-4").attr("style", "width:" + Math.round($("#main").width() / 3) + "px;");
+//                $("#booklist .news-img").attr("style", "height:" + Math.round(($("#main").width() / 3 + 7.66)) + "px");
+//            } else {
+//                // 无数据
+//                me.noData(true);
+//            }
+//            // 每次数据加载完，必须重置
+//            me.resetload();
+//        },
+//        error: function (xhr, type) {
+//            // 锁定
+//            me.lock();
+//            // 无数据
+//            me.noData();
+//            // 即使加载出错，也得重置
+//            me.resetload();
+//        }
+//    });
+//}
+})
+
+
+
+//模版
+//var template_booklist = "{{#Models}}<li>\
+//                    <div class='row'>\
+//                        <div class='col-xs-4'><a href='/Book/Detail?id={{id}}'><img src='{{img}}' class='news-img' alt='' /></a></div>\
+//                        <div class='col-xs-8'>\
+//                            <div class='keys-text'>\
+//                                <div class='title'><a href='/Book/Detail?id={{id}}'>{{name}}</a></div>\
+//                                <p><span>作者：</span>{{author}}</p>\
+//                                <p><span>出版时间：</span>{{date}}</p>\
+//                                <p><span>价格：</span><b>￥{{price}}</b></p>\
+//                                <p><a href='/Book/Detail?id={{id}}'>查看</a></p>\
+//                            </div>\
+//                        </div>\
+//                    </div>\
+//                </li>{{/Models}}"
+
+
+//function BookStoreList() {
+//    $.ajax({
+//        url: "/Book/GetBookList",
+//        dataType: "json",
+//        type: "post",
+//        success: function (data) {
+//            if (data != null && data.Models.length > 0) {
+//                var html = Mustache.render(template_booklist, data);
+//                $("#booklist").empty().append(html);
+//                $("#booklist .col-xs-4").attr("style", "width:" + Math.round($("#main").width() / 3) + "px;");
+//                $("#booklist .news-img").attr("style", "height:" + Math.round(($("#main").width() / 3 + 7.66)) + "px");
+//            } else {
+//                $("#booklist").empty();
+//            }
+//        }
+//    })
+//}

@@ -1,0 +1,99 @@
+
+@{
+    ViewBag.Title = "网上书城";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link href="~/Css/Online-bookstore.css" rel="stylesheet" />
+<link href="~/Css/Scroll.css" rel="stylesheet" />
+<script src="~/Scripts/dist/dropload.min.js"></script>
+<script src="~/Scripts/zepto.min.js"></script>
+<script src="~/Scripts/CommonScroll.js"></script>
+<script src="~/Scripts/bookstore.js"></script>
+<!--banner-->
+<div class="banner">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12">
+                <a href="#"><img src="~/Resource/banner.jpg" alt="" /></a>
+                <div class="indicator"><span></span><span class="ind-pre"></span><span></span></div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--图书列表-->
+<div class="book-list">
+    <div class="rank">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12 tab">@*<a href="#">默认</a><a href="#">价格<i></i></a><a href="#">点击量<i></i></a><a href="#" class="rank-pre">上架时间<i></i></a>*@</div>
+            </div>
+        </div>
+    </div>
+    <div class="book-list-con">
+        <div class="container content">
+            <ul id="booklist" data-type="0">
+                @*<li>
+                        <div class="row">
+                            <div class="col-xs-4"><a href="#"><img src="~/Resource/Temp/ShowPic-1.jpg" alt="" /></a></div>
+                            <div class="col-xs-8">
+                                <div class="keys-text">
+                                    <div class="title"><a href="#">平乐正骨基础理论</a></div>
+                                    <p><span>作者：</span>郭艳幸，孙贵香，郭珈宜</p>
+                                    <p><span>出版时间：</span>2018-12-01</p>
+                                    <p><span>价格：</span><b>￥89</b></p>
+                                    <p><a href="#">查看</a></p>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="row">
+                            <div class="col-xs-4"><a href="#"><img src="~/Resource/Temp/ShowPic-2.jpg" alt="" /></a></div>
+                            <div class="col-xs-8">
+                                <div class="keys-text">
+                                    <div class="title"><a href="#">眼科活血利水法的研究</a></div>
+                                    <p><span>作者：</span>彭清华</p>
+                                    <p><span>出版时间：</span>2019-01-01</p>
+                                    <p><span>价格：</span><b>￥138</b></p>
+                                    <p><a href="#">查看</a></p>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="row">
+                            <div class="col-xs-4"><a href="#"><img src="~/Resource/Temp/ShowPic-3.jpg" alt="" /></a></div>
+                            <div class="col-xs-8">
+                                <div class="keys-text">
+                                    <div class="title"><a href="#">平乐正骨康复药膳</a></div>
+                                    <p><span>作者：</span>杜天信，郭艳幸</p>
+                                    <p><span>出版时间：</span>2018-12-01</p>
+                                    <p><span>价格：</span><b>￥89</b></p>
+                                    <p><a href="#">查看</a></p>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="row">
+                            <div class="col-xs-4"><a href="#"><img src="~/Resource/Temp/ShowPic-4.jpg" alt="" /></a></div>
+                            <div class="col-xs-8">
+                                <div class="keys-text">
+                                    <div class="title"><a href="#">诸病源候论发微</a></div>
+                                    <p><span>作者：</span>孙理军，李翠娟</p>
+                                    <p><span>出版时间：</span>2019-01-01</p>
+                                    <p><span>价格：</span><b>￥59</b></p>
+                                    <p><a href="#">查看</a></p>
+                                </div>
+                            </div>
+                        </div>
+                    </li>*@
+            </ul>
+            <ul id="booklist" data-type="1"></ul>
+            <ul id="booklist" data-type="2"></ul>
+            <ul id="booklist" data-type="3"></ul>
+        </div>
+        <div class="go-top" onclick="javascript: pageScroll()">返回顶部</div>
+    </div>
+</div>

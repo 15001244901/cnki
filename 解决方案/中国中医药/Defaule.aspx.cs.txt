@@ -1,0 +1,245 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using System.Text;
+
+using zyy.Helper;
+using DRMS.BLL;
+using DRMS.Model;
+using CNKI.BaseFunction;
+using zyy.Model;
+using zyy.BLL;
+using System.Xml;
+
+namespace zyy
+{
+    public partial class Default : System.Web.UI.Page
+    {
+        protected string PriceService = System.Configuration.ConfigurationManager.AppSettings["PriceWCF"].ToString();
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            SetMasterVisual();
+            if (!IsPostBack)
+            {
+                BindBookByTime();
+                BindBookBySale();
+                BindBookByHit();
+                BindBookTheme();
+                BindAD();
+            }
+        }
+
+        private void SetMasterVisual()
+        {
+            this.Master.PageTitle = "中国中医药出版社-首页";
+            this.Master.strCssName = UrlHelper.Resolve("/css/indexcss.css");
+            this.Master.displayGps = 0;
+        }
+
+        /// <summary>
+        /// 绑定广告
+        /// </summary>
+        private void BindAD()
+        {
+            XmlDocument doc = new XmlDocument();
+            doc.Load(Server.MapPath("xml/ListItem.xml"));
+            XmlNode node = doc.SelectSingleNode("listitem/adpage/item[@name='首页']");
+            string type = node == null ? "" : node.Attributes["value"].Value;
+
+            StringBuilder sbBig = new StringBuilder();
+            StringBuilder sbSmall = new StringBuilder();
+
+            int count = 0;
+            AdBLL obj = new AdBLL();
+            IList<AdInfo> list = obj.GetList(" TYPE='" + type + "'", 1, 5, out count, true);
+            int i = 0;
+            if (list != null && list.Count != 0)
+            {
+                sbBig.Append("<div class='bigImg'>");
+                sbSmall.Append("<div class='num'>");
+
+                foreach (var item in list)
+                {
+                    i++;
+                    sbBig.AppendFormat("<a href={0}><img src='{1}' onload='SetImgAutoSize(this,1124,350,false)' /><p class='lxbTitle'>{2}</p></a>",
+                        item.IMGURL,
+                        Utility.GetImageUrl(item.SYS_FLD_FILEPATH, item.SYS_FLD_VITUALTAG, false),
+                        item.NAME);
+
+                    sbSmall.AppendFormat("<a href='javascript:;'></a>", i);
+                }
+
+                sbBig.Append("</div>");
+                sbSmall.Append("</div>");
+            }
+
+            this.ltlAd.Text = sbBig.ToString() + sbSmall.ToString();
+        }
+
+        /// <summary>
+        /// 新书快讯
+        /// </summary>
+        private void BindBookByTime()
+        {
+            StringBuilder str = new StringBuilder();
+            Book bll = new Book();
+            int count = 0;
+            string sql = "ISONLINE=1 order by SYS_FLD_CHECK_DATE desc";
+            IList<BookInfo> list = bll.GetList(sql, 1, 6, out count, true);
+            if (list != null && list.Count > 0)
+            {
+                string dois = "";
+                list.ToList().ForEach(x =>
+                {
+                    str.AppendFormat("<li><a href=\"{0}\" target=\"_blank\"><img src=\"{1}\" /></a>"
+                        , UrlHelper.Resolve("/page/BookDetail.aspx?doi=" + x.SYS_FLD_DOI)
+                        , UrlHelper.Resolve("/page/ShowPic.aspx?vpath=" + x.SYS_FLD_VIRTUALPATHTAG + "&path=" + x.SYS_FLD_COVERPATH + "&ptype=0"));
+                    str.AppendFormat("<p><a href=\"{0}\" target=\"_blank\">{1}</a> 作者：{2}<br /><span name='podPrice'>￥---</span></p></li>"
+                        , UrlHelper.Resolve("/page/BookDetail.aspx?doi=" + x.SYS_FLD_DOI)
+                        , NormalFunction.SubString(x.Name, 9, ""), x.Author);
+                    dois += NormalFunction.ResetRedFlag(x.SYS_FLD_DOI) + ";";
+                }
+                );
+                dois = dois.TrimEnd(';');
+                hid_dois.Value = dois;
+            }
+            this.bookbytime.Text = str.ToString();
+        }
+        /// <summary>
+        /// 畅销排行(按点击率排序SYS_FLD_HITCOUNT)
+        /// </summary>
+        private void BindBookBySale()
+        {
+            //List<BookTopSale> list = Util.GetTopSaleByCategory(DataBaseType.BOOKTDATA, 6, 1, null, null);
+            Book book = new Book();
+            string sql = "ORDER BY SYS_FLD_HITCOUNT DESC";
+            int recordcount = 0;
+            var list = book.GetList(sql, 1, 6, out recordcount, true);
+            StringBuilder str = new StringBuilder();
+            if (list != null && list.Count > 0)
+            {
+                #region 注释
+                //string doi = x.Doi;
+                //string name = x.Name;
+                //string price = x.Price;
+                //string discount = x.Discount;
+                //string discountRate = x.DiscountRate;
+                //decimal dprice, ddiscount;
+                //string discountprice = price;
+                //if (Decimal.TryParse(price.Trim(), out dprice) && Decimal.TryParse(discount.Trim(), out ddiscount))
+                //{
+                //    price = Math.Round(dprice, 1).ToString();
+                //    discountprice = Math.Round(dprice * ddiscount, 1).ToString();
+                //}
+                #endregion
+                foreach (var obj in list)
+                {
+                    //string vpath = "", path = "", author = "",discountprice="",doi="";
+                    //Book bll = new Book();
+                    //BookInfo obj = bll.GetItem(doi);                                         
+                    str.AppendFormat("<li><a href=\"{0}\" target=\"_blank\"><img src=\"{1}\" /></a>"
+                        , UrlHelper.Resolve("/page/BookDetail.aspx?doi=" + obj.SYS_FLD_DOI)
+                        , UrlHelper.Resolve("/page/ShowPic.aspx?vpath=" + obj.SYS_FLD_VIRTUALPATHTAG + "&path=" + obj.SYS_FLD_COVERPATH + "&ptype=0"));
+                    str.AppendFormat("<p><a href=\"{0}\" target=\"_blank\">{1}</a> 作者：{2}<br /><span name='podPrice'>￥{3}</span></p></li>"
+                        , UrlHelper.Resolve("/page/BookDetail.aspx?doi=" + obj.SYS_FLD_DOI)
+                        , NormalFunction.SubString(obj.Name, 9, ""), obj.Author, obj.Price);
+
+                }
+            }
+            else
+            {
+                str.Append("<p style=\"text-align:center;\">无销售记录</p>");
+            }
+            this.bookbysale.Text = str.ToString();
+        }
+        /// <summary>
+        /// 关注排行榜
+        /// </summary
+        private void BindBookByHit()
+        {
+            StringBuilder str = new StringBuilder();
+            Book bll = new Book();
+            int count = 0;
+            //string sql = "ISONLINE=1 order by SYS_FLD_HITCOUNT desc";
+            string sql = "  ISONLINE=1 ORDER BY  SYS_FLD_ADDDATE DESC";
+            IList<BookInfo> list = bll.GetList(sql, 1, 16, out count, true);
+            if (list != null && list.Count > 0)
+            {
+                str.Append("<ul class=\"ph1\">");
+                list.Take(4).ToList().ForEach(x =>
+                {
+                    str.AppendFormat("<li><span style='{3}'>{2}</span><a href=\"{0}\" target=\"_blank\">{1}</a></li>"
+                        , UrlHelper.Resolve("/page/BookDetail.aspx?doi=" + x.SYS_FLD_DOI), x.Name
+                        , list.IndexOf(x) + 1, list.IndexOf(x) == 0 ? "background: #9c2f41" : "");
+                });
+                str.Append("</ul>");
+                str.Append("<ul class=\"ph2\">");
+                list.Skip(4).Take(4).ToList().ForEach(x => str.AppendFormat("<li><span style='{3}'>{2}</span><a href=\"{0}\" target=\"_blank\">{1}</a></li>"
+                    , UrlHelper.Resolve("/page/BookDetail.aspx?doi=" + x.SYS_FLD_DOI), x.Name, list.IndexOf(x) + 1, list.IndexOf(x) == 0 ? "background: #9c2f41" : ""));
+                str.Append("</ul>");
+                str.Append("<ul class=\"ph3\">");
+                list.Skip(8).Take(4).ToList().ForEach(x => str.AppendFormat("<li><span style='{3}'>{2}</span><a href=\"{0}\" target=\"_blank\">{1}</a></li>"
+                    , UrlHelper.Resolve("/page/BookDetail.aspx?doi=" + x.SYS_FLD_DOI), x.Name, list.IndexOf(x) + 1, list.IndexOf(x) == 0 ? "background: #9c2f41" : ""));
+                str.Append("</ul>");
+                str.Append("<ul class=\"ph4\">");
+                list.Skip(12).Take(4).ToList().ForEach(x => str.AppendFormat("<li><span style='{3}'>{2}</span><a href=\"{0}\" target=\"_blank\">{1}</a></li>"
+                    , UrlHelper.Resolve("/page/BookDetail.aspx?doi=" + x.SYS_FLD_DOI), x.Name, list.IndexOf(x) + 1, list.IndexOf(x) == 0 ? "background: #9c2f41" : ""));
+                str.Append("</ul>");
+            }
+            this.bookbyhit.Text = str.ToString();
+        }
+        /// <summary>
+        /// 图书分类
+        /// </summary
+        private void BindBookTheme()
+        {
+            Theme bll = new Theme();
+            IList<ThemeInfo> list = bll.GetRootThemes();
+            StringBuilder str = new StringBuilder();
+            if (list != null && list.Count > 0)
+            {
+                str.AppendFormat("<div class=\"fl_left\">");
+                list.Take(4).ToList().ForEach(x =>
+                {
+                    str.AppendFormat("<p style=\"background: url(../image/fldot{0}.png) 4px 5px no-repeat\">", list.IndexOf(x) + 1);
+                    //str.AppendFormat("<strong>{0}</strong>", x.ThemeName);
+                    str.AppendFormat("<strong><a href=\"{1}\" target=\"_blank\">·{0}</a></strong>", x.ThemeName
+                           , UrlHelper.Resolve("/page/BookList.aspx?themeid=" + x.ID + "*"));
+                    IList<ThemeInfo> cdlist = bll.GetSubThemes(x.ID);
+                    if (cdlist != null && cdlist.Count > 0)
+                    {
+                        cdlist.ToList().ForEach(n => str.AppendFormat("<a href=\"{1}\" target=\"_blank\">·{0}</a>", n.ThemeName
+                            , UrlHelper.Resolve("/page/BookList.aspx?themeid=" + n.ID + "*")));
+                    }
+                    str.AppendFormat("</p>");
+                });
+                str.AppendFormat("</div>");
+                str.AppendFormat(" <div class=\"rf_fenlei\">");
+                list.Skip(4).Take(2).ToList().ForEach(x =>
+                {
+                    str.AppendFormat("<p class=\"part{0}\">", list.IndexOf(x) - 3);
+                    //str.AppendFormat("<strong>{0}</strong>", x.ThemeName);
+                    str.AppendFormat("<strong><a href=\"{1}\" target=\"_blank\">·{0}</a></strong>", x.ThemeName
+                          , UrlHelper.Resolve("/page/BookList.aspx?themeid=" + x.ID + "*"));
+                    IList<ThemeInfo> cdlist = bll.GetSubThemes(x.ID);
+                    if (cdlist != null && cdlist.Count > 0)
+                    {
+                        cdlist.ToList().ForEach(n => str.AppendFormat("<a href=\"{1}\" target=\"_blank\">·{0}</a>", n.ThemeName
+                            , UrlHelper.Resolve("/page/BookList.aspx?themeid=" + n.ID + "*")));
+                    }
+                    str.AppendFormat("</p>");
+                });
+                str.AppendFormat("<p class=\"part3\">");
+                list.Skip(6).ToList().ForEach(x => str.AppendFormat("<a href=\"{1}\" target=\"_blank\">·{0}</a>", x.ThemeName
+                     , UrlHelper.Resolve("/page/BookList.aspx?themeid=" + x.ID + "*")));
+                str.AppendFormat("</p>");
+                str.AppendFormat("</div>");
+            }
+            this.bookbytheme.Text = str.ToString();
+        }
+
+    }
+}

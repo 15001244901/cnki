@@ -1,0 +1,466 @@
+@using Webdiyer.WebControls.Mvc;
+@using Web.Utility;
+@model PagedList<KPIC.Model.ResourceInfo>
+@{
+    ViewBag.Title = "List";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    //var ResourceInfo = ViewBag.ResourceInfo as KPIC.Model.ResourceInfo;
+}
+<style type="text/css">
+    .dropdown-menu {
+        min-width: 97px !important;
+    }
+
+        .dropdown-menu li > a {
+            padding: 7px 0 6px 0px;
+        }
+
+    .add-file {
+        margin-top: 20px;
+    }
+
+    .btn-success {
+        padding: 10px;
+        cursor: pointer;
+    }
+
+    .bar {
+        height: 14px;
+        background: green;
+        margin: 10px 0px;
+        text-align: center;
+        color: white;
+    }
+
+    dd .btn-success {
+        cursor: pointer;
+        margin-left: 0px;
+        background: none;
+        background-color: #5cb85c;
+        padding: 8px 12px;
+        display: inline-block;
+        border-radius: 3px;
+        color: white;
+    }
+
+    input[type="file"] {
+        position: absolute;
+        top: 0;
+        right: 0;
+        margin: 0;
+        opacity: 0;
+        -ms-filter: 'alpha(opacity=0)';
+        font-size: 200px !important;
+        direction: ltr;
+        cursor: pointer;
+        display: none;
+    }
+
+    .glyphicon {
+        position: relative;
+        top: 1px;
+        display: inline-block;
+        font-family: 'Glyphicons Halflings';
+        font-style: normal;
+        font-weight: 400;
+        line-height: 1;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+
+    td i {
+        margin-right: 5px;
+        color: #0d638f;
+    }
+
+    .table td {
+        vertical-align: middle !important;
+    }
+
+    .operatestyle li {
+        padding: 0 5px;
+    }
+</style>
+@section PageNavigation{
+    <h3 class="page-title">
+        资源列表
+    </h3>
+    <ul class="breadcrumb">
+        <li>
+            <i class="icon-home"></i>
+            <a href="@Url.Action(" Index", "Home" )">Home</a>
+            <i class="icon-angle-right"></i>
+        </li>
+        <li>
+            <a href="#">资源</a>
+            <i class="icon-angle-right"></i>
+        </li>
+        <li>
+            <a href="#">资源列表</a>
+        </li>
+    </ul>
+}
+<div class="row-fluid">
+    <div class="span12">
+        @using (Html.BeginForm("List", "Resource", FormMethod.Get, new { @class = "form-search", @id = "SourceList" }))
+            {
+            <div class="btn-group" style="margin-bottom:20px;">
+                <button type="button" class="btn blue dropdown-toggle" data-toggle="dropdown">
+                    <i class="fa fa-plus-square"></i>
+                    添加资源
+                </button>
+                <ul class="dropdown-menu">
+                    <li>
+                        <a data-action="add-source" href="javascript:;">
+                            <i class="fa fa-database"></i>
+                            添加资源
+                        </a>
+                        <a data-action="add-link" href="javascript:;">
+                            <i class="fa fa-link"></i>
+                            添加链接
+                        </a>
+                        <a data-action="add-word" href="javascript:;">
+                            <i class="fa fa-file-word-o"></i>
+                            添加富媒体
+                        </a>
+                    </li>
+                </ul>
+                <a class="btn green" data-action="add-file" href="javascript:;">
+                    <i class="fa fa-file"></i>
+                    创建文件夹
+                </a>
+                <a class="btn yellow" data-action="add-batch" href="javascript:;">
+                    <i class="fa fa-database"></i>
+                    批量上传
+                </a>
+            </div>
+            <div class="portlet box red">
+                <div class="portlet-title">
+                    <div class="caption">
+                        <i class="icon-globe"></i>
+                        资源列表
+                    </div>
+                    <div class="tools">
+                        <a class="collapse" href="javascript:;"></a>
+                        <a class="reload" href="javascript:;"></a>
+                    </div>
+                </div>
+                <div class="portlet-body">
+                    <div id="sample_1_wrapper" class="dataTables_wrapper form-inline" role="grid">
+                        <div class="row-fluid">
+                            @if (Model != null && Model.Count > 0)
+                            {
+                                <div class="span2">
+                                    <label>
+                                        每页
+                                        @Html.DropDownList("Size", new[] {
+                                    new SelectListItem(){ Value = "5",Text = "5",Selected = Model.PageSize == 5},
+                                    new SelectListItem(){ Value = "10",Text = "10",Selected = Model.PageSize == 10},
+                                    new SelectListItem(){ Value = "20",Text = "20",Selected = Model.PageSize == 20}
+                                    }, new { @class = "form-control input-inline" })
+                                        条数据
+                                    </label>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="span2">
+                                    <label>
+                                        每页
+                                        <select name="Size" class="form-control input-inline">
+                                            <option>5</option>
+                                            <option>10</option>
+                                            <option>20</option>
+                                        </select>
+                                        条数据
+                                    </label>
+                                </div>
+                            }
+                            <div class="span4">
+                                <label class="pull-right">
+                                    检索：
+                                    <input type="search" name="Keyword" value="@Request.QueryString[" Keyword"]" class="form-control input-inline" />
+                                    <button type="submit" class="btn input-inline"><i class="icon icon-search"></i></button>
+                                </label>
+                            </div>
+                            <div class="span4">
+                                <label>
+                                    类型：
+                                    <select class="form-control input-inline" id="ResourceType" name="ResourceType"></select>
+                                </label>
+                            </div>
+                            <div class="span2">
+                                <div class="btn-group pull-right">
+                                    <button type="button" class="btn blue dropdown-toggle" data-toggle="dropdown">
+                                        <i class="fa fa-gear"></i>
+                                        批量操作
+                                    </button>
+                                    <ul class="dropdown-menu pull-right">
+                                        <li>
+                                            <a data-action="group-delete" href="javascript:;">
+                                                <i class="fa fa-remove"></i>
+                                                批量删除
+                                            </a>
+                                            <a data-action="group-delete" href="javascript:;">
+                                                <i class="fa fa-move"></i>
+                                                移动
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="table-scrollable">
+                            <table class="table table-bordered table-hover table-striped">
+                                <thead>
+                                    <tr>
+                                        <th width="3%">
+                                            <input type="checkbox" data-action="group-checkable" data-set=".table-checkbox" />
+                                        </th>
+                                        <th width="25%">资源名称</th>
+                                        <th width="11%">类型</th>
+                                        <th width="20%">创建时间</th>
+                                        <th width="11%">大小</th>
+                                        <th width="15%">操作</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @if (Model != null && Model.Count > 0)
+                                    {
+                                        foreach (var p in Model)
+                                        {
+                                            <tr>
+                                                <td><input type="checkbox" data-id="@p.ID" data-status="" class="table-checkbox" value="@p.ID" /></td>
+                                                @if (p.SOURCETYPE == 6)
+                                                {
+                                                    <td>
+                                                        <i class="fa fa-@Utility.GetFilePicture(p.SOURCETYPE)"></i><a href="javascript:;" data-action="show-img" title="@Utility.RemoveRed(p.SOURCENAME)" data-id="@p.ID" data-name="@Utility.RemoveRed(p.SOURCENAME)">
+                                                            @Html.Raw(Utility.ReplaceRed(p.SOURCENAME))
+                                                            <input type="hidden" value="@p.SOURCEPATH">
+                                                        </a>
+                                                    </td>
+                                                }
+                                                else if (p.SOURCETYPE == 7)
+                                                {
+                                                    <td><i class="fa fa-@Utility.GetFilePicture(p.SOURCETYPE)"></i><a href="@p.SOURCRURL" title="@Utility.RemoveRed(p.SOURCENAME)" target="_blank">@Html.Raw(Utility.ReplaceRed(p.SOURCENAME))</a></td>
+                                                }
+                                                else if (p.SOURCETYPE == 8 || p.SOURCETYPE == 1 || p.SOURCETYPE == 2)
+                                                {
+                                                    <td>
+                                                        <i class="fa fa-@Utility.GetFilePicture(p.SOURCETYPE)"></i>
+                                                        <a href="javascript:;" data-action="show-resource" data-name="@Utility.RemoveRed(p.SOURCENAME)" data-url="@Utility.GetReturnUrl(p.SOURCETYPE, p.ID)" title="@Utility.RemoveRed(p.SOURCENAME)">@Html.Raw(Utility.ReplaceRed(p.SOURCENAME))</a>
+                                                    </td>
+                                                }
+                                                else if (p.SOURCETYPE == 5)
+                                                {
+                                                    <td><i class="fa fa-@Utility.GetFilePicture(p.SOURCETYPE)"></i><a href="/admin/FileResource/PDFObject?doi=@p.ID" title="@Utility.RemoveRed(p.SOURCENAME)" target="_blank">@Html.Raw(Utility.ReplaceRed(p.SOURCENAME))</a></td>
+                                                }
+                                                else
+                                                {
+                                                    <td>
+                                                        <i class="fa fa-@Utility.GetFilePicture(p.SOURCETYPE)"></i>
+                                                        <a href="@Utility.GetReturnUrl(p.SOURCETYPE,p.ID)" title="@Utility.RemoveRed(p.SOURCENAME)">@Html.Raw(Utility.ReplaceRed(p.SOURCENAME))</a>
+                                                    </td>
+                                                }
+                                                <td>@Html.Raw(Utility.GetSourceTypeName(p.SOURCETYPE))</td>
+                                                <td>@Html.Raw(p.ADDTIME)</td>
+                                                <td>@Utility.GetSourceSize(p.SOURCETYPE, p.SOURCESIZE)</td>
+                                                <td>
+                                                    <ul class="operatestyle">
+                                                        <li>
+                                                            <a title="编辑" href="javascript:;" class="fa" data-action="edit" data-id="@p.ID" data-name="@Utility.RemoveRed(p.SOURCENAME)" data-type="@p.SOURCETYPE">
+                                                                编辑<input type="hidden" name="hid_url" value="@p.SOURCRURL" />
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a title="删除" href="javascript:;" class="fa" data-action="delete" data-id="@p.ID">删除</a>
+                                                        </li>
+                                                        <li>
+                                                            <a title="移动" href="javascript:;" class="fa" data-action="move" data-id="@p.ID">移动</a>
+                                                        </li>
+                                                    </ul>
+                                                </td>
+                                            </tr>
+                                        }
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                        @if (Model != null && Model.Count > 0)
+                        {
+                            <div class="row-fluid">
+                                <div class="span5">
+                                    <div class="dataTables_info">
+                                        共查询到 <span>@Model.TotalItemCount</span> 条记录，每页 <span id="PageSizeIndex">@Model.PageSize</span> 条，当前显示第 <span>@Model.CurrentPageIndex</span> 页，共 <span>@Model.TotalPageCount</span> 页
+                                    </div>
+                                </div>
+                                <div class="span7">
+                                    @Html.Pager(Model, new PagerOptions
+                           {
+                               ActionName = "List",
+                               ControllerName = "Resource",
+                               AlwaysShowFirstLastPageNumber = true,
+                               CssClass = "dataTables_paginate paging_bootstrap_full_number",
+                               PageIndexParameterName = "page",
+                               CurrentPagerItemTemplate = "<span style='color:gray'>{0}</span>&nbsp;&nbsp;",
+                               DisabledPagerItemTemplate = "<span style='color:gray'>{0}</span>&nbsp;&nbsp;",
+                               PagerItemTemplate = "<a>{0}</a>&nbsp;&nbsp;",
+                               InvalidPageIndexErrorMessage = "页索引不是有效的数值",
+                               FirstPageText = "首页",
+                               PrevPageText = "上一页",
+                               NextPageText = "下一页",
+                               LastPageText = "末页",
+                               AutoHide = false
+                           })
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+<input type="hidden" name="1" class="hidResourceType" value="@Request.QueryString[" ResourceType"]" />
+
+<form id="source">
+    @*文件夹*@
+    <div id="addFileSource" style="display:none;" class="form-horizontal">
+        <div class="control-group add-file">
+            <div class="control-group">
+                <label class="control-label">文件夹名称：</label>
+                <div class="controls">
+                    <input class="m-wrap error" id="fName" name="fileName" type="text" value="">
+                </div>
+            </div>
+        </div>
+    </div>
+    @*链接*@
+    <div id="addLinkSource" style="display:none;" class="form-horizontal">
+        <div class="control-group add-file">
+            <div class="control-group">
+                <label class="control-label">链接名称：</label>
+                <div class="controls">
+                    <input class="m-wrap error" id="lName" name="linkName" type="text" value="">
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">链接地址：</label>
+                <div class="controls">
+                    <input class="m-wrap error" id="lUrl" name="linkUrl" type="text" value="">
+                </div>
+            </div>
+        </div>
+    </div>
+    @*富文本编辑器*@
+    <div id="addUeditorSource" style="display:none;" class="form-horizontal">
+        <div class="control-group add-file">
+            <label class="control-label">图文名称：</label>
+            <div class="controls">
+                <input class="m-wrap error" id="editorName" name="editorName" type="text" value="">
+            </div>
+        </div>
+        <div class="control-group add-file" id="div_content">
+            <div id="NewsContentID" class="span9 m-wrap">
+                <script id="NewsContent" name="Content" type="text/plain" style="width:900px;height:400px;">
+                </script>
+            </div>
+        </div>
+    </div>
+    @*附件*@
+    <div id="addSource" style="display:none;" class="form-horizontal">
+        <div class="control-group add-file">
+            <label class="control-label">文件名称：</label>
+            <div class="controls">
+                <input class="m-wrap" id="sourceName" name="sourceName" type="text" value="">
+            </div>
+        </div>
+        <div class="control-group add-file">
+            <span class="btn-success fileinput-button controls" id="textfield" onclick="javascript:openBrowse();">
+                <i class="glyphicon glyphicon-plus"></i>
+                <span>添加文件...</span>
+                <input type="file" id="fileupload" name="image" multiple="" onchange="GetTimeSize()">
+            </span>
+            <div id="progress" style="padding-left:180px;">
+                <div class="bar" style="width: 0%;"></div>
+            </div>
+        </div>
+        <div class="control-group add-file">
+            <label class="control-label">文件描述：</label>
+            <div class="controls">
+                <textarea class="m-wrap" id="digest" name="digest" rows="6" style="width:80%;"></textarea>
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label"></label>
+            <div class="controls img-con" style="display:none;">
+                <img id="images" src="" style="width:285px;height:161px;" />
+            </div>
+            <div class="controls name-con" style="display:none;">
+                <span name="fileName" id="sName"></span>
+            </div>
+        </div>
+        <input type="hidden" name="sourcePath" id="hid_sourcePath" value="">
+        <input type="hidden" name="sourceType" id="hid_sourceType" value="">
+        <input type="hidden" id="hid_sourceSize" value="">
+        <input type="hidden" id="hid_url" value="">
+        <input type="hidden" id="hid_timeSize" value="">
+        <input type="hidden" id="hid_videoImg" value="">
+    </div>
+    @*展示图片*@
+    <div id="sourceImg" style="display:none;" class="form-horizontal">
+        <div class="control-group">
+            <img src="#" id="tpic" style="width:auto;height:400px;" />
+            <p id="realname" style="line-height:24px;text-align:center;font-weight:600;"></p>
+        </div>
+    </div>
+    <input type="reset" name="reset" style="display: none;" />
+</form>
+@*<input type="hidden" id="pid" value="@ResourceInfo.ID" />*@
+@section scripts{
+    <script src="~/Scripts/Lib/ueditor1.4.3/ueditor.config.js"></script>
+    <script src="~/Scripts/Lib/ueditor1.4.3/ueditor.all.js"></script>
+    <script src="~/Scripts/Lib/ueditor1.4.3/lang/zh-cn/zh-cn.js"></script>
+    <script src="~/Scripts/Lib/jqfile-upload/js/vendor/jquery.ui.widget.js"></script>
+    <script src="~/Scripts/Lib/jqfile-upload/js/jquery.iframe-transport.js"></script>
+    <script src="~/Scripts/Lib/jqfile-upload/js/jquery.fileupload.js"></script>
+    <script src="~/Scripts/Lib/layer/layer.js"></script>
+    <script src="~/Areas/Admin/Scripts/Resource.js"></script>
+    @*<script src="~/Areas/Admin/Scripts/AddBatchResource.js"></script>*@
+    <script>
+        $(function () {
+            $('#Size').on('change', function () {
+                var size = $(this).val();
+                location.href = '?Size=' + size + '';
+            });
+            //第一级导航栏选中
+            $(".page-sidebar-menu>li:eq(2)").addClass("open active").siblings().removeClass("active");
+            //子列表显示
+            $(".page-sidebar-menu>li:eq(2)>ul").show();
+            //子列表 li选中
+            $(".page-sidebar-menu>li:eq(2)>ul>li:eq(0)").addClass("active");
+            //获取资源类型
+            $.ajax({
+                url: 'GetResourceType',
+                async: false,
+                success: function (data) {
+                    var html = [];
+                    var branch = $('.hidResourceType').val();
+                    html.push('<option value="">-请选择类型-</option>');
+                    $.each(data, function (i, item) {
+                        if (branch && branch == i) {
+                            html.push('<option value="' + i + '" selected>' + item + '</option>');
+                        } else {
+                            html.push('<option value="' + i + '" >' + item + '</option>');
+                        }
+                    });
+                    $('#ResourceType').html(html.join(''));
+                }
+            });
+            //资源类型切换
+            $('#ResourceType').on('change', function () {
+                $('#SourceList').submit();
+            });
+        });
+    </script>
+}

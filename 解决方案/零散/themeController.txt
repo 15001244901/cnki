@@ -1,0 +1,576 @@
+using DRMS.BLL;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.Mvc;
+using Tool = CNKI.BaseFunction;
+using DRMS.Model;
+using System.Text;
+using OFFICALWEB.Areas.Admin.Command;
+
+namespace OFFICALWEB.Areas.Admin.Controllers
+{
+    [SysAuthorize]
+    public class ThemeController : Controller
+    {
+        private Theme _theme = new Theme();
+        protected string ThemeTitle { get; set; }
+        protected string nodeIDs { get; set; }
+        //
+        // GET: /Admin/Theme/
+        public ActionResult Index()
+        {
+            nodeIDs = Tool.NormalFunction.GetQueryString("nodeIDs", "");
+            ViewBag.nodeIDs = nodeIDs;
+            return View();
+        }
+        /// <summary>
+        /// json Theme数据
+        /// </summary>
+        /// <param name="LnodeIDs"></param>
+        /// <returns></returns>
+        public string BindTheme(string LnodeIDs)
+        {
+            string opentree = "";
+            if (LnodeIDs != null)
+            {
+                opentree = Getopentree(LnodeIDs);
+            }
+            Theme bll = new Theme();
+            int allCount = 0;
+            IList<ThemeInfo> list = bll.GetList(" ORDER BY ORDERNUM", 1, 1000, out allCount, true);
+            if (allCount > 1000)
+            {
+                list = bll.GetList("", 1, allCount, out allCount, true);
+            }
+
+            StringBuilder sb = new StringBuilder();
+            sb.Append("[");
+            if (list != null && list.Count > 0)
+            {
+                foreach (ThemeInfo info in list)
+                {
+                    string id = info.ID;
+                    string pID = info.ParentID;
+                    string name = CNKI.BaseFunction.NormalFunction.SubString(info.ThemeName, 12, "...");
+                    ThemeTitle = info.ThemeName;
+                    sb.Append("{");
+                    sb.Append("id:\"" + id + "\",");
+                    sb.Append("pId:\"" + pID + "\",");
+
+                    //if (!string.IsNullOrEmpty(info.ZTCode))
+                    //{
+                    //    sb.AppendFormat("name:\"{0}({1})\"",name,info.ZTCode);
+                    //}
+                    //else
+                    //{
+                    //    sb.Append("name:\"" + name + "\"");
+                    //}
+
+                    sb.Append("name:\"" + name + "\",");
+                    if (opentree.Contains(id))
+                    {
+                        sb.Append("open:true");
+                    }
+                    sb.Append("},");
+                }
+            }
+            //绑定所有数据
+            sb.Append("{id:\"0\",pId:\"0\",name:\"所有资源\",open:true}");
+            sb.Append("]");
+            return sb.ToString();
+        }
+        /// <summary>
+        /// 图片分类
+        /// </summary>
+        /// <returns></returns>
+        public string BindThemepic(string LnodeIDs)
+        {
+            string opentree = "";
+            if (LnodeIDs != null)
+            {
+                opentree = Getopentree(LnodeIDs);
+            }
+            Theme bll = new Theme();
+            int allCount = 0;
+            IList<ThemeInfo> list = bll.GetList("  ID='2.*'  ORDER BY ORDERNUM", 1, 1000, out allCount, true);
+            if (allCount > 1000)
+            {
+                list = bll.GetList("", 1, allCount, out allCount, true);
+            }
+
+            StringBuilder sb = new StringBuilder();
+            sb.Append("[");
+            if (list != null && list.Count > 0)
+            {
+                foreach (ThemeInfo info in list)
+                {
+                    string id = info.ID;
+                    string pID = info.ParentID;
+                    string name = CNKI.BaseFunction.NormalFunction.SubString(info.ThemeName, 12, "...");
+                    ThemeTitle = info.ThemeName;
+                    sb.Append("{");
+                    sb.Append("id:\"" + id + "\",");
+                    sb.Append("pId:\"" + pID + "\",");
+
+                    //if (!string.IsNullOrEmpty(info.ZTCode))
+                    //{
+                    //    sb.AppendFormat("name:\"{0}({1})\"",name,info.ZTCode);
+                    //}
+                    //else
+                    //{
+                    //    sb.Append("name:\"" + name + "\"");
+                    //}
+
+                    sb.Append("name:\"" + name + "\",");
+                    if (opentree.Contains(id) || pID == "0")
+                    {
+                        sb.Append("open:true,");                       
+                    }
+                    if (id==LnodeIDs)
+                    {
+                        sb.Append("checked:true,");
+                    }
+                    sb.Append("},");
+                }
+            }
+            //绑定所有数据
+            //sb.Append("{id:\"0\",pId:\"0\",name:\"所有资源\",open:true}");
+            sb.Append("]");
+            return sb.ToString();
+        }
+
+        /// <summary>
+        /// 新闻分类
+        /// </summary>
+        /// <returns></returns>
+        public string BindThemeNews(string LnodeIDs)
+        {
+            string opentree = "";            
+            if (LnodeIDs != null)
+            {
+                string[] lnodeids = LnodeIDs.Split(new string[]{";"},StringSplitOptions.RemoveEmptyEntries);
+                if (lnodeids != null && lnodeids.Count() > 0)
+                {
+                    for (int i = 0; i < lnodeids.Length; i++)
+                    {
+                        opentree += Getopentree(lnodeids[i]) + ";";
+                    }
+                }
+            }
+            Theme bll = new Theme();
+            int allCount = 0;
+            IList<ThemeInfo> list = bll.GetList("  ORDER BY ORDERNUM", 1, 1000, out allCount, true);
+            if (allCount > 1000)
+            {
+                list = bll.GetList("", 1, allCount, out allCount, true);
+            }
+
+            StringBuilder sb = new StringBuilder();
+            sb.Append("[");
+            if (list != null && list.Count > 0)
+            {
+                foreach (ThemeInfo info in list)
+                {
+                    string id = info.ID;
+                    string pID = info.ParentID;
+                    string name = CNKI.BaseFunction.NormalFunction.SubString(info.ThemeName, 12, "...");
+                    ThemeTitle = info.ThemeName;
+                    sb.Append("{");
+                    sb.Append("id:\"" + id + "\",");
+                    sb.Append("pId:\"" + pID + "\",");
+
+                    //if (!string.IsNullOrEmpty(info.ZTCode))
+                    //{
+                    //    sb.AppendFormat("name:\"{0}({1})\"",name,info.ZTCode);
+                    //}
+                    //else
+                    //{
+                    //    sb.Append("name:\"" + name + "\"");
+                    //}
+
+                    sb.Append("name:\"" + name + "\",");
+                    if (opentree.Contains(id) || pID == "0")
+                    {
+                        sb.Append("open:true,");
+                    }
+                    if (IsCheck(id.Replace(";", ""), LnodeIDs))
+                    {
+                        sb.Append("checked:true,");
+                    }
+                    sb.Append("},");
+                }
+            }
+            //绑定所有数据
+            //sb.Append("{id:\"0\",pId:\"0\",name:\"所有资源\",open:true}");
+            sb.Append("]");
+            return sb.ToString();
+        }
+        /// <summary>
+        /// 获取子节点到父节点的所以OPEN 状态
+        /// </summary>
+        /// <param name="nodeid"></param>
+        /// <returns></returns>
+        protected string Getopentree(string nodeid)
+        {
+            string sb = "";
+            ThemeInfo info = new Theme().GetItem(nodeid);
+            if (info != null)
+            {
+                sb += info.ParentID;
+                sb += Getopentree(info.ParentID)+";";
+            }
+            return sb;
+        }
+
+        /// <summary>
+        /// 删除操作
+        /// </summary>
+        /// <param name="resDoi"></param>
+        /// <returns></returns>
+        public string DelTheme(string resDoi)
+        {
+            //string message;
+            int recordCount = 0;
+            bool result = true;
+            string[] Id = resDoi.Split(new string[] { "," }, StringSplitOptions.RemoveEmptyEntries);
+
+
+            Theme theme = new Theme();
+            Book bookInfo = new Book();
+            
+            string parentId = theme.GetItem(Id[0]).ParentID;//父级id
+
+            foreach (string item in Id)//删除目录id
+            {
+                var bookList=bookInfo.GetList("SYS_FLD_CLASSFICATION='" + item+ "'  and ISONLINE='1'+'2'  order by ISSUEDATE DESC", 10, 1000, out recordCount,true);//删除目录下的图书
+                if (bookList != null && bookList.Count > 0)
+                {
+                    foreach (var book in bookList)//删除目录下的书
+                    {
+
+                        if (parentId.Length == 2)//删除的是一级目录
+                        {
+                            Book bookInfo2 = new Book();
+                            Theme theme2 = new Theme();
+                            int record = 0;
+                            book.SYS_FLD_CLASSFICATION =null;//该目录下的书CLASSFICATION为null
+                            var threeTheme=theme2.GetList("PARENTID='" + item + " ORDER BY ORDERNUM DESC", 10, 1000, out record, true);//该目录下的子目录集合
+                            if (threeTheme != null)
+                            {
+                                foreach (var three in threeTheme)
+                                {
+                                    int count = 0;
+                                    var bookThreeList = bookInfo2.GetList("SYS_FLD_CLASSFICATION='" + three.ID + "'  and ISONLINE='1'+'2'  order by ISSUEDATE DESC", 10, 1000, out count, true);//子目录下的图书
+                                    foreach (var bookThree in bookThreeList)
+                                    {
+                                        bookThree.SYS_FLD_CLASSFICATION = null;
+                                        bookInfo2.Update(bookThree);
+                                    }
+                                }
+                            }
+
+                        }
+                        else
+                        {
+
+                        book.SYS_FLD_CLASSFICATION = parentId;
+                        }
+                        bookInfo.Update(book);
+                    }
+                }
+                
+                result = result && _theme.Delete(item);
+            }
+            if (result == true)
+            {
+                IList<ThemeInfo> list = theme.GetSubThemes(parentId);
+                if (list != null && list.Count > 0)
+                {
+                    //说明此父节点还有子节点
+                }
+                else
+                {
+                    //删除当前后，父节点就没有子节点了。
+                    ThemeInfo ti = theme.GetItem(parentId);
+                    if (ti != null)
+                    {
+                        ti.HASCHILD = 0;
+                        theme.Update(ti);
+                    }
+                }
+
+                return "true";
+
+            }
+            else
+            {
+                return "false";
+            }
+        }
+
+        /// <summary>
+        /// 添加/更新视图
+        /// </summary>
+        /// <param name="shtml"></param>
+        /// <param name="doi"></param>
+        /// <returns></returns>
+        public ActionResult AdminThemeAdd(string shtml,string doi)
+        {
+            string editType = shtml;
+            string resID = Request["doi"];
+            nodeIDs = doi;
+            ThemeInfo theme=new ThemeInfo();
+            if (editType == "update")
+            {
+                theme = _theme.GetItem(resID);
+            }
+            else
+            {                
+                int count = 0;
+                IList<ThemeInfo> list = _theme.GetList("  PARENTID = \'" + resID + "\' ORDER BY ORDERNUM DESC  ", 1, 100, out count);
+                if (list == null || list.Count == 0)
+                {
+                    theme.Ordernum = "0";
+                }
+                else
+                {
+                    theme.Ordernum = (CNKI.BaseFunction.StructTrans.TransNum(list[0].Ordernum) + 1).ToString();
+                }
+            }
+            ViewBag.Theme = theme;
+            ViewBag.doi = doi;
+            ViewBag.shtml = shtml;
+            return View();
+        }
+
+        /// <summary>
+        /// 添加Theme或者更新Theme
+        /// </summary>
+        /// <returns></returns>
+        public string MaragerTheme()
+        {
+            string resDoi = Tool.NormalFunction.GetQueryString("resDoi", "");
+            string shtml = Tool.NormalFunction.GetQueryString("shtml", "");
+            string ThemeName = Request["ThemeName"];
+            string SourceCode = Request["SourceCode"];
+            string Ordernum = Request["Ordernum"];
+            string remark = Request["remark"];
+            if (String.IsNullOrEmpty(ThemeName))
+            {              
+                return "false";
+            }
+            ThemeInfo theme = null;
+            Book bookInfo = new Book();
+            if (shtml != "update")
+            {
+                theme = new ThemeInfo();
+                theme.ThemeName = ThemeName;
+                theme.SourceCode = SourceCode;
+                theme.Ordernum = Ordernum;
+                theme.remark = remark;
+                theme.ParentID = resDoi;
+                
+                bool result = _theme.Add(theme);
+                if (result)
+                {
+                    //添加则将父节点的有无孩子更新
+                    ThemeInfo parent = new Theme().GetItem(theme.ParentID);
+                    if (parent != null)
+                    {
+                        parent.HASCHILD = 1;
+                        _theme.Update(parent);
+                    }
+                    int count = 0;
+                    IList<ThemeInfo> list = _theme.GetList("  PARENTID = \'" + resDoi + "\' ORDER BY ORDERNUM DESC  ", 1, 100, out count);
+                    if (list != null || list.Count > 0)
+                    {
+                        //return list[0].ID;
+                        int recordCount = 0;
+                        var bookList = bookInfo.GetList("SYS_FLD_CLASSFICATION='" + list[0].ID + "'  and ISONLINE='1'+'2'  order by ISSUEDATE DESC", 10, 1000, out recordCount, true);
+                        if (bookList != null)
+                        {
+                            var idLast=Convert.ToInt32(list[0].ID.Substring(list[0].ID.Length - 2).Replace(".",""));
+                            list[0].ID=list[0].ID.Remove(list[0].ID.Length - 2, 2);
+                             list[0].ID=""+list[0].ID + (idLast + 1) + ".";
+                            theme.ID = list[0].ID;
+                            _theme.Update(theme);
+                            return theme.ID;
+
+                        }
+                        else
+                        {
+                            return list[0].ID;
+                        }
+
+                    }
+                    return "false";
+                }
+                else
+                {
+                    return "false";
+                }
+
+            }
+            else
+            {
+                theme = _theme.GetItem(resDoi);
+                theme.ThemeName = ThemeName;
+                theme.SourceCode = SourceCode;
+                theme.Ordernum = Ordernum;
+                theme.remark = remark;
+                bool result = _theme.Update(theme);
+                if (result)
+                {
+                    return resDoi;
+                }
+                else
+                {
+                    return "false";
+                }
+            }
+        }
+
+        public string GetThemeInfo()
+        {
+            string resDoi = Request["id"];
+            StringBuilder sb = new StringBuilder();
+            if (!string.IsNullOrEmpty(resDoi))
+            {
+                Theme _theme = new Theme();
+
+                ThemeInfo theme = _theme.GetItem(resDoi);
+
+                ThemeInfo ParentTheme = _theme.GetItem(theme.ParentID);
+                if (ParentTheme != null)
+                {
+                    theme.ParentID = ParentTheme.ThemeName;
+                }
+                sb.Append("{");
+                sb.AppendFormat("\"ThemeName\":\"{0}\",\"remark\":\"{1}\",\"SourceCode\":\"{2}\",\"Ordernum\":\"{3}\",\"HASCHILD\":\"{4}\",\"ParentID\":\"{5}\",\"ID\":\"{6}\"", theme.ThemeName, theme.remark, theme.SourceCode, theme.Ordernum, theme.HASCHILD == 1 ? "有" : "无", theme.ParentID, theme.ID);
+                sb.Append("}");               
+            }
+            return sb.ToString();
+        }
+
+
+        /// <summary>
+        /// 节点上移
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public string HidUpMove_Click()
+        {
+            string[] strs = Request["resdoi"].Split(';');
+            if (strs.Length != 2)
+            {
+                return "false";
+            }
+            string nodeID = strs[0];//自己的id
+            string nodePID = strs[1];//父节点id
+
+            Theme bll = new Theme();
+            int allCount = 0;
+            IList<ThemeInfo> list = bll.GetList(" PARENTID=\'" + nodePID + "\' ORDER BY ORDERNUM", 1, 1000, out allCount, false);
+
+            for (int i = 1; i < list.Count; i++)
+            {
+                if (list[i].ID == nodeID)
+                {
+                    //修改ORDERNUM
+                    EditOrderNum(i, list);
+                    break;
+                }
+            }
+            nodeIDs = nodeID;
+            return "true";
+        }
+        /// <summary>
+        /// 节点下移
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public string HidDownMove_Click()
+        {
+            string[] strs = Request["resdoi"].Split(';');
+            if (strs.Length != 2)
+            {
+                return "false";
+            }
+            string nodeID = strs[0];
+            string nodePID = strs[1];
+
+            Theme bll = new Theme();
+            int allCount = 0;
+            IList<ThemeInfo> list = bll.GetList(" PARENTID=\'" + nodePID + "\' ORDER BY ORDERNUM", 1, 1000, out allCount, false);
+
+            for (int i = 0; i < list.Count - 1; i++)
+            {
+                if (list[i].ID == nodeID)
+                {
+                    //修改ORDERNUM
+                    EditOrderNum(i + 1, list);
+                    break;
+                }
+            }
+            nodeIDs = nodeID;
+            return "true";
+        }
+
+        /// <summary>
+        /// 修改ORDERNUM
+        /// </summary>
+        /// <param name="index"></param>
+        /// <param name="list"></param>
+        private void EditOrderNum(int index, IList<ThemeInfo> list)
+        {
+            Theme theme = new Theme();
+            if (list[index].Ordernum != list[index - 1].Ordernum)// 移动的两个节点ORDERNUM不相等
+            {
+                //交换ORDERNUM
+                string temp = list[index].Ordernum.ToString();
+                list[index].Ordernum = list[index - 1].Ordernum;
+                list[index - 1].Ordernum = temp;
+                //更新数据
+                theme.Update(list[index]);
+                theme.Update(list[index - 1]);
+            }
+            else// 移动的两个节点ORDERNUM相等
+            {
+                list[index - 1].Ordernum = (Convert.ToInt32(list[index - 1].Ordernum) + 1).ToString();
+                theme.Update(list[index - 1]);
+                //判断是否需要修改其他值
+                if (list.Count > 2 && Convert.ToInt32(list[index - 1].Ordernum) >= Convert.ToInt32(list[index + 1].Ordernum))
+                {
+                    for (int i = index + 1; i < list.Count; i++)
+                    {
+                        list[i].Ordernum = (Convert.ToInt32(list[i].Ordernum) + 1).ToString();
+                        theme.Update(list[i]);
+                    }
+                }
+            }
+        }
+
+        private bool IsCheck(string id, string LnodeIDs)
+        {
+            if (string.IsNullOrWhiteSpace(id) || string.IsNullOrWhiteSpace(LnodeIDs))
+            {
+                return false;
+            }
+            else
+            {
+                string[] lnode = LnodeIDs.Split(';');
+                for (int i = 0; i < lnode.Length; i++)
+                {
+                    if (lnode[i] == id)
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+        
+    }
+}

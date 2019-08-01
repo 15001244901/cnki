@@ -1,0 +1,386 @@
+@using Webdiyer.WebControls.Mvc;
+@using Web.Utility;
+@model PagedList<KPIC.Model.ResourceInfo>
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>资源列表</title>
+    <link href="~/Areas/Admin/media/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <style>
+        /*  Red */
+        .btn.red {
+            color: white;
+            text-shadow: none;
+            background-image: none;
+            background-color: #d84a38;
+        }
+
+            .btn.red:hover,
+            .btn.red:focus,
+            .btn.red:active,
+            .btn.red.active,
+            .btn.red[disabled],
+            .btn.red.disabled {
+                background-image: none;
+                background-color: #bb2413 !important;
+                color: #fff !important;
+            }
+
+        /*  Blue */
+        .btn.transparent {
+            color: black;
+            text-shadow: none;
+            background-image: none;
+            background-color: transparent;
+        }
+
+        .btn.blue {
+            color: white;
+            text-shadow: none;
+            background-image: none;
+            background-color: #4d90fe;
+        }
+
+            .btn.blue:hover,
+            .btn.blue:focus,
+            .btn.blue:active,
+            .btn.blue.active,
+            .btn.blue[disabled],
+            .btn.blue.disabled {
+                background-image: none;
+                background-color: #0362fd !important;
+                color: #fff !important;
+            }
+
+        /*  Green */
+        .btn.green {
+            color: white;
+            text-shadow: none;
+            background-image: none;
+            background-color: #35aa47;
+        }
+
+            .btn.green:hover,
+            .btn.green:focus,
+            .btn.green:active,
+            .btn.green.active,
+            .btn.green.disabled,
+            .btn.green[disabled] {
+                background-image: none;
+                background-color: #1d943b !important;
+                color: #fff !important;
+            }
+
+        /*  Purple */
+        .btn.purple {
+            color: white;
+            text-shadow: none;
+            background-image: none;
+            background-color: #852b99;
+        }
+
+            .btn.purple:hover,
+            .btn.purple:focus,
+            .btn.purple:active,
+            .btn.purple.active,
+            .btn.purple.disabled,
+            .btn.purple[disabled] {
+                background-image: none;
+                background-color: #6d1b81 !important;
+                color: #fff !important;
+            }
+
+        .btn.yellow {
+            color: white;
+            text-shadow: none;
+            background-image: none;
+            background-color: #ffb848;
+        }
+
+            .btn.yellow:hover,
+            .btn.yellow:focus,
+            .btn.yellow:active,
+            .btn.yellow.active,
+            .btn.yellow.disabled,
+            .btn.yellow[disabled] {
+                background-image: none;
+                background-color: #eca22e !important;
+                color: #fff !important;
+            }
+
+        .btn.black {
+            color: white;
+            text-shadow: none;
+            background-image: none;
+            background-color: #555555;
+        }
+
+            .btn.black:hover,
+            .btn.black:focus,
+            .btn.black:active,
+            .btn.black.active,
+            .btn.black.disabled,
+            .btn.black[disabled] {
+                background-image: none;
+                background-color: #222222 !important;
+                color: #fff !important;
+            }
+
+        #BrowseSource input {
+            border: none;
+        }
+
+        .dropdown-menu {
+            min-width: 97px !important;
+        }
+
+            .dropdown-menu li > a {
+                padding: 7px 0 6px 0px;
+            }
+
+        .add-file {
+            margin-top: 20px;
+        }
+
+        .btn-success {
+            padding: 10px;
+            cursor: pointer;
+        }
+
+        .bar {
+            height: 14px;
+            background: green;
+            margin: 10px 0px;
+            text-align: center;
+            color: white;
+        }
+
+        dd .btn-success {
+            cursor: pointer;
+            margin-left: 0px;
+            background: none;
+            background-color: #5cb85c;
+            padding: 8px 12px;
+            display: inline-block;
+            border-radius: 3px;
+            color: white;
+        }
+
+        input[type="file"] {
+            position: absolute;
+            top: 0;
+            right: 0;
+            margin: 0;
+            opacity: 0;
+            -ms-filter: 'alpha(opacity=0)';
+            font-size: 200px !important;
+            direction: ltr;
+            cursor: pointer;
+            display: none;
+        }
+
+        .glyphicon {
+            position: relative;
+            top: 1px;
+            display: inline-block;
+            font-family: 'Glyphicons Halflings';
+            font-style: normal;
+            font-weight: 400;
+            line-height: 1;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+    </style>
+    <script src="~/Areas/Admin/media/js/jquery-1.10.1.min.js"></script>
+    <script src="~/Scripts/Lib/layer/layer.js"></script>
+    <script>
+        $(function () {
+            //添加目录
+            $("#btnadd").click(function () {
+                $("#from_qrcodeadd").submit();
+                parent.closeall();
+            })
+            //取消
+            $("#btncancle").click(function () {
+                parent.layer.closeAll();
+            })
+            //全选
+           // PanelOperator();
+            //确定
+            $("#btnRsourceadd").click(function () {
+                var ids = GetSelectedRadioValues();
+                if (ids == null || ids == "" || ids == undefined) {
+                    layer.alert("请勾选目标文件夹！");
+                    return;
+                }
+                
+                $.ajax({
+                    //url: "/Admin/QrResource/AddResource",
+                    url:"/Admin/Resource/GroupMoveToFile",
+                    type: "post",
+                    //data: { dois: ids, id: $("#qrcodeid").val(), parentdoi: $("#parentid").val() },
+                    
+                    data: { parentdoi: ids, id: $("#qrcodeid").val() },
+                    dataType: "json",
+                    success: function (data) {
+                        if (data.Success) {
+                            layer.alert("移动成功");
+                            parent.layer.closeAll();
+                        } else {
+                            layer.alert("移动失败！！！");
+                        }
+                    }
+                });
+            })
+        })
+        //function PanelOperator() {
+        //    var $panel = $("#Resourcelist");
+        //    $panel.on("click", "[data-action]", function () {
+        //        var self = this, $self = $(this), action = $self.data("action");
+        //        if (!action) return false;
+        //        var ids = GetSelectedBookValues();
+        //        var id = $self.attr("data-id");
+        //        switch (action) {
+        //            case "group-checkable":  //全选
+        //                var $table = $self.parents("table:first");
+        //                var set = $self.data("set");
+        //                var $targets = $(set, $table);
+        //                $targets.attr("checked", self.checked);
+        //                //$.uniform.update(set);
+        //                break;
+        //        }
+        //    });
+        //}
+        ///获取批量选择项
+        function GetSelectedBookValues() {
+            var idlist = new Array();
+            var idArray = new Array()
+            $('input[type=checkbox]').each(function (i, item) {
+               if (this.checkbox == true) {
+                    var id = $(item).data("id");
+                    if (!!id) {
+                        idlist.push(id);
+                        idArray = idlist.join(";");
+                    }
+                }
+            })
+            return idArray;
+
+        }
+
+        //获取单个选项
+        function GetSelectedRadioValues() {
+           // var id = this.$(".table-radio").data("id")
+             var id=$("input[type='radio']:checked").val();
+            return id;
+        }
+
+
+    </script>
+</head>
+<body>
+    @using (Html.BeginForm("ResourceGroupFileResList", "Resource", FormMethod.Get, new { @class = "form-search", @id = "ReSourceList" }))
+    {
+        <div id="Resourcelist" class="portlet box red" style="width:940px;margin:0px auto;">
+            <div class="portlet-body">
+                <div id="sample_1_wrapper" class="dataTables_wrapper form-inline" role="grid">
+                    <div class="row-fluid" style="margin:10px;">
+                        <div class="span8">
+                            <label class="text-center">
+                                检索：
+                                <input type="search" name="Keyword" value="@Request.QueryString["Keyword"]" class="form-control input-inline" />
+                                <button type="submit" class="btn input-inline"><i class="icon icon-search"></i></button>
+                            </label>
+                        </div>
+                        @if (!string.IsNullOrEmpty(ViewBag.parentdoi))
+                        {
+                            <div class="span4">
+                                <div class="btn-group">
+                                    <a href="javascript:window.history.go(-1);" class="btn green">返回上一级</a>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                    <div class="table-scrollable">
+                        <table class="table table-bordered table-hover table-striped">
+                            <thead>
+                                <tr>
+                                    <th width="5%">
+                                        @*<input type="radio" data-action="group-checkable" data-set=".table-radio" />*@
+                                    </th>
+                                    <th width="25%">资源名称</th>
+                                    @*<th width="10%">类型</th>*@
+                                    <th width="20%">创建时间</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (Model != null && Model.Count > 0)
+                                {
+                                    foreach (var p in Model)
+                                    {
+                                        <tr>
+                                            @*<td><input type="checkbox" data-id="@Utility.RemoveRed(p.ID)" data-status="" class="table-checkbox" value="@Utility.RemoveRed(p.ID)" /></td>*@
+                                            <td><input type="radio" name="x" data-id="@Utility.RemoveRed(p.ID)" data-status="" class="table-radio" value="@Utility.RemoveRed(p.ID)" /></td>
+
+                                            @if (p.SOURCETYPE == 0)
+                                            {
+                                                <td><a href="/admin/Resource/ResourceFileResList?doi=@ViewBag.doi&parentdoi=@p.ID">@Html.Raw(p.SOURCENAME)</a></td>
+                                            }
+                                            else
+                                            {
+                                                <td>@Html.Raw(p.SOURCENAME)</td>
+                                            }
+                                            @*<td>@Html.Raw(Utility.GetSourceTypeName(p.SOURCETYPE))</td>*@
+                                            <td>@Html.Raw(p.ADDTIME)</td>
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                    @if (Model != null && Model.Count > 0)
+                {
+                        <div class="row-fluid">
+                            <div class="span5">
+                                <div class="dataTables_info">
+                                    共查询到 <span>@Model.TotalItemCount</span> 条记录，每页 <span id="PageSizeIndex">@Model.PageSize</span> 条，当前显示第 <span>@Model.CurrentPageIndex</span> 页，共 <span>@Model.TotalPageCount</span> 页
+                                </div>
+                            </div>
+                            <div class="span7">
+                                @Html.Pager(Model, new PagerOptions
+                           {
+                               ActionName = "ResourceFileResList",
+                               ControllerName = "Resource",
+                               AlwaysShowFirstLastPageNumber = true,
+                               CssClass = "dataTables_paginate paging_bootstrap_full_number",
+                               PageIndexParameterName = "page",
+                               CurrentPagerItemTemplate = "<span style='color:gray'>{0}</span>&nbsp;&nbsp;",
+                               DisabledPagerItemTemplate = "<span style='color:gray'>{0}</span>&nbsp;&nbsp;",
+                               PagerItemTemplate = "<a>{0}</a>&nbsp;&nbsp;",
+                               InvalidPageIndexErrorMessage = "页索引不是有效的数值",
+                               FirstPageText = "首页",
+                               PrevPageText = "上一页",
+                               NextPageText = "下一页",
+                               LastPageText = "末页",
+                               AutoHide = false
+                           })
+                            </div>
+                        </div>
+                    }
+                </div>
+                <input type="hidden" id="qrcodeid" value="@ViewBag.doi" />
+                <input type="hidden" id="parentid" value="@ViewBag.parentdoi" />
+                <p class="text-center" style="position:fixed;bottom:10px;left:45%;">
+                    <input id="btnRsourceadd" type="button" value="确定" class="btn red" />&nbsp;&nbsp;&nbsp;&nbsp;<input id="btncancle" type="button" value="取消" class="btn grey" />
+                </p>
+            </div>
+        </div>
+    }
+</body>
+</html>

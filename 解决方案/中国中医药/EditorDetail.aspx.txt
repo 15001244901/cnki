@@ -1,0 +1,106 @@
+<%@ Page Title="" Language="C#" MasterPageFile="~/Master/WebPage.Master" AutoEventWireup="true" CodeBehind="EditorDetail.aspx.cs" Inherits="zyy.page.EditorDetail" %>
+
+<%@ MasterType VirtualPath="~/Master/WebPage.Master" %>
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+    <div class="clear"></div>
+
+    <div id="banner">
+        <img src="../image/book-serbanner1.png" />
+    </div>
+    <!--banner-->
+    <div id="conwrap">
+        <div id="local">
+            <img src="../image/dot4.png" /><span>当前位置：</span><a href="/Default.aspx">首页 ></a><a href="editor.aspx"> 编辑风采</a><a href="javascript:void(0);"><%=obj.Name  %></a>
+        </div>
+        <!--local-->
+
+        <div id="con">
+            <div id="leftpart">
+                <%--<img src="ShowPic.aspx?vpath=<%=obj.SYS_FLD_VIRTUALPATHTAG%>&path=<%=obj.SYS_FLD_FILEPATH%>" />--%>
+                <h3 class="p1"><%=obj.Name  %></h3>
+                <p class="p1"><%=obj.POSITION%></p>
+                <p>&nbsp</p>
+                <div class="edit-content">
+                <p><%=obj.Digest%></p>
+                    </div>
+               <%-- <a href="javascript:void(0);">联系方式:</a>
+                <p>&nbsp;&nbsp;&nbsp;&nbsp;固定电话:<%=obj.TEL1 %></p>
+                <p>&nbsp;&nbsp;&nbsp;&nbsp;手机电话:<%=obj.TEL2 %></p>
+                <p>&nbsp;&nbsp;&nbsp;&nbsp;电子邮件:<%=obj.EMail %></p>
+                <p>&nbsp;&nbsp;&nbsp;&nbsp;传&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp真: <%=obj.Fax %></p>
+                <p>&nbsp;&nbsp;&nbsp;&nbsp;微&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp博: <%=obj.Weibo %></p>
+                <p>&nbsp;&nbsp;&nbsp;&nbsp;微&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp信: <%=obj.Weixin %></p>
+                <p>&nbsp;&nbsp;&nbsp;&nbsp;QQ: <%=obj.qq %></p>--%>
+            </div>
+            <div id="rightpart">
+                <div class="rcon1">
+                    <h3>
+                        代表作:
+                    </h3>
+                   <%-- <iframe id="EditorDetail" src="EditorDetail.aspx" style="border: none;
+                        background-color: #333;" width="752px" height="340px;" scrolling="no"></iframe> --%>  
+                      <asp:Literal ID="lt_detail" runat="server"></asp:Literal>           
+                </div>
+
+            </div>
+        </div>
+ 
+        <!--leftpart-->
+       <%-- <div id="rightpart">--%>
+          <%--  <asp:Literal ID="lt_detail" runat="server"></asp:Literal>--%>
+
+            <%--                       <h3>
+                    <a href="javascript:void(0);" class="partactive">个人简介</a>
+                    <a href="javascript:void(0);">联系方式</a>
+                    <a href="javascript:void(0);">代表作品</a>
+                    <a href="javascript:void(0);">获奖情况</a>
+                </h3>--%>
+            <%-- <div class="content">
+                    <%=obj.Digest %>
+                </div>--%>
+            <%-- <div class="content" style="display: none;">
+                    <p>固定电话：<%=obj.TEL1 %></p>
+                    <p>手机电话：<%=obj.TEL2 %></p>
+                    <p>电子邮件: <%=obj.EMail %></p>
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;传真: <%=obj.Fax %></p>
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;微博: <%=obj.Weibo %></p>
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;微信: <%=obj.Weixin %></p>
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;QQ: <%=obj.qq %></p>
+                </div>
+                <div class="content" style="display: none;">
+                    <p><%=obj.Mainwork %></p>
+                </div>
+                <div class="content" style="display: none;">
+                    <p><%=obj.Prize %></p>
+                </div>--%>
+        <%--</div>--%>
+        <!--rightpart-->
+
+    </div>
+    <!--con-->
+
+    </div>
+    <!--conwarp-->
+
+    <script language="javascript" type="text/javascript">
+        $(function () {
+            var display = 6;
+            var loctext = $("#mainnav_wrap a").eq(display).text();
+            var locurl = $("#mainnav_wrap a").eq(display).attr("href");
+            if (display === 0) {
+                $("#local a").eq(1).remove();
+            } else {
+                $("#local a").eq(1).text(" " + loctext + " >");
+                $("#local a").eq(1).attr("href", locurl);
+            };
+
+            $("#rightpart h3 a").click(function () {
+                var index = $(this).parent("#rightpart h3").children("a").index($(this));
+                $(this).addClass("partactive").siblings("a").removeClass("partactive");
+                $(".content").eq(index).show().siblings(".content").hide();
+            });
+        })
+    </script>
+</asp:Content>

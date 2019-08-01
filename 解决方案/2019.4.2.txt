@@ -1,0 +1,349 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.Mvc;
+
+using OFFICALWEB.Models;
+using DRPS.BLL;
+using DRPS.Common;
+using DRPS.Model;
+using CNKI.BaseFunction;
+using DRMS.BLL;
+using DRMS.Model;
+using System.Xml.Linq;
+using System.Text.RegularExpressions;
+using System.Configuration;
+using System.Xml;
+
+namespace OFFICALWEB.Controllers
+{
+    public class HomeController : Controller
+    {
+        // GET: Home
+        public ActionResult Index()
+        {
+            return View();
+        }
+
+        public ActionResult AdContent(string id)
+        {
+            AD ad = new AD();
+            var info = ad.GetItem(id);
+            if (info != null)
+            {
+                if (!string.IsNullOrEmpty(info.CONTENT))
+                    info.CONTENT = Utility.Utility.ReplacePicUrlForBook_nopic(info.CONTENT);
+                return View(info);
+            }
+            return View(new ADInfo());
+        }
+
+        /// <summary>
+        /// 新闻轮播图
+        /// </summary>
+        /// <param name="flag"></param>
+        /// <param name="size"></param>
+        /// <returns></returns>
+        public ActionResult BindAd(string type, int size)
+        {
+            AD ad = new AD();
+            IList<ResInfo> resList = new List<ResInfo>();
+            int recordCount = 0;
+            string sql = " ISUSE=1";
+            if (!string.IsNullOrEmpty(type))
+            {
+                sql += " AND PAGEPALCE='" + type + "'";
+            }
+            sql += " ORDER BY ORDERNUM ";
+            var adList = ad.GetList(sql, 1, size, out recordCount);
+            if (adList != null && adList.Count() > 0)
+            {
+                adList.ToList().ForEach(a => resList.Add(new ResInfo()
+                {
+                    Doi = a.DOI,
+                    Name = a.TITLE,
+                    ImgPath = a.SYS_FLD_FILEPATH,
+                    VirtualPathtag = a.SYS_FLD_VIRTUALPATHTAG,
+                    Url = (a.ISHASURL == 0 ? a.URLADDRESS : ""),
+                    IsGtFive = (a.ISHASURL == 0 ? false : true)
+                }));
+            }
+            return Json(new { models = resList, success = true }, JsonRequestBehavior.AllowGet);
+        }
+
+        /// <summary>
+        /// 推荐逻辑库
+        /// </summary>
+        /// <param name="flag"></param>
+        /// <param name="size"></param>
+        /// <returns></returns>
+        public ActionResult BindRecommendLogical(int flag, int size)
+        {
+            LogicalDataBase logical = new LogicalDataBase();
+            IList<ResInfo> resList = new List<ResInfo>();
+            RecommendHelper config = new RecommendHelper();
+            List<ResourceData> resourceData = config.GetRecommendDataByFlag(flag);
+            string path = ConfigurationManager.AppSettings["LogicalDetail"];
+            if (resourceData != null && resourceData.Count > 0)
+            {
+                var result = resourceData.Take(size);
+                foreach (var item in result)
+                {
+                    var logicalInfo = logical.GetItem(item.doi);
+                    if (logicalInfo != null)
+                    {
+                        ResInfo info = new ResInfo();
+                        info.Doi = logicalInfo.DbId;
+                        info.Name = NormalFunction.GetSubStrOther(logicalInfo.DbName, 32, "...");
+                        info.Title = logicalInfo.DbName;
+                        info.ImgPath = logicalInfo.SYS_FLD_COVERPATH;
+                        info.VirtualPathtag = logicalInfo.SYS_FLD_VIRTUALPATHTAG;
+                        info.Digest = NormalFunction.GetSubStrOther(logicalInfo.DbDescription, 110, "...");
+                        info.Url = path;
+                        resList.Add(info);
+                    }
+                }
+            }
+            return Json(new { models = resList, success = true }, JsonRequestBehavior.AllowGet);
+        }
+
+        /// <summary>
+        /// 绑定新闻分类
+        /// </summary>
+        /// <param name="flag"></param>
+        /// <returns></returns>
+        public ActionResult BindType(string tag = "")
+        {
+            List<ResNewsType> result = new List<ResNewsType>();
+            try
+            {
+                string path = Server.MapPath("~/Areas/Admin/Content/Configuration/NewsType.xml");
+                XDocument doc = XDocument.Load(path);
+                XElement root = doc.Root;
+                IEnumerable<XElement> elements = root.Elements("item");
+                if (elements != null && elements.Count() > 0)
+                {
+                    if (string.IsNullOrEmpty(tag))
+                    {
+                        elements = elements.Where(o => o.Attribute("tag").Value != "2");
+                    }
+                    if (tag == "1")
+                    {
+                        elements = elements.Where(o => o.Attribute("tag").Value != "0");
+                        //elements = elements.Where(o => o.Attribute("tag").Value ==tag);
+                    }
+                    elements.ToList().ForEach(a =>
+                    {
+                        result.Add(new ResNewsType
+                        {
+                            Value = a.Attribute("value").Value,
+                            Type = a.Attribute("key").Value,
+                            Flag = a.Attribute("flag").Value,
+                            TrValue = a.Attribute("traditional").Value,
+                            EnValue = a.Attribute("english").Value,
+                        });
+                    });
+                }
+            }
+            catch (Exception)
+            {
+                result.Clear();
+            }
+            return Json(new { models = result, success = true }, JsonRequestBehavior.AllowGet);
+        }
+
+        /// <summary>
+        /// 推荐新闻
+        /// </summary>
+        /// <param name="flag"></param>
+        /// <param name="size"></param>
+        /// <returns></returns>
+        public ActionResult BindRecommendNews(int flag, int size)
+        {
+            News news = new News();
+            IList<ResNewsInfo> resList = new List<ResNewsInfo>();
+            RecommendHelper config = new RecommendHelper();
+            List<ResourceData> resourceData = new List<ResourceData>();
+
+            List<ResourceData> flagTypeData = new List<ResourceData>();
+
+            if (flag == 15)
+            {
+                string type = "1;2;3;";
+                var typeList = type.Split(new string[] { ";" }, StringSplitOptions.RemoveEmptyEntries);
+
+                if (typeList != null)
+                {    
+                   
+                    for (int i = 0; i < typeList.Length; i++)
+                    {
+                        
+                        //flag = Convert.ToInt32(typeList[i])
+                        flag = StructTrans.TransNum(typeList[i]);
+                        //List<ResourceData> flagtype = config.GetRecommendDataByFlag(flag);
+                        List<ResourceData>  flagTypeNewData= config.GetRecommendDataByFlag(flag);
+                        flagTypeData.AddRange(flagTypeNewData);
+                    }
+
+                    if (flagTypeData != null && flagTypeData.Count > 0)
+                    {
+
+                        //var result = flagTypeData.Take(size);
+                        foreach (var itemFlag in flagTypeData)
+                        {
+                            var logicalInfoFlag = news.Get(itemFlag.doi);
+                            if (logicalInfoFlag != null)
+                            {
+                                ResNewsInfo info = new ResNewsInfo();
+                                var digest = Regex.Replace(Utility.Utility.HtmlToTxt(logicalInfoFlag.Digest), @"{(\S+|[0-9]+)\S+(.jpg|.jpeg|.gif|.png|.JPG|.JPEG|.PNG|.GIF)}", "");
+                                info.Doi = logicalInfoFlag.Urlid;
+                                info.Name = NormalFunction.GetSubStrOther(logicalInfoFlag.Title, 56, "...");
+                                info.Title = logicalInfoFlag.Title;
+                                info.Digest = NormalFunction.GetSubStrOther(digest, 140, "...");
+                                info.YearMonth = logicalInfoFlag.Pubdate.ToString("yyyy.MM");
+                                info.Day = logicalInfoFlag.Pubdate.Day.ToString();
+                                info.Date= logicalInfoFlag.Pubdate.ToString("yyyy.MM.dd");
+                                resList.Add(info);
+                            }
+                        }
+                        resList = resList.OrderByDescending(o => o.Date).Take(size).ToList();
+                    }
+                }
+            }
+            else
+            {
+                resourceData = config.GetRecommendDataByFlag(flag);
+                if (resourceData != null && resourceData.Count > 0)
+                {
+                    var result = resourceData.Take(size);
+                    foreach (var item in result)
+                    {
+                        var logicalInfo = news.Get(item.doi);
+                        if (logicalInfo != null)
+                        {
+                            ResNewsInfo info = new ResNewsInfo();
+                            var digest = Regex.Replace(Utility.Utility.HtmlToTxt(logicalInfo.Digest), @"{(\S+|[0-9]+)\S+(.jpg|.jpeg|.gif|.png|.JPG|.JPEG|.PNG|.GIF)}", "");
+                            info.Doi = logicalInfo.Urlid;
+                            info.Name = NormalFunction.GetSubStrOther(logicalInfo.Title, 56, "...");
+                            info.Title = logicalInfo.Title;
+                            info.Digest = NormalFunction.GetSubStrOther(digest, 140, "...");
+                            info.YearMonth = logicalInfo.Pubdate.ToString("yyyy.MM");
+                            info.Day = logicalInfo.Pubdate.Day.ToString();
+                            resList.Add(info);
+                        }
+                    }
+                }
+            }
+
+
+            return Json(new { models = resList, success = true }, JsonRequestBehavior.AllowGet);
+        }
+
+        /// <summary>
+        /// 推荐图书
+        /// </summary>
+        /// <param name="flag"></param>
+        /// <param name="size"></param>
+        /// <returns></returns>
+        public ActionResult BindRecommendBook(int flag, int size)
+        {
+            Book book = new Book();
+            IList<ResBookInfo> resList = new List<ResBookInfo>();
+            RecommendHelper config = new RecommendHelper();
+            List<ResourceData> resourceData = config.GetRecommendDataByFlag(flag);
+            List<ResourceData> result = null;
+            if (resourceData != null && resourceData.Count > 0)
+            {
+                if (size == -1)
+                {
+                    result = resourceData;
+                }
+                else
+                {
+                    result = resourceData.Take(size).ToList();
+                }
+                foreach (var item in result)
+                {
+                    var bookInfo = book.GetItem(item.doi);
+                    if (bookInfo != null)
+                    {
+                        ResBookInfo info = new ResBookInfo();
+                        info.Doi = bookInfo.SYS_FLD_DOI;
+                        info.Name = NormalFunction.GetSubStrOther(bookInfo.Name, 44, "...");
+                        info.Title = bookInfo.Name;
+                        info.ISBN = bookInfo.ISBN;
+                        info.IssueDate = bookInfo.IssueDate.ToString("yyyy年MM月");
+                        info.Issuedep = bookInfo.IssueDep;
+                        info.ImgPath = bookInfo.SYS_FLD_COVERPATH;
+                        info.VirtualPathtag = bookInfo.SYS_FLD_VIRTUALPATHTAG;
+                        info.EssenceDigest = bookInfo.EssenceDigest;
+                        info.ExecutiveEditor = CNKI.BaseFunction.NormalFunction.SubString(bookInfo.RECOMMENDED, 328, "......<a href='/PBook/Detail?doi=" + bookInfo.SYS_FLD_DOI + "' style='color: #0a6778;'> [更多] </a>");
+
+                        //外链地址
+                        if (!string.IsNullOrEmpty(bookInfo.ENLiabilityForm) && !string.IsNullOrEmpty(bookInfo.ENLiabilityForm))
+                        {
+                            var nameList = bookInfo.ENLiabilityForm.Split(new string[] { ";" }, StringSplitOptions.RemoveEmptyEntries);
+                            var urlList = bookInfo.Department.Split(new string[] { ";" }, StringSplitOptions.RemoveEmptyEntries);
+                            if (nameList != null && nameList.Count() > 0 && urlList != null && urlList.Count() > 0)
+                            {
+                                for (int i = 0; i < (nameList.Count() > urlList.Count() ? urlList.Count() : nameList.Count()); i++)
+                                {
+                                    LinkInfo model = new LinkInfo();
+                                    model.LinkName = nameList[i];
+                                    model.LinkUrl = string.IsNullOrEmpty(urlList[i]) ? "/Home/Index" : urlList[i];
+                                    info.linkInfo.Add(model);
+                                }
+                            }
+                        }
+
+                        //作者
+                        var dic = Utility.Util.GetAuthorFromBookInfoNew(bookInfo.Sys_fld_BookInfo);
+                        if (dic != null && dic.Count() > 0)
+                        {
+                            AuthorIn authorInfo = new AuthorIn();
+                            foreach (var key in dic.Keys)
+                            {
+                                authorInfo.authorName = dic[key];
+                                authorInfo.authorForm = key;
+                            }
+                            info.AuthorNew = authorInfo;
+                        }
+                        resList.Add(info);
+                    }
+                }
+            }
+            return Json(new { models = resList, success = true }, JsonRequestBehavior.AllowGet);
+        }
+
+        /// <summary>
+        /// 友情链接
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult GetAboutLink()
+        {
+            string path = System.Web.HttpContext.Current.Server.MapPath("~/Areas/Admin/Content/Configuration/AboutLinq.xml");
+            XmlDocument doc = new XmlDocument();
+            doc.Load(path);
+            XmlNodeList nodeList = doc.SelectNodes("/root/data");
+            List<AboutUsViewModel> list = new List<AboutUsViewModel>();
+            if (nodeList != null)
+            {
+                //读取资源文件
+                foreach (XmlNode item in nodeList)
+                {
+                    AboutUsViewModel abm = new AboutUsViewModel();
+                    XmlElement xe = (XmlElement)item;
+                    abm.Name = xe.GetAttribute("name");
+                    abm.ID = xe.GetAttribute("id");
+                    abm.Url = xe.GetAttribute("url");
+                    list.Add(abm);
+                }
+                return Json(new { success = true, data = list }, JsonRequestBehavior.AllowGet);
+            }
+            return Json(new { success = false }, JsonRequestBehavior.AllowGet);
+        }
+
+    }
+}

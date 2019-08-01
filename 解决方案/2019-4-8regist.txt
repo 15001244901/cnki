@@ -1,0 +1,259 @@
+
+@{
+    ViewBag.Title = "Regist";
+    Layout = "~/Views/Shared/_GovWorkLayout .cshtml";
+}
+
+<link rel="stylesheet" href="~/Css/register.css" />
+<div id="login-wrap">
+    <div class="login-con">
+        <div class="login-con-box">
+            <div class="log-det">
+                <h1><a href="/Account/Login?ReturnUrl=@ViewBag.url" class="fr">用户登录<i></i></a><span>用户注册</span></h1>
+                <form id="form" action="/Account/Regist?ReturnUrl=@ViewBag.url" method="post">
+                    <div class="item">
+                        <div class="text fl">
+                            <span>*</span>
+                            <label for="loginName">用户名：</label>
+                        </div>
+                        <input type="text" id="loginName" name="USERNAME" class="txt-name" placeholder="请输入用户名" />
+                    </div>
+                    <div class="item">
+                        <div class="text fl">
+                            <span>*</span>
+                            <label for="loginPwd">密码：</label>
+                        </div>
+                        <input type="password" id="loginPwd" name="PASSWORD" class="txt-name" placeholder="设置密码" />
+                    </div>
+                    <div class="item">
+                        <div class="text fl">
+                            <span>*</span>
+                            <label for="loginRePwd">确认密码：</label>
+                        </div>
+                        <input type="password" id="loginRePwd" name="loginRePwd" class="txt-name" placeholder="确认密码" />
+                    </div>
+                    <div class="item test">
+                        <div class="text fl">
+                            <span>*</span>
+                            <label for="loginTest">验证码：</label>
+                        </div>
+                        <input type="text" id="loginTest" name="Code" class="txt-name" placeholder="请输入验证码" />
+                        @*<a href="javascript:void(0);" class="txt-check" onclick="javascript:settime(this)">获取短信验证码</a>*@
+                        <img src="/ValidateCode" class="validate-code" id="vCodeImg" style="border-radius: 4px;height:25px;" onclick="return vCodeChange();" />
+
+                       @* <input type="text" name="check" value="获取短信验证码" class="txt-check" id="hsbtn" onclick="sendMessage()">*@
+        <label class="error"></label>
+    </div>
+    <div class="item chk-box">
+        <div class="text fl"></div>
+        <label for="chk-box">
+            @*<input type="checkbox" id="chk-box" name="chkBox" class="txt-box" />
+            我已阅读并同意
+            <a href="#">《用户注册协议》</a>
+            <a href="#">《隐私政策》</a>*@
+            <label class="error"></label>
+        </label>
+    </div>
+    <input type="hidden" value="@ViewBag.url" name="url" />
+    <div class="item item-btn">
+        <div class="text fl"></div>
+        @*<a href="#" class="btn-login">立即注册</a>*@
+                        <input class="btn-login" name="commit" value="立即注册" type="submit"onclick="return Regist();">
+                    </div>
+                    <div class="item">
+                        @*<div id="divMessage" style="width:auto;text-align:center;">
+                          @ViewBag.message
+                        </div>*@
+                            <div id="divMessage" style="color:red;margin-top: 5px;font-size: 16px;">@ViewBag.message</div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts{
+    <script src="~/Scripts/jquery.validate.js"></script>
+    <script src="~/Scripts/plugin/layer/layer.js"></script>
+    <script src="~/Scripts/ChangeMobile.js"></script>
+    <script>
+        $(function () {
+            //验证密码
+            $("#form").validate({
+                //submitHandler: function (form) {
+                //    if ($("input[name=chkBox]").is(":checked")) {
+                        
+                //    } else {
+                //        layer.alert("（请阅读并同意协议）");
+                //    }
+                //},
+                onfocusout: function (element) {
+                    if ($(element).valid()) {
+                        if (element.id == "loginName") {
+                            $("#hsbtn").next().html("");
+                            $("#hsbtn").removeAttr("disabled");//启用按钮
+                        }
+                    }
+                },
+                //errorPlacement: function (error, element) {
+                //    if (element[0].name == 'Code') {
+                //        var msg = error[0].innerHTML;
+                //        $("#hsbtn").next().html(msg);
+                //    } else {
+                //        element.after(error);
+                //    }
+                //},
+                onkeyup: false,
+                focusInvalid: false,
+                rules: {
+                    USERNAME: {
+                        required: true,
+                        //digits: true,
+                        isUserName:true,
+                        remote: {
+                            type: "post",
+                            url: "/Account/ValidatePhone",
+                            data: {
+                                phone: function () { return $("#loginName").val(); }
+                            }
+                        }
+                    },
+                    PASSWORD: {
+                        required: true,
+                        rangelength: [6, 16]
+                    },
+                    loginRePwd: {
+                        required: true,
+                        rangelength: [6, 16],
+                        equalTo: "#loginPwd"
+                    },
+                    Code: {
+                        required: true
+                    }
+                },
+                messages: {
+                    USERNAME: {
+                        required: "（请输入用户名）",
+                        //digits: "（只能输入数字）",
+                        isUserName: "（请正确填写您的用户名(长度应大于4）",
+                        remote: "（该用户名已经存在）"
+                    },
+                    PASSWORD: {
+                        required: "（请输入密码）",
+                        rangelength: "（{0}-{1}位之间）",
+                        remote: "（密码输入错误）"
+                    },
+                    loginRePwd: {
+                        required: "（请输入密码）",
+                        rangelength: "（{0}-{1}位之间）",
+                        equalTo: "（两次密码输入不一致）"
+                    },
+                    Code: {
+                        required: "（请输入验证码）"
+                    }
+                }
+            });
+
+            //自定义用户名验证
+            jQuery.validator.addMethod("isUserName", function (value, element) {
+                var length = value.length;
+                //var mobile = /^1[3|4|5|8|7|9|6]{1}[0-9]{9}$/;
+                var moblie = /^[\s\S]*.*[^\s][\s\S]*$/;
+                return this.optional(element) || (length >4 && moblie.test(value));
+            }, "请正确填写您的用户名");
+        });
+        //验证码
+        function vCodeChange() {
+            var o = $("#vCodeImg");
+            if (o) {
+                o.attr({ "src": "/ValidateCode/Index?t=" + Math.random() });
+            }
+            return false;
+        }
+        function getCheckCookie(name) {
+            var c = document.cookie;
+            if (!c) {
+                return "";
+            }
+            var r = "";
+            var a = c.split(";");
+            a.forEach(function (o) {
+                var p = o.replace(" ", "").split("=");
+                if (p.length == 2 && p[0] == name) {
+                    r = p[1];
+                    return;
+                }
+            });
+            return r.toLowerCase();
+        }
+        function Regist() {
+            $("#divMessage").val("");
+            var vCode = $("#loginTest").val();
+            var messg = getCheckCookie("CheckCode");
+            if (vCode.toLowerCase() != messg) {
+                $("#divMessage").text("验证码输入错误!");
+                //刷新验证码
+                vCodeChange();
+                return false;
+            }
+        }
+        //发送验证码
+        @* var InterValObj; //timer变量，控制时间
+        var count = 60; //间隔函数，1秒执行
+        var curCount;//当前剩余秒数
+           *@
+
+       //function sendMessage() {
+       //     var phone = $("#loginName").val();
+       //     if (phone.length > 0) {
+       //         curCount = count;
+       //         //向后台发送处理数据
+       //         $.ajax({
+       //             type: "POST",
+       //             dataType: "json",
+       //             url: '/Account/CheckUserExist',
+       //             data: { MOBILEPHONE: $("#loginName").val() },
+       //             error: function (XMLHttpRequest, textStatus, errorThrown) { },
+       //             success: function (data) {
+       //                 if (data.success) {
+       //                     if (data.code == 1) {
+       //                         //设置button效果，开始计时
+       //                         $("#hsbtn").attr("disabled", "true");
+       //                         $("#hsbtn").val("在" + curCount + "秒点此重发");
+       //                         $("#hsbtn").attr("style", "color:gray");
+       //                         InterValObj = window.setInterval(SetRemainTime, 1000); //启动计时器，1秒执行一次
+       //                     }
+       //                 } else {
+       //                     if (data.code == 0) {
+       //                         $("#hsbtn").next().html("（该手机号已被注册！）");
+       //                     } else if (data.code == 2) {
+       //                         $("#hsbtn").next().html("（验证码获取频繁，请稍后再试！）");
+       //                     } else if (data.code == 3) {
+       //                         $("#hsbtn").next().html("（发送失败，请重新获取！）");
+       //                     }
+       //                 }
+       //             }
+       //         });
+       //     } else {
+       //         $("#loginName").blur();
+       //         $("#hsbtn").attr("disabled", true);
+       //         return false;
+       //     }
+       // }
+
+        //timer处理函数
+        //function SetRemainTime() {
+        //    if (curCount == 0) {
+        //        window.clearInterval(InterValObj);//停止计时器
+        //        $("#hsbtn").removeAttr("disabled");//启用按钮
+        //        $("#hsbtn").removeAttr("style", "color:gray");
+        //        $("#hsbtn").val("重新发送验证码");
+        //    }
+        //    else {
+        //        curCount--;
+        //        $("#hsbtn").val("在" + curCount + "秒点此重发");
+        //    }
+        //}
+        
+    </script>
+}
+

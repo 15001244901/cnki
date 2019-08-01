@@ -1,0 +1,207 @@
+<%@ Page Title="" Language="C#" MasterPageFile="~/Master/WebPage.Master" AutoEventWireup="true"
+    CodeBehind="Default.aspx.cs" Inherits="zyy.Default" %>
+
+<%@ MasterType VirtualPath="~/Master/WebPage.Master" %>
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+    <style type="text/css">
+        #banner {
+            width: 1124px;
+            height: 418px;
+            margin: 0 auto;
+            margin-top: 16px;
+            background: url(../image/banner.png) 0 0 no-repeat !important;
+            text-align: center;
+        }
+
+        .bigImg{ height:350px; margin-bottom:20px;}
+        .bigImg img{width:1124px;height:350px;}
+        .bigImg p{position:relative;opacity:0.5;filter:alpha(opacity=50);color: #fff;font-size: 16px;margin-top: -38px;background:#333333;z-index:999;height:35px;width:1107px;padding-left:15px;}
+        .num{float: right;margin-right: 10px;margin-top: -40px;position: relative;z-index: 999}
+        .num a{ background-color: #fff;border-radius: 10px;display: inline-block;height: 18px;opacity: 0.9;width: 18px;margin:-10px 3px 5px 4px;}
+        .num .select{background-color:#3192e1;}
+        .selectImg{background-color: #3192e1 !important;}
+    </style>
+    <script src="js/jquery.soChange-min.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        $(function () {
+            selectNav(1);
+
+            $("#ad .bigImg a").soChange({
+                thumbObj: '.num a',
+                slideTime: 0,//鼠标滑动时平滑切换
+                thumbOverEvent: false,
+                autoChange: true,
+                thumbNowClass: "selectImg"
+            });
+        });
+
+    </script>
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+
+    <div id="ad" style="width:1124px;height:350px;margin:5px auto;">
+         <asp:Literal ID="ltlAd" runat="server"></asp:Literal>
+    </div>
+
+    <div id="news">
+        <div class="left" data-source="note" data-place="top_left" data-size="6" data-flag="0">
+            <h3>
+                <span>活动中心</span><a href="/Ajax/CreateUrl.ashx?d=2&t=c&f=0"></a></h3>
+                 <div style="width:200px; float:right; background:#090"></div> 
+                 <div style=" margin-right:210px; background:#F33"></div> 
+        </div>
+        <!--left-->
+        <%--<div class="mid" data-source="note" data-place="top_mid" data-size="7" data-flag="1">
+            <h3>
+                <span>社内新闻</span><a href="/Ajax/CreateUrl.ashx?d=2&t=c&f=1"></a></h3>
+        </div>--%>
+        <!--mid-->
+        <div class="right" data-source="note" data-place="top_right" data-size="4" data-flag="2">
+            <h3>
+                <span>通知公告</span><a href="/Ajax/CreateUrl.ashx?d=2&t=c&f=2"></a></h3>
+        </div>
+        <!--right-->
+    </div>
+
+    <div class="clear"></div>
+
+    <div id="banner">
+        <p>
+        </p>
+    </div>
+
+    <%--    <div class="banner2">
+        <img src="../image/img7.png" alt="" />
+    </div>
+
+    <div id="zhanban" data-source="note" data-place="center" data-size="25" data-flag="3">
+        <ul>
+        </ul>
+    </div>
+
+    <div id="zhanban2">
+        <p>
+        </p>
+    </div>--%>
+
+    <div id="tushu1_wrap">
+        <div id="tushu1">
+            <h3>
+                <span>新书快讯</span><a href="#">天猫旗舰店</a> <strong><a href="/page/BookList.aspx?themeid=*"></a></strong>
+            </h3>
+        </div>
+        <!--tushu1-->
+        <div class="tushucon">
+            <ul>
+                <asp:Literal ID="bookbytime" runat="server"></asp:Literal>
+            </ul>
+        </div>
+        <!--tushucon-->
+    </div>
+
+    <div id="tushutuijian">
+        <div id="tushu2">
+            <h3>
+                <span></span><a href="/page/BookList.aspx?themeid=*"></a>
+            </h3>
+        </div>
+
+        <div class="tushucon">
+            <ul>
+                <asp:Literal ID="bookbysale" runat="server"></asp:Literal>
+            </ul>
+        </div>
+
+        <div id="tushu3">
+            <h3>
+                <span></span><a href="#"></a>
+            </h3>
+        </div>
+
+        <div class="paihang">
+            <asp:Literal ID="bookbyhit" runat="server"></asp:Literal>
+        </div>
+        <div id="fenleiwrap">
+            <div id="fenlei">
+                <h3>
+                    <span>图书分类</span> <a href="/page/BookList.aspx?themeid=*">重点推荐<img src="../image/hot.png" /></a>
+                </h3>
+                <asp:Literal ID="bookbytheme" runat="server"></asp:Literal>
+            </div>
+        </div>
+
+        <div class="clear"></div>
+
+        <script type="text/javascript">
+            function nTabs(thisObj, Num) {
+                if (thisObj.className == "active") return;
+                var tabList = document.getElementById("myTab").getElementsByTagName("li");
+                for (i = 0; i < tabList.length; i++) {//点击之后，其他tab变成灰色，内容隐藏，只有点击的tab和内容有属性
+                    if (i == Num) {
+                        thisObj.className = "active";
+                        document.getElementById("myTab_Content" + i).style.display = "block";
+                        $(".page").eq(i).show();
+                    } else {
+                        tabList[i].className = "normal";
+                        document.getElementById("myTab_Content" + i).style.display = "none";
+                        $(".page").eq(i).hide();
+                    }
+                }
+            }
+        </script>
+        <div id="bot_new">
+            <div class="nTab">
+                <div class="TabTitle">
+                    <ul id="myTab">
+                        <li class="active" onclick="nTabs(this,0);">专题推荐</li>
+                    </ul>
+                    <div class="page">
+                    </div>
+                    <div class="page none">
+                    </div>
+                </div>
+                <div class="TabContent">
+                    <div id="myTab_Content0" data-source="note" data-place="bottombase" data-size="24" data-flag="10">
+                        <div class="tupian">
+                            <a href="#">
+                                <img src="../image/zhuanti.png" width="120" height="140" alt="" /></a>
+                        </div>
+                    </div>
+                    <div id="myTab_Content1" class="none" data-source="note" data-place="bottomauthor" data-size="20" data-flag="11">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <asp:HiddenField ID="hid_dois" runat="server" />
+    <script language="javascript" type="text/javascript" src="../js/booksxml.js"></script>
+    <script language="javascript" type="text/javascript" src="js/notesbase.js"></script>
+    <script language="javascript" type="text/javascript" src="js/price.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            BOOKS.init({
+                xmlPath: "/xml/topbooks.xml",
+                perView: 5
+            });
+
+            $("[data-source='note']").each(function (i, n) {
+                var place = $(this).data("place");
+                var size = $(this).data("size");
+                var flag = $(this).data("flag");
+                $(this).notes({ place: place, size: size, flag: flag });
+            });
+
+            //加载书籍的价格信息
+            var strDoi = $("#<%=hid_dois.ClientID %>").val();
+            var list = strDoi.split(';');
+            var xml = "<ItemList type=\"0\" >";
+            for (var i = 0; i < list.length; i++) {
+                xml += "<Item Guid=\"" + list[i] + "\" />";
+            }
+            xml += "</ItemList>";
+            var priceService = "<%=PriceService%>";
+            loadBookListPrice(xml, priceService);
+
+        })
+    </script>
+</asp:Content>

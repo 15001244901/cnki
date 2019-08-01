@@ -1,0 +1,64 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Web;
+using System.Web.Http;
+
+namespace DRPS.Web.Utility
+{   
+    /// <summary>
+    /// 控制这个Http请求
+    /// </summary>
+    public class MyHttpModule : IHttpModule
+    {   
+        /// <summary>
+        /// 初始化
+        /// </summary>
+        public void Dispose()
+        {
+
+        }
+        /// <summary>
+        /// 在初始化方法中添加事件处理方法
+        /// </summary>
+        /// <param name="context"></param>
+        public void Init(HttpApplication context)
+        {
+            //向客户端发送 HTTP 标头之前发生
+            context.PreSendRequestHeaders += new EventHandler(context_PreSendRequestHeaders);
+        }
+        /// <summary> 
+        ///  编写开始处理请求代码
+        ///  向客户端发送 HTTP 标头之前发生
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        void context_PreSendRequestHeaders(object sender, EventArgs e)
+        {
+            try
+            {
+                HttpApplication app = sender as HttpApplication;
+                if (null != app && null != app.Request && null != app.Context && null != app.Context.Response)
+                {
+                    //响应头
+                    var headers = app.Context.Response.Headers;
+                    if (null != headers)
+                    {
+                        //移除实例中具有指定键的项
+                        headers.Remove("Server");
+                        headers.Remove("X-Powered-By");
+                        //headers.Remove("Cache-Control");
+                        //headers.Remove("Content-Type");
+                        //headers.Remove("Location");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+    }
+}

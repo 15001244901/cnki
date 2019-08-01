@@ -1,0 +1,112 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using System.Data;
+using System.Text;
+using System.Web.Script.Serialization;
+using DRMS.BLL;
+using DRMS.Model;
+using zyy.Helper;
+using System.Runtime.Serialization.Json;
+using CNKI.BaseFunction;
+using System.Configuration;
+
+namespace zyy.Ajax
+{
+    /// <summary>
+    /// BookRecommendation 的摘要说明
+    /// </summary>
+    public class BookRecommendation : /*System.Web.UI.Page, */IHttpHandler
+    {
+        protected readonly string url = ConfigurationManager.AppSettings["ResUrl"];
+        public void ProcessRequest(HttpContext context)
+        {
+            context.Response.ContentType = "application/json";
+            string callback = context.Request["callback"];
+            string cata = context.Request["cata"];
+            string order = context.Request["order"];
+            string doiStr = GetDoiArray(cata);
+            Book bll = new Book();
+            int recordcount = 0;
+            string sql = " isonline='1' ";
+            //string sql = "";
+            if (!string.IsNullOrEmpty(doiStr))
+            {
+                sql += " and " + doiStr;
+                //sql += doiStr;
+            }
+            sql += " order by "+order+" desc";
+            var list = bll.GetList(sql, 1, 5, out recordcount, true);
+            var lists=list.Select(o => new
+            {
+                id = o.SYS_FLD_DOI,
+                title = o.Name,
+                //img = url + "/Page/ShowPic.aspx?path=" + Server.UrlEncode(o.SYS_FLD_COVERPATH) + "&vpath=1&ptype=0",
+                img = url + "/Page/ShowPic.aspx?path=" + o.SYS_FLD_COVERPATH.Replace("\\","/") + "&vpath=1&ptype=0",
+                name = NormalFunction.SubString(o.Name, 15, "..."),
+                date = o.IssueDate,
+
+            });
+            JavaScriptSerializer jss = new JavaScriptSerializer();
+            string listJson=jss.Serialize(lists);
+
+
+            
+
+            context.Response.Write(callback+"('"+listJson+"')");
+        }
+
+        private string DataTableToJson(IList<BookInfo> list)
+        {
+
+
+            throw new NotImplementedException();
+        }
+
+
+
+
+        /// <summary>
+        /// 获取当前分类下的doi 
+        /// </summary>
+        /// <returns></returns>
+        private string GetDoiArray(string cata)
+        {
+            string DoiArr = string.Empty;
+           // string cata = Utility.ReplaceStr(Request.QueryString["cata"]);
+
+            if (string.IsNullOrEmpty(cata))
+            {
+                cata = "0";
+            }
+            int cataNum = CNKI.BaseFunction.StructTrans.TransNum(cata);
+            CategoriesHelper config = new CategoriesHelper();
+            List<FeaturedData> nlist = config.GetCategoriesDataByOrder(cataNum);
+            if (nlist != null && nlist.Count > 0)
+            {
+                foreach (var item in nlist)
+                {
+                     DoiArr += " sys_fld_doi ='" + item.doi + "' and isonline='1' or  ";
+                   // DoiArr += " sys_fld_doi ='" + item.doi + "";
+                }
+                if (!string.IsNullOrEmpty(DoiArr) && DoiArr.Length > 3)
+                {
+                    int index = DoiArr.LastIndexOf('o');
+                    DoiArr = DoiArr.Substring(0, index);
+                }
+            }
+
+            return DoiArr;
+        }
+        public bool IsReusable
+        {
+            get
+            {
+                return false;
+            }
+        }
+    }
+}

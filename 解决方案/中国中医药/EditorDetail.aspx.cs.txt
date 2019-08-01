@@ -1,0 +1,109 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using System.Text;
+
+using zyy.Helper;
+using zyy.Model;
+using zyy.BLL;
+using CNKI.BaseFunction;
+using DRMS.BLL;
+
+namespace zyy.page
+{
+    public partial class EditorDetail : System.Web.UI.Page
+    {
+        protected EditorInfo obj;
+        string doi;
+        /// <summary>
+        /// 文章id
+        /// </summary>
+        public string Doi
+        {
+            get { return doi; }
+            set { doi = value; }
+        }
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            SetMasterVisual();
+            this.doi = Utility.ReplaceStr(CNKI.BaseFunction.NormalFunction.GetQueryString("doi", ""));
+            if (!IsPostBack)
+            {
+                BindData();
+            }
+        }
+
+        private void SetMasterVisual()
+        {
+            this.Master.PageTitle = "中国中医药出版社-编辑风采详情页";
+            this.Master.strCssName = UrlHelper.Resolve("/css/editor-con.css");
+            this.Master.displayGps = 5;
+        }
+
+        private void BindData()
+        {
+            EditorBLL bll = new EditorBLL();
+            if (string.IsNullOrEmpty(doi))
+            {
+                Response.Write("<script>alert('无法找到该页面');window.close();</script>");
+                Response.End();
+                return;
+            }
+            obj = bll.GetItem(doi);
+            if (obj == null)
+            {
+                Response.Write("<script>alert('无法找到该页面');window.close();</script>");
+                Response.End();
+                return;
+            }
+            //if (obj != null)
+            //{
+            //    string content = Utility.ReplacePicUrlForBook_nopic(obj.Digest);
+            //    lt_detail.Text = content;
+            //}
+            if (obj != null)
+            {
+                string key = obj.Name;
+                Book book = new Book();
+                int recordcount = 0;
+                //string sql = " ISONLINE='1'";
+                string sql = "";
+                //sql += string.Format(" ( name='?{0}' or author ='?{0}'  or EXECUTIVEEDITOR='?{0}' or DIGEST='?{0}' )", key.Trim());
+                sql += "(author='?" + key.Trim() + "' or EXECUTIVEEDITOR='?" + key.Trim() + "' or ZTCode='?" + key.Trim() + "' or BookCode='?" + key.Trim() + "')";
+                sql += "  ORDER BY Sys_fld_Adddate DESC ";
+                var list = book.GetList(sql, 1, 6, out recordcount, true);
+                if (list != null && list.Count > 0)
+                {
+
+                    StringBuilder sb = new StringBuilder();
+                    foreach (var item in list)
+                    {
+                        string imgUrl = "/page/ShowPic.aspx?path=" + Server.UrlEncode(item.SYS_FLD_COVERPATH) + "&vpath=" + item.SYS_FLD_VIRTUALPATHTAG + "&nopic=1";
+                        string Url = "/page/BookDetail.aspx?doi=" + item.SYS_FLD_DOI + "";
+                        sb.Append("<div class='book1'><img src='" + imgUrl + "' width='88' height='124' /><dl><dt>" + item.Name + "</dt>");
+                        //sb.Append("<dd style='color: #d40a00'><strong class='priceArrayS2'>" + "￥" + item.Price + "</strong></dd>");
+                        sb.Append("<dd class='jieshao'>作者：" + item.Author +"</dd><dd class='jieshao'>责任编辑: "+item.ExecutiveEditor.Replace("##LEFT##","").Replace("##RIGHT##","")+" </dd><dd class='jieshao'> 出版时间：" + item.IssueDate.ToString("yyyy-MM-dd") + "</dd>");
+                        sb.Append("<dd> <a target='_blank' href='" + Url + "'>详情</a></dd></dl></div>");
+
+
+                    }
+                    this.lt_detail.Text = sb.ToString();
+                    //string dois = "";
+                    //list.ToList().ForEach(x => dois += x.SYS_FLD_DOI + ";");
+                    //dois = dois.TrimEnd(';');
+                    //hid_dois.Value = dois;
+                }
+            }
+            else {
+                Response.Write("<script>alert('无法找到该页面');window.close();</script>");
+                Response.End();
+                return;
+            }
+
+        }
+
+    }
+}

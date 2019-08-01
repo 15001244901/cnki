@@ -1,0 +1,247 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using System.Text;
+
+using zyy.Helper;
+using zyy.Model;
+using zyy.BLL;
+using CNKI.BaseFunction;
+
+namespace zyy.page
+{
+    public partial class news : System.Web.UI.Page
+    {
+        string display;
+        /// <summary>
+        /// 展示导航
+        /// </summary>
+        public string Display
+        {
+            get { return display; }
+            set { display = value; }
+        }
+        string flag;
+        /// <summary>
+        /// 分类标志
+        /// </summary>
+        public string Flag
+        {
+            get { return flag; }
+            set { flag = value; }
+        }
+        /// <summary>
+        /// 资讯分类
+        /// </summary>
+        string sid;
+        public string Sid
+        {
+            get { return sid; }
+            set { sid = value; }
+        }
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            this.display = Utility.ReplaceStr(CNKI.BaseFunction.NormalFunction.GetQueryString("d", "2"));
+            this.flag = Utility.ReplaceStr(CNKI.BaseFunction.NormalFunction.GetQueryString("f", "5"));
+            NewsConfig config = new NewsConfig();
+            this.sid = config.GetNewsConfigByFlag(Convert.ToInt32(this.flag));
+            SetMasterVisual();
+            if (!IsPostBack)
+            {
+                BindData();
+            }
+        }
+
+        private void SetMasterVisual()
+        {
+            this.Master.PageTitle = "中国中医药出版社-新闻中心";
+            this.Master.strCssName = UrlHelper.Resolve("/css/news.css");
+            this.Master.displayGps = Convert.ToInt32(this.display);
+        }
+
+        private void BindData()
+        {
+            CMSTheme theme = new CMSTheme();
+            IList<CMSThemeInfo> list = theme.GetSubThemes(sid);
+            if (list != null && list.Count > 0)
+            {
+                StringBuilder str = new StringBuilder();
+                int j = list.Count > 4 ? 4 : list.Count;
+                for (int i = 0; i < j; i++)
+                {
+                    string css = "";
+                    switch (i)
+                    {
+                        case 0:
+                            css = "lefttop";
+                            break;
+                        case 1:
+                            css = "righttop";
+                            break;
+                        case 2:
+                            css = "leftbot";
+                            break;
+                        //case 3:
+                        //    css = "rightbot";
+                        //    break;
+                    }
+                    if (!string.IsNullOrEmpty(css))
+                    {
+                        str.Append("<div class=\"" + css + "\">");
+                        str.AppendFormat("<h3><span>{0}</span><a href=\"{1}\"></a></h3>"
+                            , list[i].ThemeName, UrlHelper.Resolve("/page/NotesList.aspx?d=" + this.display + "&cid=" + list[i].ID));
+                        Note obj = new Note();
+                        string sql = "Classification='" + list[i].ID + "' AND isuse=1 ORDER BY Pubdate DESC";
+                        int count;
+                        IList<NoteInfo> mylist = obj.GetList(sql, 1, 12, out count, true);
+                        str.Append(GetContent(mylist, i));
+                        str.Append("</div>");
+                    }
+                }
+                this.Litnews.Text = str.ToString();
+            }
+        }
+
+        protected string GetContent(IList<NoteInfo> mylist, int displace)
+        {
+            StringBuilder str = new StringBuilder();
+            if (mylist != null && mylist.Count > 0)
+            {
+                if (displace == 3)  //视频新闻
+                {
+                    str.AppendFormat("<div class=\"rbl\">");           
+                    str.AppendFormat("<ul>");
+                    if (mylist.Take(10).ToList() != null && mylist.Take(10).ToList().Count > 0)
+                    {
+                        mylist.Take(10).ToList().ForEach(x => str.AppendFormat("<li><a href=\"{0}\" target=\"_blank\">{1}</a></li>"
+                            , UrlHelper.Resolve("/page/NoteDetail.aspx?id=" + x.Id + "&d=" + this.display), x.Title));
+                    }
+                    str.Append("</ul>");
+                    str.Append("</div>");         
+                }
+                else if (displace == 2)  //前3项全部包含图片
+                {
+                    mylist.Take(6).ToList().ForEach(x =>
+                    {
+                        //str.AppendFormat("<div class=\"part1\" {0}>", mylist.Take(3).ToList().IndexOf(x) == 2 ? "style=\"border-bottom:none\"" : "");
+                        str.AppendFormat("<div class=\"part1\" {0}>", mylist.Take(3).ToList().IndexOf(x) == 2);
+                        if (!string.IsNullOrWhiteSpace(x.SYS_FLD_COVERPATH))
+                        {
+                            str.AppendFormat("<img src=\"{0}\" width=\"130\" height=\"76\" />", x.SYS_FLD_COVERPATH);
+                            str.AppendFormat("<div class=\"part1con\"  style=\"width:300px;\">");
+                        }
+                        else
+                        {
+                            str.AppendFormat("<div class=\"part1con\" style=\"width:470px;\">");
+                        }
+                        str.AppendFormat("<h4><a href=\"{0}\" target=\"_blank\">{1}</a></h4>"
+                            , UrlHelper.Resolve("/page/NoteDetail.aspx?id=" + x.Id + "&d=" + this.display), x.Title);
+                        str.AppendFormat("<p><a href=\"{0}\" target=\"_blank\">{1}</a></p>"
+                             , UrlHelper.Resolve("/page/NoteDetail.aspx?id=" + x.Id + "&d=" + this.display)
+                             , NormalFunction.SubString(string.IsNullOrWhiteSpace(x.DIGEST) ? ImgHelper.RemoveHtmlTag(x.Content) : x.DIGEST, 60, "..."));
+                        str.AppendFormat("</div>");
+                        str.AppendFormat("</div>");
+                    }
+                        );                    
+                }
+                else if (displace == 1)   //至少有3项包含图片
+                {
+                    //IList<NoteInfo> hasimglist = mylist.Where(x => x.HASIMAGE == 1).Take(3).ToList();
+                    //if (hasimglist != null && hasimglist.Count > 0)
+                    //{
+                    //    str.AppendFormat("<ul>");
+                    //    mylist.Where(x => !hasimglist.Contains(x)).Take(8).ToList().ForEach(x => str.AppendFormat("<li><a href=\"{0}\" target=\"_blank\">{1}</a></li>"
+                    //           , UrlHelper.Resolve("/page/NoteDetail.aspx?id=" + x.Id + "&d=" + this.display), x.Title));
+                    //    str.AppendFormat("</ul>");
+                    //    str.AppendFormat("<div class=\"imgscroll\">");
+                    //    hasimglist.ToList().ForEach(x =>
+                    //    {
+                    //        str.AppendFormat("<a href=\"{0}\" target=\"_blank\"><img src=\"{1}\"  width=\"130\"/>"
+                    //             , UrlHelper.Resolve("/page/NoteDetail.aspx?id=" + x.Id + "&d=" + this.display), x.SYS_FLD_COVERPATH);
+                    //        str.AppendFormat("<p>{0}</p></a>", x.Title);
+                    //    }
+                    //    );
+                    //    str.AppendFormat("</div>");
+                    //}
+                    //else 
+                    //{
+                    //    str.Append("<ul>");
+                    //    mylist.Take(8).ToList().ForEach(x => str.AppendFormat("<li style=\"width:500px;\"><a href=\"{0}\" target=\"_blank\">{1}</a><span style=\"display: inline-block;float: right;line-height: 36px;height: 36px;color: #666;\">{2}</span></li>"
+                    //                , UrlHelper.Resolve("/page/NoteDetail.aspx?id=" + x.Id + "&d=" + this.display)
+                    //                , x.Title, x.PUBDATE.Length >= 10 ? x.PUBDATE.Substring(0, 10) : ""));
+
+                    //    str.Append("</ul>");
+                    //}
+                    mylist.Take(3).ToList().ForEach(x =>
+                    {
+                        str.AppendFormat("<img src=\"{0}\" />", string.IsNullOrEmpty(x.SYS_FLD_COVERPATH) ? "..\\images\\picerr\\2.jpg" : x.SYS_FLD_COVERPATH);
+                        str.AppendFormat("<div class=\"top1\">");
+                        str.AppendFormat("<h4><a href=\"{0}\">{1}</a><span>{2}</span></h4>"
+                            , UrlHelper.Resolve("/page/NoteDetail.aspx?id=" + x.Id + "&d=" + this.display)
+                            , x.Title, x.PUBDATE.Length >= 10 ? x.PUBDATE.Substring(0, 10) : "");
+                        str.AppendFormat("<p><a href=\"{0}\" target=\"_blank\">{1}</a></p>"
+                             , UrlHelper.Resolve("/page/NoteDetail.aspx?id=" + x.Id + "&d=" + this.display)
+                             , NormalFunction.SubString(string.IsNullOrWhiteSpace(x.DIGEST) ? ImgHelper.RemoveHtmlTag(x.Content) : x.DIGEST, 60, "..."));
+                        str.AppendFormat("</div><div class=\"clear\"></div>");
+
+
+                    }
+                       );
+                }
+                else if (displace == 0)  //前6项中至少有一张包含图片
+                {
+                    //NoteInfo HasImage = mylist.FirstOrDefault(x => x.HASIMAGE == 1);
+                    //if (HasImage != null)
+                    //{
+                    //    str.AppendFormat("<img src=\"{0}\" />", HasImage.SYS_FLD_COVERPATH);
+                    //    str.AppendFormat("<div class=\"top1\">");
+                    //    str.AppendFormat("<h4><a href=\"{0}\">{1}</a><span>{2}</span></h4>"
+                    //        , UrlHelper.Resolve("/page/NoteDetail.aspx?id=" + HasImage.Id + "&d=" + this.display)
+                    //        , HasImage.Title, HasImage.PUBDATE.Length >= 10 ? HasImage.PUBDATE.Substring(0, 10) : "");
+                    //    str.AppendFormat("<p><a href=\"{0}\" target=\"_blank\">{1}</a></p>"
+                    //         , UrlHelper.Resolve("/page/NoteDetail.aspx?id=" + HasImage.Id + "&d=" + this.display)
+                    //         , NormalFunction.SubString(string.IsNullOrWhiteSpace(HasImage.DIGEST) ? ImgHelper.RemoveHtmlTag(HasImage.Content) : HasImage.DIGEST, 60, "..."));
+                    //    str.AppendFormat("</div><div class=\"clear\"></div>");
+                    //    str.Append("<ul>");
+                    //    mylist.Where(x => x.Id != HasImage.Id).Take(6).ToList().ForEach(x => str.AppendFormat("<li><a href=\"{0}\" target=\"_blank\">{1}</a><span>{2}</span></li>"
+                    //                , UrlHelper.Resolve("/page/NoteDetail.aspx?id=" + x.Id + "&d=" + this.display)
+                    //                , NormalFunction.SubString(x.Title,30,"..."), x.PUBDATE.Length >= 10 ? x.PUBDATE.Substring(0, 10) : ""));
+
+                    //    str.Append("</ul>");
+                    //}
+                    //else
+                    //{
+                    //    str.Append("<ul style=\"border-top:none;margin-top:-6px;\">");
+                    //    mylist.Take(8).ToList().ForEach(x => str.AppendFormat("<li><a href=\"{0}\" target=\"_blank\">{1}</a><span>{2}</span></li>"
+                    //                , UrlHelper.Resolve("/page/NoteDetail.aspx?id=" + x.Id + "&d=" + this.display)
+                    //                , NormalFunction.SubString(x.Title, 30, "..."), x.PUBDATE.Length >= 10 ? x.PUBDATE.Substring(0, 10) : ""));
+
+                    //    str.Append("</ul>");
+                    //}
+
+                    mylist.Take(3).ToList().ForEach(x =>
+                    {
+                        str.AppendFormat("<img src=\"{0}\" />", string.IsNullOrEmpty( x.SYS_FLD_COVERPATH) ? "..\\images\\picerr\\2.jpg" : x.SYS_FLD_COVERPATH);
+                        str.AppendFormat("<div class=\"top1\">");
+                        str.AppendFormat("<h4><a href=\"{0}\">{1}</a><span>{2}</span></h4>"
+                            , UrlHelper.Resolve("/page/NoteDetail.aspx?id=" + x.Id + "&d=" + this.display)
+                            , x.Title, x.PUBDATE.Length >= 10 ? x.PUBDATE.Substring(0, 10) : "");
+                        str.AppendFormat("<p><a href=\"{0}\" target=\"_blank\">{1}</a></p>"
+                             , UrlHelper.Resolve("/page/NoteDetail.aspx?id=" + x.Id + "&d=" + this.display)
+                             , NormalFunction.SubString(string.IsNullOrWhiteSpace(x.DIGEST) ? ImgHelper.RemoveHtmlTag(x.Content) : x.DIGEST, 60, "..."));
+                        str.AppendFormat("</div><div class=\"clear\"></div>");
+                       
+                       
+                    }
+                       );
+
+                }
+            }
+            return str.ToString();
+        }
+
+    }
+}

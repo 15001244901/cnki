@@ -1,0 +1,272 @@
+//var resType = '3.';
+
+$(function () {
+    //新闻资讯导航
+   // NewsList();
+    //详情
+    var resType = $('.tab a:first').data('type');
+    var itemIndex = 0;
+    var tab1LoadEnd = false;
+    var tab2LoadEnd = false;
+    var tab3LoadEnd = false;
+    var tab4LoadEnd = false;
+    var tab5LoadEnd = false;
+    var dropload = "";
+    var page = 1;
+
+    $('.tab').on('click', 'a', function () {
+        var $this = $(this);
+        itemIndex = $this.index();
+        $this.addClass('selected').siblings('a').removeClass('selected');
+        resType = $this.data("type");
+        page = 1;
+        $('.newlist').each(function () {
+            var type = $(this).data("type");
+            if (type == itemIndex) {
+                $(this).show().siblings(".newlist").hide();
+                $(this).empty();
+            }
+        });
+        resType = $this.data("type");
+        // 如果选中菜单一:全部
+        if (itemIndex == '0') {
+            // 如果数据没有加载完
+            if (!tab1LoadEnd) {
+                // 解锁
+                dropload.unlock();
+                dropload.noData(false);
+            } else {
+                // 锁定
+                dropload.lock('down');
+                dropload.noData();
+            }
+            // 如果选中菜单二:通知公告
+        } else if (itemIndex == '1') {
+            if (!tab2LoadEnd) {
+                // 解锁
+                dropload.unlock();
+                dropload.noData(false);
+            } else {
+                // 锁定
+                dropload.lock('down');
+                dropload.noData();
+            }
+            // 如果选中菜单三:媒体看我社
+        } else if (itemIndex == '2') {
+            if (!tab3LoadEnd) {
+                // 解锁
+                dropload.unlock();
+                dropload.noData(false);
+            } else {
+                // 锁定
+                dropload.lock('down');
+                dropload.noData();
+            }
+            // 如果选中菜单四:活动中心
+        } else if (itemIndex == '3') {
+            if (!tab4LoadEnd) {
+                // 解锁
+                dropload.unlock();
+                dropload.noData(false);
+            } else {
+                // 锁定
+                dropload.lock('down');
+                dropload.noData();
+            }
+            // 如果选中菜单五:投稿信箱
+        } else if (itemIndex == '4') {
+            if (!tab5LoadEnd) {
+                // 解锁
+                dropload.unlock();
+                dropload.noData(false);
+            } else {
+                // 锁定
+                dropload.lock('down');
+                dropload.noData();
+            }
+        }
+        // 重置
+        dropload.resetload();
+    });
+    //});
+    // 每页展示10个
+    var size = 10;
+    var pageStart = 0, pageEnd = 0;
+    //详情
+    var template = "{{#Models}}<li>\
+                        <div class='row'>\
+                            <div class='col-xs-4'><a href='/News/Detail?id={{id}}'><img src='/ShowPic/Index?vpath={{img}}'class='news-img' alt='' /></a></div>\
+                            <div class='col-xs-8'>\
+                                <div class='keys-text'>\
+                                    <h4><a href='/News/Detail?id={{id}}'>{{title}}</a></h4>\
+                                    <p>{{date}}</p>\
+                                </div>\
+                            </div>\
+                        </div>\
+                    </li>{{/Models}}";
+
+    // dropload
+    dropload = $('.content').dropload({
+        scrollArea: window,
+        loadDownFn: function (me) {
+            switch (itemIndex) {
+                case 0:
+                case 1:
+                case 2:
+                case 3:
+                case 4:               
+                    $.ajax({                        
+                            type: 'post',
+                            url: '/News/GetNewsList',
+                            dataType: 'json',
+                            data: { Page: page, Size: size, Type: resType },
+                            success: function (data) {
+                                if (data.Models.length > 0) {
+                                    page++;
+                                    var html1 = Mustache.render(template, data);
+                                    if (page > data.PageCount) {
+                                        // 数据加载完
+                                        //tab1LoadEnd = true;
+                                        // 锁定
+                                        me.lock()
+                                        // 无数据
+                                        me.noData();
+                                    }
+
+                                    $('.newlist').each(function () {
+                                        var type = $(this).data("type");
+                                        if (type == itemIndex) {
+                                            $("#count").empty().html(data.Count);
+                                            $(this).append(html1).siblings()
+                                        }
+                                    });
+                                    $(".newlist li>.row").attr("style", "width:" + $("#main").width() + "px;");
+                                    $(".newlist .news-img").attr("style", "width:" + Math.round($("#main").width() / 3 - 30) + "px;height:" + Math.round(($(".newlist li>.row").width() / 3 - 30) * 0.615) + "px");
+                                } else {
+                                    // 无数据
+                                    me.noData(true);
+                                }
+                                // 每次数据加载完，必须重置
+                                me.resetload();
+                            },
+                            error: function (xhr, type) {
+                                // 锁定
+                                me.lock();
+                                // 无数据
+                                me.noData();
+                                // 即使加载出错，也得重置
+                                me.resetload();
+                            }
+                        });                    
+                    break;
+            }                                                         
+        }
+    });
+
+})
+//导航
+//var template_newsListType = "{{#list}}<a href='javascript:void(0);'data-type='{{id}}' data-sort='{{name}}' class=''>{{name}}</a>{{/list}}";
+
+
+
+
+
+//function NewList(type) {
+//    $.ajax({
+//        url: "/News/GetNewsList",
+//        type: "post",
+//        dataType: "json",
+//        data: { Type: type },
+//        success: function (data) {
+//            if (data != null && data.Models.length > 0) {
+//                var html = Mustache.render(template_newList, data);
+//                $("#count").empty().html(data.Count);
+//                $("#newlist").empty().append(html);
+//            $("#newlist li>.row").attr("style", "width:" + $("#main").width() + "px;");
+//              $("#newlist .news-img").attr("style", "width:" + Math.round($("#main").width() / 3 - 30) + "px;height:" + Math.round(($("#newlist li>.row").width() / 3 - 30) * 0.615) + "px");
+//            } else {
+//                $("#newList").empty();
+//                $("#count").html("0");
+//            }
+//        }
+//    })
+//}
+
+
+//function NewList(type1) {
+//    var page = 0;
+//    // 每页展示10个
+//    var size = 10;
+//    // dropload
+//    dropload= $('.con-list').dropload({
+//        scrollArea: window,
+//        domUp: {
+//            domClass: 'dropload-up',
+//            domRefresh: '<div class="dropload-refresh">↓下拉刷新</div>',
+//            domUpdate: '<div class="dropload-update">↑释放更新</div>',
+//            domLoad: '<div class="dropload-load"><span class="loading"></span>加载中...</div>'
+//        },
+
+//        loadDownFn: function (me) {
+//            page++;
+//            // 拼接HTML
+//            //var result = '';
+//            $.ajax({
+//                url: "/News/GetNewsList",
+//                dataType: "json",
+//                type: "post",
+//                data: { Page: page, Size: size, Type: type1 },
+//                success: function (data) {
+//                    if (data != null && data.Models.length > 0) {
+//                        var html = Mustache.render(template_newList, data);
+//                        $("#count").empty().html(data.Count);
+//                        $("#newlist").empty().append(html);
+//                        $("#newlist li>.row").attr("style", "width:" + $("#main").width() + "px;");
+//                        $("#newlist .news-img").attr("style", "width:" + Math.round($("#main").width() / 3 - 30) + "px;height:" + Math.round(($("#newlist li>.row").width() / 3 - 30) * 0.615) + "px");
+//                        // 如果没有数据
+//                        if (data.Count == 1 || page == data.Count) {
+//                            // 锁定
+//                            me.lock();
+//                            // 无数据
+//                            me.noData();
+//                        }
+//                    } else {
+//                        // 锁定
+//                        me.lock();
+//                        // 无数据
+//                        me.noData();
+//                    }
+
+//                },
+//                error: function (xhr, type) {
+//                    // 锁定
+//                    me.lock();
+//                    // 无数据
+//                    me.noData();
+//                    // 即使加载出错，也得重置
+//                    me.resetload();
+//                }
+//            });
+//        },
+//        threshold: 50
+//    });
+//};
+
+//导航方法
+//function NewsList() {
+//    $.ajax({
+//        url: "/News/GetNewsCls",
+//        type: "post",
+//        dataType: "json",
+//        success: function (data) {
+//            if (data != null && data.length > 0) {
+//                var html = Mustache.render(template_newsListType, { list: data });
+//                $("#botton").append(html);
+//                resType = $(".col-xs-12 a:first").data("type")
+//            } else {
+//                $("#botton").empty();
+//            }
+//        }
+//    })
+//}
+

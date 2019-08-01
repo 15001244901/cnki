@@ -1,0 +1,29 @@
+<%@ Page Title="" Language="C#" MasterPageFile="~/Master/WebPage.Master" AutoEventWireup="true" CodeBehind="news.aspx.cs" Inherits="zyy.page.news" %>
+<%@ MasterType VirtualPath="~/Master/WebPage.Master" %>
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+        
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+<div class="clear"></div>
+<div id="banner"><img src="../image/newbanner.png" /></div><!--banner-->
+<div id="conwrap">
+<div id="local"><img src="../image/dot4.png" /><span>当前位置：</span><a href="/Default.aspx">首页 ></a><a href="#"> </a></div><!--local-->
+<div id="con">
+<asp:Literal ID="Litnews" runat="server"></asp:Literal>
+</div>
+</div>
+<script language="javascript" type="text/javascript">
+    $(function () {
+        var display = parseInt("<%=Display %>");
+        var loctext = $("#mainnav_wrapul >li >a").eq(display).text();
+        var locurl = $("#mainnav_wrapul >li >a").eq(display).attr("href");
+        if (display === 0) {
+            $("#local a").eq(1).remove();
+        } else {
+            $("#local a").eq(1).text(" " + loctext);
+            $("#local a").eq(1).attr("href", locurl);
+        }
+    })
+    selectNav(3);
+    </script>
+</asp:Content>

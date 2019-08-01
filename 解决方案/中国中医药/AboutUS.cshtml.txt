@@ -1,0 +1,54 @@
+@model zyy.Model.NoteInfo
+
+@{
+    ViewBag.Title = "关于我们";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link href="~/Css/contact-us.css" rel="stylesheet" />
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+<script src="~/Scripts/aboutus.js"></script>
+<script src="~/Scripts/mustache.min.js"></script>
+@*<script>
+    $(function () {
+        var cls=$("#active").val();
+
+        $("#smenu a").each(function () {
+            var id = $(this).data("cls");
+            if (id == cls)
+            {
+                $(this).addClass().addClass("selected").siblings().removeClass("selected");
+            }
+        });
+    });
+</script>*@
+
+<!--导航-->
+<div class="con-nav">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12" id="smenu">
+                <span class="arrow-l"></span><span class="arrow-r"></span>
+                @*<a href="/AboutUs/Index?cls=2.1." data-cls="2.1." class="selected">出版社简介</a>
+                <a href="/AboutUs/Index?cls=2.2." data-cls="2.2.">社长致辞</a>
+                <a href="/AboutUs/Index?cls=2.3." data-cls="2.3.">现任领导</a>
+                <a href="/AboutUs/Index?cls=2.4." data-cls="2.4.">组织机构</a>
+                <a href="/AboutUs/Index?cls=2.5." data-cls="2.5.">荣誉长廊</a>
+                <a href="/AboutUs/Index?cls=2.6." data-cls="2.6.">出版社文化</a>*@
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--出版社联系方式-->
+<div class="con-item contact-way">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12" id="content">
+                @*@Html.Raw(Model.Content)*@
+            </div>
+        </div>
+    </div>
+</div>
+
+<input id="active" value="@ViewBag.cls" hidden />

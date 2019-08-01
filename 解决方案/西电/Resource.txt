@@ -1,0 +1,512 @@
+$(function () {
+    window.UEDITOR_HOME_URL = location.protocol + '//' + document.domain + (location.port ? (":" + location.port) : "") + "/Scripts/Lib/ueditor1.4.3/";
+    UEDITOR_CONFIG.imagePath = "/Scripts/Lib/ueditor1.4.3/";
+    var editor = UE.getEditor('NewsContent');
+    //操作
+    PanelOperator(editor);
+});
+function PanelOperator(editor) {
+    var $panel = $("#SourceList");
+    $panel.on("click", "[data-action]", function () {
+        var self = this, $self = $(this), action = $self.data("action");
+        if (!action) return false;
+        var id = $self.data("id");
+        var ids = GetSelectedBookValues();
+        switch (action) {
+            case "group-checkable":  //全选
+                var $table = $self.parents("table:first");
+                var set = $self.data("set");
+                var $targets = $(set, $table);
+                $targets.attr("checked", self.checked);
+                $.uniform.update(set);
+                break;
+            case "add-file"://添加文件夹
+                OperateFileSource("");
+                break;
+            case "add-source":  //添加资源
+                OperateSource("");
+                break;
+            case "add-link"://添加链接
+                OperateLinkSource("");
+                break;
+            case "add-word"://添加富文本编辑
+                OperateUeditorSource("", editor);
+                break;
+            case "edit"://编辑
+                if (isNull(id)) {
+                    layer.alert("未获取到数据，请重试！")
+                } else {
+                    var type = $self.data("type");
+                    switch (type) {
+                        case 0:
+                            $("#fName").val($self.data("name"));
+                            OperateFileSource(id);//文件夹编辑
+                            break;
+                        case 7:
+                            $("#lName").val($self.data("name"));
+                            $("#lUrl").val($self.children("input").val());
+                            OperateLinkSource(id);
+                            break;
+                        case 8:
+                            $("#editorName").val($self.data("name"));
+                            OperateUeditorSource(id, editor);
+                            break;
+                        default:
+                            OperateSource(id);
+                            break;
+                    }
+                }
+                break;
+            case "group-delete"://图书批量删除
+                if (ids.length) {
+                    layer.confirm('您确定要删除此项吗？', {
+                        btn: ['确定', '取消']
+                    }, function () {
+                        DeleteSource(ids);
+                    });
+                }
+                else {
+                    layer.alert("您没有选中任何项！");
+                }
+                break;
+            case "delete"://删除
+                layer.confirm("您确定要删除选中项吗？", function (index) {
+                    DeleteSource(id);
+                });
+                break;
+            case "show-img"://展示图片
+                $("#tpic").attr("src", "/Admin/ShowPic/Show?vtag=1&ptype=1&vpath=" + $self.children("input").val());
+                $("#realname").text($self.data("name"));
+                layer.open({
+                    type: 1,
+                    title: false,
+                    closeBtn: 1,
+                    maxWidth: '800',
+                    area: 'auto',
+                    //skin: 'layui-layer-nobg', //没有背景色
+                    shadeClose: true,
+                    content: $('#sourceImg'),
+                    cancel: function (index) {
+                        layer.close(index);
+                    }
+                });
+                break;
+            case "show-resource"://展示资源
+                layer.open({
+                    type: 2,
+                    title: $self.data("name"),
+                    shadeClose: true,
+                    shade: false,
+                    maxmin: true, //开启最大化最小化按钮
+                    area: ['960px', '600px'],
+                    offset: 'auto', //右下角弹出
+                    shift: 2,
+                    content: [$self.data("url"), 'yes'], //iframe的url，no代表不显示滚动条
+                });
+                break;
+            case "move"://移动
+                layer.open({
+                    type: 2,
+                    //title: title,
+                    maxmin: true, //开启最大化最小化按钮
+                    area: ['960px', '614px'],
+                    fixed: false,
+                    //content: ["/admin/QrResource/FileResList?doi=" + doi, 'yes'], //iframe的url，no代表不显示滚动条
+                    content: ["/admin/Resource/ResourceFileResList?doi=" + id, 'yes'],
+                    end: function () {//无论是确认还是取消，只要层被销毁了，end都会执行，不携带任何参数。layer.open关闭事件
+                        location.reload();
+                    }
+                });
+                break;
+            case "group-move"://图书批量删除
+                if (ids.length) {
+                    layer.confirm('您确定要移动此项吗？', {
+                        btn: ['确定', '取消']
+                    }, function () {
+                        MoveSource(ids);
+                    });
+                }
+                else {
+                    layer.alert("您没有选中任何项！");
+                }
+                break;
+            default:
+                break;
+        }
+    });
+}
+
+//编辑文件资源
+function OperateSource(id) {
+    if (!isNull(id)) {
+        $.ajax({
+            url: "/Admin/Resource/GetContent",
+            type: "get",
+            dataType: "json",
+            data: { doi: id },
+            success: function (data) {
+                if (data.success) {
+                    $("#sourceName").val(data.Model.SOURCENAME);
+                    $("#digest").val(data.Model.DIGEST);
+                    $("#hid_sourceType").val(data.Model.SOURCETYPE);
+                    $("#hid_sourcePath").val(data.Model.SOURCEPATH);
+                    $("#hid_sourceSize").val(data.Model.SOURCESIZE);
+                    $("#hid_url").val("/Admin/Resource/UPDetail?id=" + data.Model.ID + "");
+                    if (data.Model.SOURCETYPE == 6) {
+                        $(".img-con").show();
+                        $(".name-con").hide();
+                        $("#images").attr("src", "/Admin/ShowPic/Show?vtag=1&ptype=1&vpath=" + data.Model.SOURCEPATH);
+                    } else if (data.Model.SOURCETYPE == 2) {//视频封面
+                        $("#hid_videoImg").val(data.Model.SOURCRURL);
+                        $(".img-con").show();
+                        $(".name-con").hide();
+                        $("#images").attr("src", "/Admin/ShowPic/Show?vtag=1&ptype=1&vpath=" + data.Model.SOURCRURL);
+                    }
+                    else {
+                        $(".name-con").show();
+                        $(".img-con").hide();
+                        $("span[name=fileName]").html((isNull(data.Model.SOURCEPATH) ? "没有上传文件！" : data.Model.SOURCENAME));
+                    }
+                }
+            }
+        });
+    } else {
+        $(".img-con").hide();
+        $(".name-con").hide();
+    }
+
+    //上传文件
+    UploadFile(id);
+    document.getElementById('fileupload').onchange = setFileInfo;
+    //捕获页
+    layer.open({
+        type: 1,
+        title: "文件资源",
+        shade: false,
+        btn: ['确认', '取消'],
+        area: ['900px', '600px'],
+        content: $('#addSource'), //捕获的元素             
+        yes: function (index) {
+            var fileName = $("#sourceName").val();
+            if (isNull(fileName)) {
+                layer.alert("请输入文件名称！");
+            } else {
+                var model = new SourceView();
+                model.fileName = fileName;
+                model.doi = id;
+                model.sourceType = $("#hid_sourceType").val() || 9;
+                model.sourcePath = $("#hid_sourcePath").val();
+                model.sourceSize = $("#hid_sourceSize").val();
+                model.timeSize = $("#hid_timeSize").val();
+                model.digest = $("#digest").val();
+                model.videoImg = $("#hid_videoImg").val();
+                EditFileSource(model);
+            }
+        },
+        btn2: function (index) {
+            Close(index);
+        }
+    });
+
+
+
+    //layer.open({
+    //    type: 2,
+    //    title: "文件资源",
+    //    maxmin: true, //开启最大化最小化按钮
+    //    area: ['920px', '650px'],
+    //    content: ["/admin/FileResource/DownResource?id=" + id, 'yes'], //捕获的元素
+    //    end: function () {//无论是确认还是取消，只要层被销毁了，end都会执行，不携带任何参数。layer.open关闭事件
+    //        location.reload();
+    //    }
+    //});
+
+}
+
+//富文本编辑
+function OperateUeditorSource(id, editor) {
+    UE.ajax.request("/Admin/Resource/GetContent", {
+        'method': 'GET',
+        'dataType': 'json',
+        'data': { doi: id },
+        'async': false,
+        'onsuccess': function (r) {
+            var msg = eval("(" + r.response + ")");
+            if (msg.success) {
+                //捕获页
+                layer.open({
+                    type: 1,
+                    title: "图文",
+                    shade: false,
+                    btn: ['确认', '取消'],
+                    area: ['970px', '680px'],
+                    zIndex: 0.1,
+                    content: $('#addUeditorSource'), //捕获的元素
+                    cancel: function (index) {
+                        Close(index);
+                    },
+                    success: function (layero, index) {
+                    },
+                    yes: function (index) {
+                        var sourceName = $("#editorName").val();
+                        var sourceContent = editor.getContent();
+                        if (isNull(sourceName)) {
+                            layer.alert("请输入图文名称！");
+                        } else {
+                            var model = new SourceView();
+                            model.fileName = sourceName;
+                            model.sourceContent = sourceContent;
+                            model.doi = id;
+                            model.sourceType = 8;//链接
+                            EditFileSource(model);
+                        }
+                    },
+                    btn2: function (index) {
+                        Close(index);
+                    },
+                    end: function (index) {
+                        editor.setContent(" ", false);
+                    }
+                });
+                editor = UE.getEditor('NewsContent');
+                editor.addListener("ready", function () {
+                    if (editor.getContent() == "") {
+                        editor.setContent(msg.Model.SOURCECONTENT, false);
+                    }
+                });
+                editor.setContent(msg.Model.SOURCECONTENT, false);
+            }
+        }
+    });
+}
+
+//链接
+function OperateLinkSource(id) {
+    //捕获页
+    layer.open({
+        type: 1,
+        title: "链接",
+        shade: false,
+        btn: ['确认', '取消'],
+        area: ['600px', '250px'],
+        content: $('#addLinkSource'), //捕获的元素
+        cancel: function (index) {
+            Close(index);
+        },
+        yes: function (index) {
+            var linkName = $("#lName").val();
+            var linkUrl = $("#lUrl").val();
+            if (isNull(linkName)) {
+                layer.alert("请输入链接名称！");
+            } else {
+                var model = new SourceView();
+                model.fileName = linkName;
+                model.linkUrl = linkUrl;
+                model.doi = id;
+                model.sourceType = 7;//链接
+                EditFileSource(model);
+            }
+        },
+        btn2: function (index) {
+            Close(index);
+        }
+    });
+}
+
+//编辑文件夹
+function OperateFileSource(id) {
+    //捕获页
+    layer.open({
+        type: 1,
+        title: "文件夹",
+        shade: false,
+        btn: ['确认', '取消'],
+        area: ['600px', '200px'],
+        content: $('#addFileSource'), //捕获的元素
+        cancel: function (index) {
+            Close(index);
+        },
+        yes: function (index) {
+            var fileName = $("#fName").val();
+            if (isNull(fileName)) {
+                layer.alert("请输入文件夹名称！");
+            } else {
+                var model = new SourceView();
+                model.fileName = fileName;
+                model.doi = id;
+                model.sourceType = 0;//文件夹
+                EditFileSource(model);
+            }
+        },
+        btn2: function (index) {
+            Close(index);
+        }
+    });
+}
+
+//提交数据-添加/编辑
+function EditFileSource(model) {
+    var data = { FileName: model.fileName, LinkUrl: model.linkUrl, Doi: model.doi, SourceType: model.sourceType, SourceContent: model.sourceContent, SourcePath: model.sourcePath, SourceSize: model.sourceSize, digest: model.digest, TimeSize: model.timeSize, VideoImg:model.videoImg };
+    $.ajax({
+        url: "/Admin/Resource/AddFileResource",
+        type: "post",
+        data: data,
+        dataType: "json",
+        success: function (data) {
+            if (data.success) {
+                window.parent.location.reload();
+            } else {
+                layer.alert("操作失败，请重试！");
+            }
+        }
+    });
+}
+
+///获取批量删除选择项
+function GetSelectedBookValues() {
+    var idlist = new Array();
+    var idArray = new Array()
+    $('input[type=checkbox]').each(function (i, item) {
+        if (this.checked == true) {
+            var id = $(item).data("id");
+            if (!!id) {
+                idlist.push(id);
+                idArray = idlist.join(";");
+            }
+        }
+    })
+    return idArray;
+}
+
+//删除
+function DeleteSource(id) {
+    $.ajax({
+        url: "/Admin/Resource/DeleteResource",
+        type: "post",
+        data: { dois: id },
+        dataType: "json",
+        success: function (data) {
+            if (data.success) {
+                window.parent.location.reload();
+            } else {
+                layer.alert("删除失败，请重试！");
+            }
+        }
+    });
+}
+
+//上传
+function UploadFile(id) {
+    $('#fileupload').fileupload({
+        type: "post",
+        dataType: 'json',
+        url: "/Admin/Resource/UPDetail?id=" + id,
+        done: function (e, data) {
+            if (data.result['success'] == "false") {
+                $('#progress .bar').css(
+               'width',
+               0 + '%'
+           );
+                layer.alert("上传失败！");
+            } else {
+                document.getElementById('fileupload').onchange = setFileInfo;
+                var name = $("#sourceName").val();
+                $("#sourceName").val(data.result['name']);
+                if (data.result['sourceType'] == '6') {
+                    $(".img-con").show();
+                    $(".name-con").hide();
+                    $("#images").attr("src", "/Admin/ShowPic/Show?vtag=1&ptype=1&vpath=" + data.result['path']);
+                } else {
+                    $(".name-con").show();
+                    $(".img-con").hide();
+                    $("span[name=fileName]").html(data.result['name']);
+                }
+                $("#hid_sourcePath").val(data.result['path']);
+                $("#hid_sourceType").val(data.result['sourceType']);
+                $("#hid_sourceSize").val(Math.round(data.files[0].size / 1024, 2));
+                $("#hid_videoImg").val(data.result['imgpath']);
+            }
+        },
+        fail: function () {
+            layer.alert("上传失败！");
+        },
+        progressall: function (e, data) {
+            var progress = parseInt(data.loaded / data.total * 53, 10);
+            $('#progress .bar').css(
+                'width',
+                progress + '%'
+            );
+            $('#progress .bar').html(parseInt(data.loaded / data.total * 100, 10) + '%');
+        }
+    });
+}
+
+//视频，保存时长
+function setFileInfo() {
+    var myVideos = [];
+    var files = this.files;
+    myVideos.push(files[0]);
+    var video = document.createElement('video');
+    video.preload = 'metadata';
+    video.onloadedmetadata = function () {
+        var duration = video.duration;
+        myVideos[myVideos.length - 1].duration = duration;
+        var hour = parseInt((duration) / 3600);
+        var minute = parseInt((duration % 3600) / 60);
+        var second = Math.ceil(duration % 60);
+        $("#hid_timeSize").val(hour + ":" + minute + ":" + second);
+    }
+    video.src = URL.createObjectURL(files[0]);;
+}
+
+function openBrowse() {
+    var ieorchorme = (navigator.appName == "Microsoft Internet Explorer" || navigator.appName == "Netscape") ? true : false;
+    if (ieorchorme) {
+    } else {
+    } document.getElementById("fileupload").click();
+}
+
+//model
+function SourceView() {
+    var fileName = "";
+    var linkUrl = "";
+    var doi = "";
+    var sourceType = "";
+    var sourceContent = "";
+    var digest = "";
+    var sourcePath = "";
+    var sourceSize = "";
+    var timeSize = "";
+    var videoImg = "";
+}
+
+function isNull(input) {
+    if (input == null || input == undefined || input == "") {
+        return true;
+    }
+    return false;
+}
+
+function Close(index) {
+    $("#sName").html("");
+    $("input[type='hidden']").val("");
+    $("input[type=reset]").trigger("click");
+    layer.close(index);
+}
+
+
+function MoveSource(ids) {
+    $.ajax({
+        url: "/Admin/Resource/MoveResource",
+        type: "post",
+        data: { dois: ids },
+        dataType: "json",
+        success: function (data) {
+            if (data.success) {
+                window.parent.location.reload();
+            } else {
+                layer.alert("删除失败，请重试！");
+            }
+        }
+    });
+}
