@@ -112,3 +112,10 @@ Views>>Account>>Login.cshtml/Register.cshtml
 后台
 1.数据管理 电子书管理 详情
 2.图书出版专题管理 规划教材 Marterials.xml
+3前台
+1.图书详情页 点击查看大图 css
+
+2019.8.2
+暨大
+前台
+1.乔批 点击购买 流程
