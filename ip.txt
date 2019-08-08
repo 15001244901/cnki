@@ -3,14 +3,13 @@
 中医药; H5  http://192.168.100.169:8095/  Web  http://192.168.100.169:8094/    H5  http://114.112.104.244:8008   Web http://www.cptcm.com
 
 图标库: http://fontawesome.dashgame.com/
-
+电商:http://192.168.100.169:8189
 215 cnki@cnki_123
 169 cnki_123
+10.170.128.120 
+用户名  ：administrator     密码 ：a.1
 
 yp yp
 hp hp
 
-Git:
-username:15001244901
-email:2386856867@qq.com
-pwd:GOOD123good
+CmWliR3UQjHemsAUIVYFYxjcA49elRwU
