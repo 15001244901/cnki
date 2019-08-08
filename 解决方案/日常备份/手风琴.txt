@@ -1,0 +1,148 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="Keywords" content="">
+<meta name="Keywords" content="">
+<title>手风琴</title>
+</head>
+<link rel="stylesheet" type="text/css" href="css/accordion.css" />
+<body>
+<div class="wrapper">
+<ul>
+<li>
+<div class="content">
+<dl>
+<dt><img src="images/a1.png" /></dt>
+<dd>Picture 1</dd>
+</dl>
+<dl>
+<dt><img src="images/a1.png" /></dt>
+<dd>Picture 11</dd>
+</dl>
+<dl>
+<dt><img src="images/a1.png" /></dt>
+<dd>Picture 12</dd>
+</dl>
+<dl>
+<dt><img src="images/a1.png" /></dt>
+<dd>Picture 13</dd>
+</dl>
+</div>
+<p class="p1">Picture information 1</p>
+<p class="p2">Picture information 1</p>
+</li>
+<li>
+<div class="content">
+<dl>
+<dt><img src="images/a2.png" /></dt>
+<dd>Picture 2</dd>
+</dl>
+<dl>
+<dt><img src="images/a2.png" /></dt>
+<dd>Picture 21</dd>
+</dl>
+<dl>
+<dt><img src="images/a2.png" /></dt>
+<dd>Picture 22</dd>
+</dl>
+<dl>
+<dt><img src="images/a2.png" /></dt>
+<dd>Picture 23</dd>
+</dl>
+</div>
+<p class="p1">Picture information 2</p>
+<p class="p2">Picture information 2</p>
+</li>
+<li>
+<div class="content">
+<dl>
+<dt><img src="images/a3.png" /></dt>
+<dd>Picture 3</dd>
+</dl>
+<dl>
+<dt><img src="images/a3.png" /></dt>
+<dd>Picture 31</dd>
+</dl>
+<dl>
+<dt><img src="images/a3.png" /></dt>
+<dd>Picture 32</dd>
+</dl>
+<dl>
+<dt><img src="images/a3.png" /></dt>
+<dd>Picture 33</dd>
+</dl>
+</div>
+<p class="p1">Picture information 3</p>
+<p class="p2">Picture information 3</p>
+</li>
+<li>
+<div class="content">
+<dl>
+<dt><img src="images/a4.png" /></dt>
+<dd>Picture 4</dd>
+</dl>
+<dl>
+<dt><img src="images/a4.png" /></dt>
+<dd>Picture 41</dd>
+</dl>
+<dl>
+<dt><img src="images/a4.png" /></dt>
+<dd>Picture 42</dd>
+</dl>
+<dl>
+<dt><img src="images/a4.png" /></dt>
+<dd>Picture 43</dd>
+</dl>
+</div>
+<p class="p1">Picture information 4</p>
+<p class="p2">Picture information 4</p>
+</li>
+<li>
+<div class="content">
+<dl>
+<dt><img src="images/a5.png" /></dt>
+<dd>Picture 5</dd>
+</dl>
+<dl>
+<dt><img src="images/a5.png" /></dt>
+<dd>Picture 51</dd>
+</dl>
+<dl>
+<dt><img src="images/a5.png" /></dt>
+<dd>Picture 52</dd>
+</dl>
+<dl>
+<dt><img src="images/a5.png" /></dt>
+<dd>Picture 53</dd>
+</dl>
+</div>
+<p class="p1">Picture information 5</p>
+<p class="p2">Picture information 5</p>
+</li>
+<li>
+<div class="content">
+<dl>
+<dt><img src="images/a6.png" /></dt>
+<dd>Picture 6</dd>
+</dl>
+<dl>
+<dt><img src="images/a6.png" /></dt>
+<dd>Picture 61</dd>
+</dl>
+<dl>
+<dt><img src="images/a6.png" /></dt>
+<dd>Picture 62</dd>
+</dl>
+<dl>
+<dt><img src="images/a6.png" /></dt>
+<dd>Picture 63</dd>
+</dl>
+</div>
+<p class="p1">Picture information 6</p>
+<p class="p2">Picture information 6</p>
+</li>
+</ul>
+</div>
+</body>
+</html>

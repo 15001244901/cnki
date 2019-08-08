@@ -1,0 +1,140 @@
+$(function () {
+
+    var keyword = $("#inputKeyword").val();
+    var type = $("#inputType").val();
+    //绑定词条分类
+    GetTypes(type, keyword);
+
+
+    if (keyword != "") {
+        $("input[type=text]").val(keyword);
+        var type = $("#types").children("a:eq(0)").data("type");
+        GetTypeList(type, "1", keyword)
+    }
+
+    if (type != "") {
+        $("#types a").each(function () {
+            if ($(this).data("type") == type) {
+                $(this).addClass("active").siblings().removeClass("active");
+                //GetTypes(type, keyword);
+                GetTypeList(type, "1", keyword)
+            }
+        })
+
+
+    }
+
+    //相关平台链接
+    LinkList();
+    $("#link-list").on("click", "a", function () {
+        $(this).addClass("active").siblings().removeClass("active");
+        $(this).parent().siblings().children('a').removeClass('active')
+    })
+
+    //获取选中分类的详情list
+    $("#types").on("click", "a", function () {
+        $(this).addClass("active").siblings().removeClass("active");
+
+        keyword = $("input[type=text]").val();
+        type = $(this).data("type");
+        //获取选中分类的详情list
+        GetTypeList(type, "1", keyword)
+
+    })
+
+
+    //关键词检索
+    $(".search-btn").click(function () {
+        keyword = $("input[type=text]").val();
+        type = $("#types").find("a[class=active]").data("type");
+        GetTypeList(type, "1", keyword);
+    })
+
+})
+
+//绑定词条分类
+var template_types = "{{#models}} <a href='#'data-type='{{name}}'>{{name}}</a>{{/models}}";
+function GetTypes(type, keyword) {
+    $.ajax({
+        //async: false,
+        url: "/Entry/GetTypes",
+        type: "post",
+        success: function (data) {
+            if (data.success) {
+                var html = Mustache.render(template_types, data);
+                $("#types").append(html);
+                if (type == "" || type == null) {
+                    $("#types").children("a:eq(0)").addClass("active")
+                    var type = $("#types").children("a:eq(0)").data("type");
+                    GetTypeList(type, "1", keyword);
+                } else {
+                    $("#types").children("a[data-type=" + type + "]").addClass("active")
+                    GetTypeList(type, "1")
+                }
+            } else {
+                $("#types").empty();
+            }
+        }
+    })
+}
+
+
+//获取选中分类的详情list
+var template_list = "{{#models}}<li>\
+                <a href='/Entry/Detail?doi={{doi}}'>\
+                    <h4><i></i>{{&name}}</h4>\
+                    <p>{{&content}}</p>\
+                </a>\
+            </li>{{/models}}"
+function GetTypeList(type, page, keyword) {
+    var fun = arguments.callee;
+    $.ajax({
+
+        url: "/Entry/GetTypeList",
+        type: "post",
+        data: { classfication: type, Page: page, Keyword: keyword },
+        success: function (data) {
+            if (data.success) {
+                var a = $("input[name=PageCount]").val(data.PageCount);
+                var b = $("input[name=Size]").val(data.Size);
+                var c = $("input[name=Page]").val(page);
+                var d = $("input[name=dangqianye]").val(page);
+                var html = Mustache.render(template_list, data);
+                $("#result-list").empty().html(html);
+
+                //var dqts = "为您检索到<b>" + json.Count + "</b>条结果，当前显示<b>" + json.Page + "/" + json.PageCount + "</b>页";
+                //$(".result-info p.xsresult").html(dqts);
+            } else {
+                $("#result-list").empty().html("<li>未查询到相关数据</li>");
+            }
+            pageSet(data.PageCount, fun, 0, data.Size, type, keyword);
+            // $("#pages").children("a:eq(2)").addClass("current_page").siblings().removeClass("current_page");
+        }
+
+
+
+    })
+}
+
+
+//其他平台连接
+var template_link = "{{#models}}<li><a href='{{url}}'  blank='_target'><i></i>{{name}}</a></li>{{/models}}"
+
+function LinkList() {
+    $.ajax({
+        async: false,
+        url: "/Entry/LinkList",
+        type: "post",
+        success: function (data) {
+            if (data != null) {
+                var html = Mustache.render(template_link, data);
+                $("#link-list").empty().append(html);
+                //$("#link-list").children("a:eq(0)").addClass("active")
+                $("#link-list").find("a").eq(0).addClass("active");
+            } else {
+                $("#link-list").empty().html("<li>未存在其他平台相关链接,敬请期待...</li>")
+            }
+        }
+    })
+}
+

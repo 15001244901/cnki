@@ -1,0 +1,1 @@
+ <add key="URLReplace" value="',;,and,exec,insert,select,count,*,chr,asc,master,truncate,char,declare,net user,xp_cmdshell,/add,drop,from,alert,confirm,`,`"/>

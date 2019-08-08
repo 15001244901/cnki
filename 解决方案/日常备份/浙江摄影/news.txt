@@ -1,0 +1,124 @@
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link href="~/Content/css/news-index.css" rel="stylesheet" />
+
+<div class="main-con">
+    <div class="cur-position"><a href="#">首页</a> &gt; <span>专题活动列表</span></div>
+    <h3><img src="~/Content/images/spec-title.png" alt="" /></h3>
+    <div class="spec-con clearfix">
+        <div class="left-nav fl">
+            <p>今</p>
+            <ul>
+                <li><a href="#"><i></i>2019年6月</a></li>
+                <li><a href="#"><i></i>2019年5月</a></li>
+                <li><a href="#"><i></i>2019年4月</a></li>
+                <li><a href="#" class="selected"><i></i>2019年3月</a></li>
+                <li><a href="#"><i></i>2019年2月</a></li>
+                <li><a href="#"><i></i>2019年1月</a></li>
+            </ul>
+        </div>
+        <div class="spec-list fr">
+            <ul>
+                <li>
+                    <div class="spec-item">
+                        <div class="spec-pic"><a href="#"><img src="~/Content/images/spec-pic-1.jpg" alt="" /></a></div>
+                        <div class="spec-info">
+                            <h4>
+                                <a href="#">浙江省2019年“文化和自然遗产日”宣传展示活动综述</a>
+                                <p><span>2019.03.02</span></p>
+                            </h4>
+                            <p>6月8日至10日，由云南省文化和旅游厅、红河哈尼族彝族自治州人民政府主办，云南省非物质文化遗产保护中心、红河州文化和旅游局、红河州蒙自市人民政府、云南大学文化发展研究院、云南大学艺术与设计学院、昆明市文化和旅游局、昆明市官渡...</p>
+                            <a href="#" class="more">查看更多</a>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="spec-item">
+                        <div class="spec-pic"><a href="#"><img src="~/Content/images/spec-pic-1.jpg" alt="" /></a></div>
+                        <div class="spec-info">
+                            <h4>
+                                <a href="#">浙江省2019年“文化和自然遗产日”宣传展示活动综述</a>
+                                <p><span>2019.03.02</span></p>
+                            </h4>
+                            <p>6月8日至10日，由云南省文化和旅游厅、红河哈尼族彝族自治州人民政府主办，云南省非物质文化遗产保护中心、红河州文化和旅游局、红河州蒙自市人民政府、云南大学文化发展研究院、云南大学艺术与设计学院、昆明市文化和旅游局、昆明市官渡...</p>
+                            <a href="#" class="more">查看更多</a>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="spec-item">
+                        <div class="spec-pic"><a href="#"><img src="~/Content/images/spec-pic-2.jpg" alt="" /></a></div>
+                        <div class="spec-info">
+                            <h4>
+                                <a href="#">浙江省2019年“文化和自然遗产日”宣传展示活动综述</a>
+                                <p><span>2019.03.02</span></p>
+                            </h4>
+                            <p>6月8日至10日，由云南省文化和旅游厅、红河哈尼族彝族自治州人民政府主办，云南省非物质文化遗产保护中心、红河州文化和旅游局、红河州蒙自市人民政府、云南大学文化发展研究院、云南大学艺术与设计学院、昆明市文化和旅游局、昆明市官渡...</p>
+                            <a href="#" class="more">查看更多</a>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="spec-item">
+                        <div class="spec-pic"><a href="#"><img src="~/Content/images/spec-pic-3.jpg" alt="" /></a></div>
+                        <div class="spec-info">
+                            <h4>
+                                <a href="#">浙江省2019年“文化和自然遗产日”宣传展示活动综述</a>
+                                <p><span>2019.03.02</span></p>
+                            </h4>
+                            <p>6月8日至10日，由云南省文化和旅游厅、红河哈尼族彝族自治州人民政府主办，云南省非物质文化遗产保护中心、红河州文化和旅游局、红河州蒙自市人民政府、云南大学文化发展研究院、云南大学艺术与设计学院、昆明市文化和旅游局、昆明市官渡...</p>
+                            <a href="#" class="more">查看更多</a>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="spec-item">
+                        <div class="spec-pic"><a href="#"><img src="~/Content/images/spec-pic-4.jpg" alt="" /></a></div>
+                        <div class="spec-info">
+                            <h4>
+                                <a href="#">浙江省2019年“文化和自然遗产日”宣传展示活动综述</a>
+                                <p><span>2019.03.02</span></p>
+                            </h4>
+                            <p>6月8日至10日，由云南省文化和旅游厅、红河哈尼族彝族自治州人民政府主办，云南省非物质文化遗产保护中心、红河州文化和旅游局、红河州蒙自市人民政府、云南大学文化发展研究院、云南大学艺术与设计学院、昆明市文化和旅游局、昆明市官渡...</p>
+                            <a href="#" class="more">查看更多</a>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="spec-item">
+                        <div class="spec-pic"><a href="#"><img src="~/Content/images/spec-pic-5.jpg" alt="" /></a></div>
+                        <div class="spec-info">
+                            <h4>
+                                <a href="#">浙江省2019年“文化和自然遗产日”宣传展示活动综述</a>
+                                <p><span>2019.03.02</span></p>
+                            </h4>
+                            <p>6月8日至10日，由云南省文化和旅游厅、红河哈尼族彝族自治州人民政府主办，云南省非物质文化遗产保护中心、红河州文化和旅游局、红河州蒙自市人民政府、云南大学文化发展研究院、云南大学艺术与设计学院、昆明市文化和旅游局、昆明市官渡...</p>
+                            <a href="#" class="more">查看更多</a>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+            <div class="list-page clearfix">
+                <a href="#">首页</a>
+                <a href="#">上一页</a>
+                <a class="current-page" href="#">1</a>
+                <a href="#">2</a>
+                <a href="#">3</a>
+                <a href="#">4</a>
+                <a href="#">···</a>
+                <a href="#">10</a>
+                <a href="#">下一页</a>
+                <a href="#">末页</a>
+                跳转到
+                <input type="text" placeholder="" />
+                页
+                <a href="#" class="go">GO</a>
+            </div>
+        </div>
+    </div>
+</div>
+

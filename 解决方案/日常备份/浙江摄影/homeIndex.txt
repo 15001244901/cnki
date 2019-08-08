@@ -1,0 +1,161 @@
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>浙江非物质文化遗产-首页</title>
+    <link href="~/Content/css/reset.css" rel="stylesheet" />
+    <link href="~/Content/css/jquery.fullPage.css" rel="stylesheet" />
+    <link href="~/Content/css/common.css" rel="stylesheet" />
+    <link href="~/Content/css/index.css" rel="stylesheet" />
+    <script src="~/scripts/jquery-1.11.3.min.js"></script>
+    <script src="~/scripts/mustache.min.js"></script>
+    <script src="~/scripts/jquery.mChange.js"></script>
+    <script src="~/scripts/jquery.soChange-min.js"></script>
+    <script src="~/scripts/ChangeMobile.js"></script>
+</head>
+<body>
+    <div id="header">
+        <div class="head-top">
+            <div class="logo"><img src="~/Content/images/logo.png" alt="" /></div>
+            <div class="head-bar">
+                <a href="#" class="ser"></a>
+                <a href="#" class="user"></a>
+            </div>
+        </div>
+        <div class="head-nav">
+            <div class="nav-con clearfix">
+                <a href="#page1" data-menuanchor="page1" class="active">首页</a>
+                <a href="#page3" data-menuanchor="page3">按类别</a>
+                <a href="#page2" data-menuanchor="page2">按级别</a>
+                <a href="#page4" data-menuanchor="page4">按批次</a>
+            </div>
+        </div>
+    </div>
+    <div id="page">
+        <div class="page page1 section active">
+            <div class="page-box">
+                <div class="index-title"><img src="~/Content/images/index-title.png" alt="" /></div>
+                <div class="indicator"><a href="#" class="cur"></a><a href="#"></a><a href="#"></a><a href="#"></a></div>
+                <ul>
+                    <li><a href="#"><img src="~/Content/images/banner-index-1.jpg" alt="" /></a></li>
+                </ul>
+            </div>
+        </div>
+        <!--非遗民俗项目、非遗关键词-->
+        <div class="page page2 section">
+            <div class="page-box">
+                <div class="page2-l fl"><img src="~/Content/images/map.png" alt="" /></div>
+                <div class="page2-r fr">
+                    <div class="region-ich">
+                        <div class="re-title title-proj"><span></span><img src="~/Content/images/title-proj.png" alt="" /></div>
+                        <ul class="clearfix">
+                            <li><a href="#"><img src="~/Content/images/ich-bg.jpg" alt="" /><p>十八罗汉</p></a></li>
+                            <li><a href="#"><img src="~/Content/images/ich-img-1.jpg" alt="" /></a></li>
+                            <li><a href="#"><img src="~/Content/images/ich-bg.jpg" alt="" /><p>南太极拳</p></a></li>
+                            <li><a href="#"><img src="~/Content/images/ich-bg.jpg" alt="" /><p>花桥龙灯</p></a></li>
+                            <li><a href="#"><img src="~/Content/images/ich-img-2.jpg" alt="" /></a></li>
+                            <li><a href="#"><img src="~/Content/images/ich-bg.jpg" alt="" /><p>章氏骨伤疗法</p></a></li>
+                            <li><a href="#"><img src="~/Content/images/ich-img-3.jpg" alt="" /></a></li>
+                            <li><a href="#"><img src="~/Content/images/ich-bg.jpg" alt="" /><p>鲤鱼跳龙门</p></a></li>
+                            <li><a href="#"><img src="~/Content/images/ich-bg.jpg" alt="" /><p>黄岩评书</p></a></li>
+                            <li><a href="#"><img src="~/Content/images/ich-img-4.jpg" alt="" /></a></li>
+                            <li><a href="#"><img src="~/Content/images/ich-bg.jpg" alt="" /><p>芦浦红山走马灯</p></a></li>
+                            <li><a href="#"><img src="~/Content/images/ich-img-5.jpg" alt="" /></a></li>
+                        </ul>
+                        <p><a href="#"></a><a href="#"></a></p>
+                    </div>
+                    <div class="region-ich">
+                        <div class="re-title title-keyw"><span></span><img src="~/Content/images/title-keyw.png" alt="" /></div>
+                        <ul class="clearfix">
+                            <li><a href="#"><img src="~/Content/images/ich-bg.jpg" alt="" /><p>仙居鲤鱼跳龙门</p></a></li>
+                            <li><a href="#"><img src="~/Content/images/ich-img-6.jpg" alt="" /></a></li>
+                            <li><a href="#"><img src="~/Content/images/ich-bg.jpg" alt="" /><p>十八罗汉</p></a></li>
+                            <li><a href="#"><img src="~/Content/images/ich-img-7.jpg" alt="" /></a></li>
+                            <li><a href="#"><img src="~/Content/images/ich-bg.jpg" alt="" /><p>临海词调</p></a></li>
+                            <li><a href="#"><img src="~/Content/images/ich-bg.jpg" alt="" /><p>温岭石雕</p></a></li>
+                            <li><a href="#"><img src="~/Content/images/ich-img-8.jpg" alt="" /></a></li>
+                            <li><a href="#"><img src="~/Content/images/ich-bg.jpg" alt="" /><p>黄岩翻簧</p></a></li>
+                            <li><a href="#"><img src="~/Content/images/ich-img-9.jpg" alt="" /></a></li>
+                            <li><a href="#"><img src="~/Content/images/ich-bg.jpg" alt="" /><p>沉香木雕</p></a></li>
+                            <li><a href="#"><img src="~/Content/images/ich-bg.jpg" alt="" /><p>仙居花灯</p></a></li>
+                            <li><a href="#"><img src="~/Content/images/ich-img-10.jpg" alt="" /></a></li>
+                        </ul>
+                        <p><a href="#"></a><a href="#"></a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--类别-->
+        <div class="page page3 section">
+            <div class="page-box">
+                <h3><img src="~/Content/images/page3-title.png" alt="" /></h3>
+                <div class="category-list">
+                    <ul class="clearfix">
+                        <li><a href="#"><img src="~/Content/images/category-1.jpg" alt="" /></a></li>
+                        <li><a href="#"><img src="~/Content/images/category-2.jpg" alt="" /></a></li>
+                        <li><a href="#"><img src="~/Content/images/category-3.jpg" alt="" /></a></li>
+                        <li><a href="#"><img src="~/Content/images/category-4.jpg" alt="" /></a></li>
+                        <li><a href="#"><img src="~/Content/images/category-5.jpg" alt="" /></a></li>
+                        <li><a href="#"><img src="~/Content/images/category-6.jpg" alt="" /></a></li>
+                        <li><a href="#"><img src="~/Content/images/category-7.jpg" alt="" /></a></li>
+                        <li><a href="#"><img src="~/Content/images/category-8.jpg" alt="" /></a></li>
+                        <li><a href="#"><img src="~/Content/images/category-9.jpg" alt="" /></a></li>
+                        <li><a href="#"><img src="~/Content/images/category-10.jpg" alt="" /></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!--第四部分-->
+        <div class="page page4 section">
+            <div class="page-box">
+                <ul class="clearfix">
+                    <li class="item-1"><a href="#"><h3><img src="~/Content/images/item-1-h.png" alt="" /></h3></a></li>
+                    <li class="item-2"><a href="#"><h3><img src="~/Content/images/item-2-h.png" alt="" /></h3></a></li>
+                    <li class="item-3"><a href="#"><h3><img src="~/Content/images/item-3-h.png" alt="" /></h3></a></li>
+                    <li class="item-4"><a href="#"><h3><img src="~/Content/images/item-4-h.png" alt="" /></h3></a></li>
+                    <li class="item-5"><a href="#"><h3><img src="~/Content/images/item-5-h.png" alt="" /></h3></a></li>
+                    <li class="item-6"><a href="#"><h3><img src="~/Content/images/item-6-h.png" alt="" /></h3></a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="page page5 section">
+            <div class="page-box">
+                <div class="footer">
+                    <div class="relate-links">
+                        <div class="links-con">
+                            <span>相关链接:</span>
+                            <a href="#">浙江非遗研究院</a>
+                            <a href="#">浙江非遗网</a>
+                            <a href="#">浙江在线</a>
+                            <a href="#">浙江摄影出版社</a>
+                        </div>
+                    </div>
+                    <div class="footer-con">
+                        <p><a href="#">设为首页</a>/<a href="#">关于我们</a>/<a href="#">在线推广</a>/<a href="">意见反馈</a></p>
+                        <p><span>©2019 浙江非遗</span><span>京ICP证030173号</span><span>京公网安备11000002000001号</span></p>
+                        <div class="wx"><img src="~/Content/images/wx.jpg" alt="" /><p>关注微信公众号</p></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+   
+    <script src="~/scripts/jquery.slimscroll.min.js"></script>
+    <script src="~/scripts/jquery.fullPage.min.js"></script>
+    <script>
+        //需要放到下面 否则控制台出错
+        $('#page').fullpage({
+            anchors: ['page1', 'page2', 'page3', 'page4', 'page5', 'page6'],
+            menu: '#head-nav',
+            scrollOverflow: true
+        });
+
+    </script>
+</body>
+</html>

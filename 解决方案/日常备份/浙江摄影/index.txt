@@ -1,0 +1,284 @@
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/scripts/jquery-1.11.3.min.js"></script>
+<link href="~/Content/css/search-index.css" rel="stylesheet" />
+<script src="~/scripts/fenye.js"></script>
+<script src="~/scripts/mustache.min.js"></script>
+<script src="~/scripts/Province.js"></script>
+<style type="text/css">
+    .filtrate-item select {
+        display: inline-block;
+        width: 150px;
+        height: 42px;
+        padding: 8px 10px;
+        border: 1px solid #cbc5be;
+        background: #fff;
+        font-size: 16px;
+        position: relative;
+    }
+
+    a.cur_page.nolink {
+        background-color: #a40000;
+        color: white;
+    }
+
+    button {
+        color: white;
+    }
+    select#searchsize {
+    width: 95px;
+    height: 26px;
+    font-size: 10px;
+    padding: 0px;
+}
+   td a {
+    color: #555555;
+    text-decoration: none;
+    display: inline-block;
+    max-width: 106px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+</style>
+<div class="main-con">
+    <div class="ser-filtrate">
+        <div class="data-stat">
+            <span class="domestic">100</span>
+            <span class="category">3</span>
+            <span class="project">@ViewBag.project</span>
+        </div>
+        <div class="ser">
+            <div class="ser-con clearfix">
+                <div class="filtrate-item">
+                    @*<p>批次<i></i></p>
+                        <ul>
+                            <li><a href="#">批次1</a></li>
+                            <li><a href="#">批次2</a></li>
+                        </ul>*@
+
+                    <select id="batch">
+                        <option value="*">批次</option>
+                        <option value="批次一">批次一</option>
+                        <option value="批次二">批次二</option>
+                        <option value="批次三">批次三</option>
+                        <option value="批次四">批次四</option>
+
+                    </select>
+                </div>
+                <div class="filtrate-item">
+                    @*<p>级别<i></i></p>
+                        <ul>
+                            <li><a href="#">级别1</a></li>
+                            <li><a href="#">级别2</a></li>
+                        </ul>*@
+                    <select id="rank">
+                        <option value="*">级别</option>
+                        <option value="级别1">级别1</option>
+                        <option value="级别2">级别2</option>
+                    </select>
+
+                </div>
+                <div class="filtrate-item">
+                    @*<p>*@
+                    @*省份<i></i>*@
+                    @*<ul id="province">
+                            <li><a href="#">浙江</a></li>
+                                <li><a href="#">江苏</a></li>
+                        </ul>*@
+                    <select id="province">
+                        @*<option value="浙江">浙江</option>*@
+                    </select>
+                    @*</p>*@
+                </div>
+                <div class="filtrate-item">
+                    @*<p>类别<i></i></p>
+                        <ul>
+                            <li><a href="#">类别1</a></li>
+                            <li><a href="#">类别2</a></li>
+                        </ul>*@
+                    <select id="category">
+                        <option value="*">类别</option>
+                        <option value="图书">图书</option>
+                        <option value="图片">图片</option>
+                        <option value="视频">视频</option>
+
+                    </select>
+                </div>
+                <form id="form_data">
+                    @*<input type="hidden" name="specialId" value="@ViewBag.doi" />*@
+                    <input type="hidden" name="Page" value="1">
+                    <input type="hidden" name="Size" value="10" id="Size" />
+                    <input type="hidden" name="PageCount" id="pageCount" value="">
+                    <input type="hidden" name="batch" value="" />
+                    <input type="hidden" name="rank" value="" />
+                    <input type="hidden" name="province" value="" />
+                    <input type="hidden" name="RESOURCETYPE" value="" />
+                    <input type="text" placeholder="关键词" id="keyword" name="Keyword" value="@ViewBag.keyword" />
+                    <a href="javascript:void(0);" class="btn-ser">搜 索</a>
+                </form>
+                @*<a href="#" class="btn-adser">高级检索</a>*@
+            </div>
+            <div class="key-words">
+                <span>热搜词</span>
+                <a href="#">布袋和尚</a>
+                <a href="#">白蛇传</a>
+                <a href="#">浙江省</a>
+                <a href="#">非遗</a>
+                <a href="#">手工艺</a>
+                <a href="#">非遗传承</a>
+                <a href="#">2018</a>
+            </div>
+        </div>
+    </div>
+    <div class="ser-list">
+        <div class="list-con">
+            <div class="list-top">
+
+                <p>共检索到<a href="" id="count"></a>条记录，当前显示第<a href="" id="page"></a>页，共<a href="" id="pagecount"></a>页</p>
+                <div class="list-top-r clearfix">
+                    <span class="fl">每页</span>
+                    <div class="filtrate-item fl searchsize">
+                        @*<p>10<i></i></p>
+                        <ul>
+                            <li><a href="#">9</a></li>
+                            <li><a href="#">8</a></li>
+                        </ul>*@
+                        <select id="searchsize">
+                            <option value="10" class="selected">10</option>
+                            <option value="9">9</option>
+                            <option value="8">8</option>                       
+                        </select>
+                    </div>
+                    <span class="fl">条数据</span>
+                </div>
+            </div>
+            <div class="list">
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width:5%">序号</th>
+                            <th style="width:10%">封面</th>
+                            <th style="width:10%">项目名称</th>
+                            <th style="width:45%">具体内容</th>
+                            <th style="width:10%">类别</th>
+                            <th style="width:10%">批次</th>
+                            <th style="width:10%">资源类型</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tblist">
+                        @*<tr>
+                                <td>1</td>
+                                <td><a href="#"><img src="~/Content/images/ich-pic-1.jpg" alt="" /></a></td>
+                                <td><a href="#">戚继光抗倭传说</a></td>
+                                <td class="ich-con"><p>浙江省是我国非物质文化遗产保护较早的省份之一，目前保护成果具中国首位。浙江省于2007年对非物质文化遗产的保护指定地方法规，不断对浙江的非物质文化遗产加大资金扶持和保护力度。</p></td>
+                                <td><p>民间文学</p></td>
+                                <td><p>第一批</p></td>
+                                <td><p>图书</p></td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td><a href="#"><img src="~/Content/images/ich-pic-2.jpg" alt="" /></a></td>
+                                <td><a href="#">梁祝传说</a></td>
+                                <td class="ich-con"><p>浙江省是我国非物质文化遗产保护较早的省份之一，目前保护成果具中国首位。浙江省于2007年对非物质文化遗产的保护指定地方法规，不断对浙江的非物质文化遗产加大资金扶持和保护力度。</p></td>
+                                <td><p>民间文学</p></td>
+                                <td><p>第一批</p></td>
+                                <td><p>图片</p></td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td><a href="#"><img src="~/Content/images/ich-pic-3.jpg" alt="" /></a></td>
+                                <td><a href="#">渔民号子</a></td>
+                                <td class="ich-con"><p>浙江省是我国非物质文化遗产保护较早的省份之一，目前保护成果具中国首位。浙江省于2007年对非物质文化遗产的保护指定地方法规，不断对浙江的非物质文化遗产加大资金扶持和保护力度。</p></td>
+                                <td><p>民间文学</p></td>
+                                <td><p>第一批</p></td>
+                                <td><p>视频</p></td>
+                            </tr>
+                            <tr>
+                                <td>4</td>
+                                <td><a href="#"><img src="~/Content/images/ich-pic-4.jpg" alt="" /></a></td>
+                                <td><a href="#">虞舜传说</a></td>
+                                <td class="ich-con"><p>浙江省是我国非物质文化遗产保护较早的省份之一，目前保护成果具中国首位。浙江省于2007年对非物质文化遗产的保护指定地方法规，不断对浙江的非物质文化遗产加大资金扶持和保护力度。</p></td>
+                                <td><p>民间文学</p></td>
+                                <td><p>第一批</p></td>
+                                <td><p>图书</p></td>
+                            </tr>
+                            <tr>
+                                <td>5</td>
+                                <td><a href="#"><img src="~/Content/images/ich-pic-5.jpg" alt="" /></a></td>
+                                <td><a href="#">山歌(仙居山歌)</a></td>
+                                <td class="ich-con"><p>浙江省是我国非物质文化遗产保护较早的省份之一，目前保护成果具中国首位。浙江省于2007年对非物质文化遗产的保护指定地方法规，不断对浙江的非物质文化遗产加大资金扶持和保护力度。</p></td>
+                                <td><p>民间文学</p></td>
+                                <td><p>第一批</p></td>
+                                <td><p>图书</p></td>
+                            </tr>
+                            <tr>
+                                <td>6</td>
+                                <td><a href="#"><img src="~/Content/images/ich-pic-6.jpg" alt="" /></a></td>
+                                <td><a href="#">畲族民歌</a></td>
+                                <td class="ich-con"><p>浙江省是我国非物质文化遗产保护较早的省份之一，目前保护成果具中国首位。浙江省于2007年对非物质文化遗产的保护指定地方法规，不断对浙江的非物质文化遗产加大资金扶持和保护力度。</p></td>
+                                <td><p>民间文学</p></td>
+                                <td><p>第一批</p></td>
+                                <td><p>图书</p></td>
+                            </tr>
+                            <tr>
+                                <td>7</td>
+                                <td><a href="#"><img src="~/Content/images/ich-pic-2.jpg" alt="" /></a></td>
+                                <td><a href="#">河上龙灯胜会</a></td>
+                                <td class="ich-con"><p>浙江省是我国非物质文化遗产保护较早的省份之一，目前保护成果具中国首位。浙江省于2007年对非物质文化遗产的保护指定地方法规，不断对浙江的非物质文化遗产加大资金扶持和保护力度。</p></td>
+                                <td><p>民间文学</p></td>
+                                <td><p>第一批</p></td>
+                                <td><p>图书</p></td>
+                            </tr>
+                            <tr>
+                                <td>8</td>
+                                <td><a href="#"><img src="~/Content/images/ich-pic-3.jpg" alt="" /></a></td>
+                                <td><a href="#">祭海</a></td>
+                                <td class="ich-con"><p>浙江省是我国非物质文化遗产保护较早的省份之一，目前保护成果具中国首位。浙江省于2007年对非物质文化遗产的保护指定地方法规，不断对浙江的非物质文化遗产加大资金扶持和保护力度。</p></td>
+                                <td><p>民间文学</p></td>
+                                <td><p>第一批</p></td>
+                                <td><p>图书</p></td>
+                            </tr>
+                            <tr>
+                                <td>9</td>
+                                <td><a href="#"><img src="~/Content/images/ich-pic-4.jpg" alt="" /></a></td>
+                                <td><a href="#">陈十四信俗</a></td>
+                                <td class="ich-con"><p>浙江省是我国非物质文化遗产保护较早的省份之一，目前保护成果具中国首位。浙江省于2007年对非物质文化遗产的保护指定地方法规，不断对浙江的非物质文化遗产加大资金扶持和保护力度。</p></td>
+                                <td><p>民间文学</p></td>
+                                <td><p>第一批</p></td>
+                                <td><p>图书</p></td>
+                            </tr>
+                            <tr>
+                                <td>10</td>
+                                <td><a href="#"><img src="~/Content/images/ich-pic-5.jpg" alt="" /></a></td>
+                                <td><a href="#">陈十四信俗</a></td>
+                                <td class="ich-con"><p>浙江省是我国非物质文化遗产保护较早的省份之一，目前保护成果具中国首位。浙江省于2007年对非物质文化遗产的保护指定地方法规，不断对浙江的非物质文化遗产加大资金扶持和保护力度。</p></td>
+                                <td><p>民间文学</p></td>
+                                <td><p>第一批</p></td>
+                                <td><p>图书</p></td>
+                            </tr>*@
+                    </tbody>
+                </table>
+                <div class="list-page clearfix">
+                    @*<a href="#">首页</a>
+                        <a href="#">上一页</a>
+                        <a class="current-page" href="#">1</a>
+                        <a href="#">2</a>
+                        <a href="#">3</a>
+                        <a href="#">4</a>
+                        <a href="#">···</a>
+                        <a href="#">10</a>
+                        <a href="#">下一页</a>
+                        <a href="#">末页</a>
+                        跳转到
+                        <input type="text" placeholder="" />
+                        页
+                        <a href="#" class="go">GO</a>*@
+                    <div class="page" id="pages"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,91 @@
+
+@{
+    ViewBag.Title = "BookDetail";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link href="~/Content/css/book-details.css" rel="stylesheet" />
+
+<div class="main-con">
+		<div class="detail-info">
+			<h3>白蛇传传说</h3>
+			<p><span><b>类别：</b>传统戏剧</span><span><b>批次：</b>第一批</span><span><b>所属地区：</b>杭州市</span></p>
+			<p><span><b>年限：</b>永久</span><span><b>级别：</b>高级</span><span><b>传承人/单位：</b>浙江非物质文化遗产</span></p>
+			<p class="brief"><b>简介：</b>浙江省杭州市白蛇传传说是我国民间文学中的一颗璀璨明珠，所塑造的白娘子、许仙、法海和小青等人物形象，表达了广大人民对人性解放的渴望，是中华民族宝贵的精神文化遗产。传说中所保留的大量古代传统习俗，使白蛇传成为我国民俗文化信息最为丰富的口头遗产之一。</p>
+		</div>
+		<div class="detail-con clearfix">
+			<div class="pic fl">
+				<div class="h4">
+				    当前章节：<span>前言</span>
+				    <div class="r-bar clearfix">
+				    	@*<span class="page-num"><input type="text" placeholder="10"/>/<a href="#">90</a></span>*@
+				    	<span class="font-size"><a href="#">A+</a><a href="#">A-</a></span>
+				    </div>
+				</div>
+				<div class="pic-con">
+					<p>中国家喻户晓的《白蛇传》，虽然是一个富有神话色彩的传说故事，但是它起源古远，流布广泛，内蕴丰富，表现形式多彩多姿，具有很高的学术研究价值。</p>
+					<p>其他许多民间传说一样，《白蛇传》由人们口头创作，经过长期口耳相传而被记录下来。南宋时，这个故事已由当时的书会先生（又称“才人”）写成话本。到了明代，文学家冯梦龙对这个话本做了加工，并定名为《白娘子永镇雷峰塔》，把它编入《警世通言》一书，这就是我们今天能看到的最早、最完整的《白蛇传》故事。</p>
+					<p>在这之后，《白蛇传》故事继续发展流传，可以明显地看出存在两条线索：一条是在民间口头流传，包括以说书、弹唱等曲艺形式在城乡演出；另一条是由文人以戏剧和小说等形式对《白蛇传》题材进行加工乃至创作。《白蛇传》的这个流传过程有两个特点：首先，这两条线索之间存在着密切联系，民间口头与文人笔下的《白蛇传》不断地、反复地相互影响。其次，这两条线索至今未断绝，直到今天，《白蛇传》传说依然活在民众口头，活在各种地方戏的舞台上乃至改编剧之中。中国人民不但对这个古老的传说表现出极大的喜爱，而且还在以自己的聪明才智丰富着、完善着这个古老的传说。</p>
+					<p>《白蛇传》将张着血盆大口吃人的蛇精演变成一个反对封建礼教，争取婚姻自由、家庭和谐的蛇仙，即化身为坚贞可爱的白娘子，这一变化深深地体现了民众的美好愿</p>
+					<div class="pic-img"><img src="~/Content/images/pic-img.jpg" alt=""/></div>
+				</div>
+			</div>
+			<div class="right-nav fr">
+
+                <p class="tab">
+                    <a href="javascript:;" class="active">本书目录</a>
+                    <a href="javascript:;">书内检索</a>
+                </p>
+			    @*<a href="#" class="arrow-t"></a>
+		        <a href="#" class="arrow-d cur"></a>*@
+				<ul>
+					<li><a href="#"><i></i>总序</a></li>
+					<li><a href="#" class="selected"><i></i>前言</a></li>
+					<li>
+					    <a href="#"><i></i>一、《白蛇传》传说的起源、演变和发展</a>
+					    <ul>
+					    	<li><a href="#"><i></i>[壹]《白蛇传》传说的民俗渊源</a></li>
+					        <li><a href="#"><i></i>[贰]《白蛇传》传说的演变和发展</a></li>
+					    </ul>
+					</li>
+					<li>
+					    <a href="#"><i></i>二、《白蛇传》的丰富内涵</a>
+					    <ul>
+					        <li><a href="#"><i></i>[壹]丰富多彩的《白蛇传》传说</a></li>
+					        <li><a href="#"><i></i>[贰]富有情趣的《白蛇传》风物传说</a></li>
+					    </ul>
+					</li>
+					<li>
+					    <a href="#"><i></i>三、《白蛇传》传播的文化空间</a>
+					    <ul>
+					    	<li><a href="#"><i></i>[壹]《白蛇传》与民间文学</a></li>
+					        <li><a href="#"><i></i>[贰]《白蛇传》与俗文学</a></li>
+					        <li><a href="#"><i></i>[叁]《白蛇传》的其他艺术形式</a></li>
+					        <li><a href="#"><i></i>[肆]《白蛇传》在海外的传播</a></li>
+					    </ul>
+					</li>
+					<li>
+					    <a href="#"><i></i>四、《白蛇传》研究</a>
+					    <ul>
+					    	<li><a href="#"><i></i>[壹]《白蛇传》研究回顾</a></li>
+					        <li><a href="#"><i></i>[贰]《白蛇传》与俗文学</a></li>
+					        <li><a href="#"><i></i>[叁]《白蛇传》研究成果</a></li>
+					    </ul>
+					</li>
+					<li>
+					    <a href="#"><i></i>五、《白蛇传》的社会科学价值</a>
+					    <ul>
+					    	<li><a href="#"><i></i>[壹]《白蛇传》的社会科学价值</a></li>
+					        <li><a href="#"><i></i>[贰]国内外名人论《白蛇传》</a></li>
+					    </ul>
+					</li>
+					<li>
+					    <a href="#"><i></i>六、《白蛇传》传说的保护与传承</a>
+					    <ul>
+					    	<li><a href="#"><i></i>[壹]《白蛇传》传说的濒危状况及原因</a></li>
+					    </ul>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>

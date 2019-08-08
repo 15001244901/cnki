@@ -1,0 +1,36 @@
+@model KPIC.Model.VideoInfo
+@{
+    ViewBag.Title = "VideoDetail";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link href="~/Content/css/video-details.css" rel="stylesheet" />
+
+<div class="main-con">
+    <div class="detail-info">
+        <h3>白蛇传传说</h3>
+        <p><span><b>类别：</b>传统戏剧</span><span><b>批次：</b>第一批</span><span><b>所属地区：</b>杭州市</span></p>
+        <p><span><b>年限：</b>永久</span><span><b>级别：</b>高级</span><span><b>传承人/单位：</b>浙江非物质文化遗产</span></p>
+        <p class="brief"><b>简介：</b>浙江省杭州市白蛇传传说是我国民间文学中的一颗璀璨明珠，所塑造的白娘子、许仙、法海和小青等人物形象，表达了广大人民对人性解放的渴望，是中华民族宝贵的精神文化遗产。传说中所保留的大量古代传统习俗，使白蛇传成为我国民俗文化信息最为丰富的口头遗产之一。</p>
+    </div>
+    <div class="detail-con clearfix">
+        <div class="video fl">
+            <h4>当前视频：<span>白蛇传戏曲选段二</span></h4>
+            <div class="video-play">
+                <a href="#"></a>
+                <i></i>
+                <div class="play-item"><img src="~/Content/images/play-item.png" alt="" /></div>
+                <img src="~/Content/images/video-img.jpg" alt="" />
+            </div>
+        </div>
+        <div class="right-nav fr">
+            <ul>
+                <li><a href="#"><i></i>白蛇传戏曲选段一</a></li>
+                <li><a href="#" class="selected"><i></i>白蛇传戏曲选段二</a></li>
+                <li><a href="#"><i></i>白蛇传戏曲选段三</a></li>
+                <li><a href="#"><i></i>白蛇传戏曲选段四</a></li>
+                <li><a href="#"><i></i>白蛇传戏曲选段五</a></li>
+            </ul>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,135 @@
+@using Webdiyer.WebControls.Mvc;
+@using OFFICALWEB.Areas.Admin.Models;
+@using OFFICALWEB.Utility;
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    // var Model = ViewBag.book as List<DRMS.Model.BookInfo>;
+    var Model = ViewBag.book as List<OFFICALWEB.Models.ResBookInfo>;
+}
+
+@*<script src="~/scripts/jquery-sochange.js"></script>*@
+<script src="~/scripts/jquery.soChange-min.js"></script>
+<link type="text/css" rel="stylesheet" href="~/Css/UserCenterCss/common.css" />
+<link href="~/Css/UserCenterCss/personal_center.css" rel="stylesheet" />
+<script src="~/scripts/bought.js"></script>
+<script type="text/javascript">
+    function sczy(doi, type, name) {
+        $.ajax({
+            url: '/UserCenter/AddFavoriteData',
+            data: { doi: doi, type: type, name: name },
+            type: "get",
+            dataType: "json",
+            success: function (data) {
+                if (data.Success) {
+                    alert("收藏成功！");
+                }
+                else {
+                    alert(data.Message);
+                }
+            }
+        })
+    }
+    function buyBook(doi, buyType, mType) {
+        var price = "";
+        if (buyType == 1) {
+            price = $("#podPrice").text();
+        }
+        else if (buyType == 2) {
+            price = $("#readPrice").text();
+        }
+        else if (buyType == 3) {
+            price = $(this).attr("date-index");
+        }
+        if (price == "未定价") {
+            alert("该书尚未定价，无法购买！");
+            return false;
+        }
+        addToCartAjax(doi, buyType, mType);
+    }
+    $(function () {
+        $(".main_con_right .soChange").soChange({
+           // thumbObj: '.main_con_right h3 .changebook',
+           // thumbNowClass: 'changebook',
+            thumbOverEvent: false,
+            slideTime: 0, //对象平滑过渡持续时间，默认为1000ms,
+            autoChange: false,
+           // botPrev: null,//按钮上一个，默认为空
+            botNext: ".main_con_right .changebook"//按钮下一个。默认为空
+        })
+        $(".buyprice").each(function () {
+            GetBookPrice(this, "");
+        })
+
+    })
+
+    function GetBookPrice(obj, doi) {
+        var priceService = '@ViewBag.PriceService';
+        GetPriceBuyAjax(doi, priceService, funcNames)
+    }
+    //function funcNames() {
+
+    //}
+</script>
+<div class="main_warp">
+    <div class="cur_positon"><span>当前位置：</span><a href="#">首页</a> > 个人中心</div>
+    <div class="main_con clearfix">
+        @Html.Action("UserCenterLeft")
+        <div class="main_con_right fr">
+            <h3>
+                推荐书籍
+                <a class="changebook" href="javascript:void(0)" target="_blank">换一批</a>
+            </h3>
+            <input type="hidden" value="@Model.Count" />
+            @*<ul>*@
+            @if (Model != null)
+            {
+                var q = 0;
+                for (var j = 0; j < Math.Ceiling(Model.Count / 4.0); j++)
+                {
+                    <ul class="soChange">
+                        @for (var i = 0; i < 4; i++)
+                        {
+
+                            try
+                            {
+                                if (Model[q] == null)
+                                {
+
+                                }
+                            }
+                            catch
+                            {
+                                break;
+                            }
+                            <li>
+                                <div class="book_list clearfix">
+                                    <div class="book_img fl"><a href="/PBook/Detail?doi=@Model[q].Doi" target="_blank"><img src="/ShowPic/Show?vpath=@Model[q].ImgPath&vtag=@Model[q].VirtualPathtag&ptype=1" /></a></div>
+                                    <div class="book_brief fr">
+                                        <p class="book_title" title="@Model[q].Name"><a href="/PBook/Detail?doi=@Model[q].Doi" target="_blank">@Model[q].Name</a></p>
+                                        <p class="book_author" title="@Model[q].Author">作者：@Model[q].Author</p>
+                                        <p class="book_price">@Utility.RemoveHtmlSubString(Model[q].Digest, 45, "...")</p>
+                                        @*<p class="book_price buyprice">￥@info.Price</p>*@
+                                        <p class="button"></p>
+                                    </div>
+                                </div>
+                            </li>
+                            if (q <= Model.Count)
+                            {
+                                q++;
+
+                            }
+                        }
+                    </ul>
+                }
+            }
+            else
+            {
+                <ul>
+                    <p style=' margin:15px auto; width:300px; height:50px; text-align:center; color:Red; padding-top:20px; border:1px solid #d1bfb0;'>没有已经上架可以推荐的图书！</p>
+                </ul>
+            }
+            @*</ul>*@
+        </div>
+    </div>
+</div>
