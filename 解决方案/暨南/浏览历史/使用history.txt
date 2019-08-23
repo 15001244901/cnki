@@ -1,0 +1,16 @@
+ /*
+                * 浏览历史
+            */
+
+            var _id = $("#hid_id").val(), _name = $('#hid_name').val();;
+            var hidtory_key = 'hgbd_journalarticle';
+            History.set(hidtory_key, { id: _id, name: _name });
+            var history_data = History.get(hidtory_key).filter(function (item) { return item.id !== _id; }), $history = $('.history');
+            if (history_data.length == 0)
+                $history.children('ul').html('<li class="no-data">暂无相关数据！</li>');
+            else
+                $history.children('ul').html(Mustache.render('{{#data}}<li><a href="/Journal/ArticleDetail?doi={{id}}" title="{{name}}">{{name}}</a></li>{{/data}}', { data: history_data }));
+            $('h3 a', $history).click(function () {
+                History.clear(hidtory_key);
+                $history.children('ul').html('<li class="no-data">暂无相关数据！</li>');
+            });
