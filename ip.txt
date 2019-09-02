@@ -2,6 +2,7 @@
 暨南大学:http://192.168.101.215:8137   http://www.jnupress.com  cnkiadmin cnkiadmin 
 中医药; H5  http://192.168.100.169:8095/  Web  http://192.168.100.169:8094/    H5  http://114.112.104.244:8008   Web http://www.cptcm.com
 苏州大学出版社: admin1  000000
+西安电子科技大学出版社  http://c.xduph.com   admin  000000
 图标库: http://fontawesome.dashgame.com/
 电商:http://192.168.100.169:8189
 215 cnki@cnki_123
@@ -19,7 +20,7 @@ CmWliR3UQjHemsAUIVYFYxjcA49elRwU
 社里的编辑账号  
 wangfang       88190652 
 Koala  jf74226
-
+jk2018  123456
 ********************财经*********************************
 http://edu.cfeph.com.cn/UHome/CourseColumn_EduResourse?cid=350
 用户名 coursemake 密码是123456
@@ -27,6 +28,9 @@ http://edu.cfeph.com.cn/UHome/CourseColumn_EduResourse?cid=350
 wangfang       88190652 
 Koala  jf74226
 
+大后台:http://edu.cfeph.com.cn/account/admin_logon
+账号 admin  密码 mofzx-=88191007
+本地  admin      123456
 财经 VPN
  https://211.101.20.211
 账号cnki
